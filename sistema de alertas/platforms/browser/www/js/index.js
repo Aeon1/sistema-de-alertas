@@ -264,10 +264,11 @@ function registrar(){
         onClick: function() {
            myApp.showPreloader('Enviando al servidor');
            sendDatesServer();
-            //setTimeout(function () {
-//                myApp.hidePreloader();
-//                mainView.router.loadPage('index.html');
-//            }, 2000);
+            setTimeout(function () {
+                myApp.hidePreloader();
+                mainView.router.loadPage('index.html');
+                navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
+            }, 2000);
             
         }
       },
@@ -354,7 +355,7 @@ function datosFin(tx, results){
 //    console.log(xhr);
 //}
 
- $$.ajax({
+            $$.ajax({
                         url:"http://quody.co/sms.php",
                         method: "POST", 
                         data: {To:'6672244900',Body:'mensaje de prueba'},
@@ -365,9 +366,9 @@ function datosFin(tx, results){
 }
      function OnSuccess(data, status, xhr)
     {
-        console.log(data);
-        myApp.hidePreloader();
+        myApp.hidePreloader();        
         mainView.router.loadPage('index.html');
+        navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
     }
 
     function OnError(xhr, status)
@@ -375,7 +376,7 @@ function datosFin(tx, results){
         myApp.alert('Error');
     }
 function Onbefore(xhr){
-    console.log("enviando mensaje");
+    myApp.alert("enviando mensaje");
 }
 
 
