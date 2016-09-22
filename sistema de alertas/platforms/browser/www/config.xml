@@ -11,6 +11,7 @@
     <author email="support@phonegap.com" href="http://phonegap.com">Innovacion Gubernamental</author>
     <content src="index.html" />
     <icon src="icon.png" />
+    <access origin="http://quody.co/" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
