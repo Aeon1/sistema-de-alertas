@@ -436,7 +436,7 @@ function onSuccessC(position) {
 // onError Callback receives a PositionError object
 function onErrorC(error) {
     myApp.alert('Asegurese que tiene habilitada la geolocalizacion', 'Ubicacion no encontrada', function () {
-        cordova.plugins.settings.openGlobal(function(){
+        cordova.plugins.settings.openSetting ("wifi",function(){
             console.log("opened settings")
         },
         function(){
