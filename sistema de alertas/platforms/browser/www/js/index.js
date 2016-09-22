@@ -436,11 +436,11 @@ function onSuccessC(position) {
 // onError Callback receives a PositionError object
 function onErrorC(error) {
     myApp.alert('Asegurese que tiene habilitada la geolocalizacion', 'Ubicacion no encontrada', function () {
-        cordova.plugins.settings.wifi(function(){
-            console.log("opened settings")
+        cordova.plugins.settings.openSetting("locale", function(){
+            console.log("opened nfc settings")
         },
         function(){
-            console.log("failed to open settings")
+            console.log("failed to open nfc settings")
         });
     });
     $$("#locacion").html("<span style='color:red'>Asegurese que tiene habilitada la geolocalizacion<span>");
