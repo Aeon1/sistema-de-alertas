@@ -417,8 +417,7 @@ var captureSuccess = function(mediaFiles) {
         path = mediaFiles[i].fullPath;
         console.log(mediaFiles[i].size);
     }
-    //alert(path);
-    ft.upload(fileURL, uri, win, fail, options);
+
 };
 // capture error callback
 var captureError = function(error) {
