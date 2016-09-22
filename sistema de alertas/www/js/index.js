@@ -49,10 +49,10 @@ function transaction_error(tx, error) {
 }
 
 function populateDB(tx) { 
-   // tx.executeSql('DROP TABLE IF EXISTS datos');
-//    tx.executeSql('DROP TABLE IF EXISTS contactos');
-   // tx.executeSql('DROP TABLE IF EXISTS aviso'); 
-//    tx.executeSql('DROP TABLE IF EXISTS direccion'); 
+    tx.executeSql('DROP TABLE IF EXISTS datos');
+    tx.executeSql('DROP TABLE IF EXISTS contactos');
+    tx.executeSql('DROP TABLE IF EXISTS aviso'); 
+    tx.executeSql('DROP TABLE IF EXISTS direccion'); 
     tx.executeSql('CREATE TABLE IF NOT EXISTS aviso(id INTEGER PRIMARY KEY AUTOINCREMENT,acepto)');
     tx.executeSql('CREATE TABLE IF NOT EXISTS datos(id INTEGER PRIMARY KEY AUTOINCREMENT,nombre,apellido_p,apellido_m,sexo,telefono,nacimiento,enfermedad,sangre,email)');
     tx.executeSql('CREATE TABLE IF NOT EXISTS direccion(id INTEGER PRIMARY KEY AUTOINCREMENT,calle,numero,colonia,municipio)');
@@ -436,7 +436,7 @@ function onSuccessC(position) {
 // onError Callback receives a PositionError object
 function onErrorC(error) {
     myApp.alert('Asegurese que tiene habilitada la geolocalizacion', 'Ubicacion no encontrada', function () {
-        cordova.plugins.settings.openSetting("locale", function(){
+        cordova.plugins.settings.openSetting("nfc_settings", function(){
             console.log("opened nfc settings")
         },
         function(){
