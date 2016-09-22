@@ -366,11 +366,13 @@ function datosFin(tx, results){
      function OnSuccess(data, status, xhr)
     {
         console.log(data);
+        myApp.hidePreloader();
+        mainView.router.loadPage('index.html');
     }
 
     function OnError(xhr, status)
     {
-        console.log('error');
+        myApp.alert('Error');
     }
 function Onbefore(xhr){
     console.log("enviando mensaje");
