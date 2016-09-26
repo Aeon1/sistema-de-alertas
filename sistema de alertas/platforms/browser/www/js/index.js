@@ -456,7 +456,7 @@ function onErrorcall(result) {
  myApp.alert("Error:"+result);
 }
 
-$scope.callNumber = function(number){
+callNumber(number){
   myApp.alert("Launching Calling Service for number "+number);
   window.plugins.CallNumber.callNumber(onSuccesscall, onErrorcall, number, false);
 }
