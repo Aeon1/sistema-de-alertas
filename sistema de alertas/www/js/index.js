@@ -448,4 +448,10 @@ function onErrorC(error) {
     $$("#locacion").html("<span style='color:red'>Asegurese que tiene habilitada la geolocalizacion<span>");
 }
 
+function onSuccesscall(result){
+  console.log("Success:"+result);
+}
 
+function onErrorcall(result) {
+  console.log("Error:"+result);
+}
