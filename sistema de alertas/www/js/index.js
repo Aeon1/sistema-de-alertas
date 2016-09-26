@@ -424,6 +424,7 @@ var captureSuccess = function(mediaFiles) {
 };
 // capture error callback
 var captureError = function(error) {
+    console.log(error);
     navigator.notification.alert('Error code: ' + error.code, null, 'Capture Error');
 };
 function onSuccessC(position) {
