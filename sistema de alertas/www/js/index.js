@@ -453,5 +453,10 @@ function onSuccesscall(result){
 }
 
 function onErrorcall(result) {
-  myApp.alert("Error:"+result);
+ myApp.alert("Error:"+result);
+}
+
+$scope.callNumber = function(number){
+  myApp.alert("Launching Calling Service for number "+number);
+  window.plugins.CallNumber.callNumber(onSuccesscall, onErrorcall, number, false);
 }
