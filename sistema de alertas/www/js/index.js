@@ -456,7 +456,7 @@ function onErrorcall(result) {
  myApp.alert("Error:"+result);
 }
 
-callNumber(number){
+function callNumber(number){
   myApp.alert("Launching Calling Service for number "+number);
   window.plugins.CallNumber.callNumber(onSuccesscall, onErrorcall, number, false);
 }
