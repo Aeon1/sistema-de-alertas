@@ -449,9 +449,9 @@ function onErrorC(error) {
 }
 
 function onSuccesscall(result){
-  console.log("Success:"+result);
+  myApp.alert("Success:"+result);
 }
 
 function onErrorcall(result) {
-  console.log("Error:"+result);
+  myApp.alert("Error:"+result);
 }
