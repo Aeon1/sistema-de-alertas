@@ -3,87 +3,22 @@
 <!-- Top Navbar-->
 <div class="navbar">
   <div class="navbar-inner">
-  <div class="left"><a href="#" class="back link"> <i class="icon icon-left-arrow-angle"></i></a></div>
-    <div class="center sliding">Registro</div>    
+    <div class="center sliding">Paso final</div>    
   </div>
 </div>
 <div class="pages">
   <!-- Page, data-page contains page name-->
-  <div data-page="registro" class="page">
+  <div data-page="finalizado" class="page">
     <!-- Scrollable page content-->
     <div class="page-content">
       <div class="content-block">
-        <div class="content-block-inner">
-  
-  <div class="content-block-title">Labels and inputs</div>
-<div class="list-block">
-  <ul>
-    <!-- Text inputs -->
-    <li>
-      <div class="item-content">
-        <div class="item-inner">
-          <div class="item-title label">Name</div>
-          <div class="item-input">
-            <input type="text" placeholder="Your name">
-          </div>
+        <h3>el registro se ha hecho correctamente</h3>
+        <p>en breve recibira un sms indicandole el codigo de confirmaci&oacute;n</p>
+        <div class="item-input">
+            <input type="text" id="codigo_confirmacion" placeholder="Codigo de confirmacion">
         </div>
-      </div>
-    </li>
-    <li>
-      <div class="item-content">
-        <div class="item-inner">
-          <div class="item-title label">E-mail</div>
-          <div class="item-input">
-            <input type="email" placeholder="E-mail">
-          </div>
-        </div>
-      </div>
-    </li>
- 
-    <!-- Select -->
-    <li>
-      <div class="item-content">
-        <div class="item-inner">
-          <div class="item-title label">Gender</div>
-          <div class="item-input">
-            <select>
-              <option>Male</option>
-              <option>Female</option>
-            </select>
-          </div>
-        </div>
-      </div>
-    </li>
- 
-    <!-- Date -->
-    <li>
-      <div class="item-content">
-        <div class="item-inner">
-          <div class="item-title label">Birth date</div>
-          <div class="item-input">
-            <input type="date" placeholder="Birth day" value="2014-04-30">
-          </div>
-        </div>
-      </div>
-    </li>
- 
-    <!-- Switch (Checkbox) -->
-    <li>
-      <div class="item-content">
-        <div class="item-inner">
-          <div class="item-title label">Switch</div>
-          <div class="item-input">
-            <label class="label-switch">
-              <input type="checkbox">
-              <div class="checkbox"></div>
-            </label>
-          </div>
-        </div>
-      </div>
-    </li>
-  </ul>
-</div>
-        </div>
+        <br />
+        <a href="#" class="button button-big button-fill" onclick="finalizar()">Confirmar</a>
       </div>
     </div>
   </div>

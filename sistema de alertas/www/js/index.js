@@ -3,7 +3,7 @@ var db=null;
 function onDeviceReady() {   
         db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
         db.transaction(populateDB);
-        
+
         //checkConnection();
         aviso()
 }
@@ -20,6 +20,12 @@ var mainView = myApp.addView('.view-main', {
     // Because we use fixed-through navbar we can enable dynamic navbar
     dynamicNavbar: true
 });
+//saber que reporte es
+myApp.onPageInit('reporte', function (page) {
+  console.log('reporte page initialized');
+  console.log(page);
+});
+
  var online;
  function checkConnection() {
         var networkState = navigator.network.connection.type;
@@ -49,21 +55,22 @@ function transaction_error(tx, error) {
 }
 
 function populateDB(tx) { 
-//    tx.executeSql('DROP TABLE IF EXISTS datos');
-//    tx.executeSql('DROP TABLE IF EXISTS contactos');
-//    tx.executeSql('DROP TABLE IF EXISTS aviso'); 
-//    tx.executeSql('DROP TABLE IF EXISTS direccion'); 
+    tx.executeSql('DROP TABLE IF EXISTS datos');
+    tx.executeSql('DROP TABLE IF EXISTS contactos');
+    tx.executeSql('DROP TABLE IF EXISTS aviso'); 
+    tx.executeSql('DROP TABLE IF EXISTS direccion'); 
     tx.executeSql('CREATE TABLE IF NOT EXISTS aviso(id INTEGER PRIMARY KEY AUTOINCREMENT,acepto)');
     tx.executeSql('CREATE TABLE IF NOT EXISTS datos(id INTEGER PRIMARY KEY AUTOINCREMENT,nombre,apellido_p,apellido_m,sexo,telefono,nacimiento,enfermedad,sangre,email)');
     tx.executeSql('CREATE TABLE IF NOT EXISTS direccion(id INTEGER PRIMARY KEY AUTOINCREMENT,calle,numero,colonia,municipio)');
     tx.executeSql('CREATE TABLE IF NOT EXISTS contactos(id INTEGER PRIMARY KEY AUTOINCREMENT,nombre,telefono)');
+    tx.executeSql('CREATE TABLE IF NOT EXISTS acceso(id INTEGER PRIMARY KEY AUTOINCREMENT,contacto,confirmacion)');
 
 }
 function aviso(){
         db.transaction(
         function(tx) {
         tx.executeSql('SELECT * FROM aviso',[],checkAviso);
-    });
+    });            
 }
 //si no se ha registrado le muestra la pantalla de registro
 function checkAviso(tx, results){
@@ -262,13 +269,8 @@ function registrar(){
       {
         text: 'Aceptar',
         onClick: function() {
-           myApp.showPreloader('Enviando al servidor');
+           myApp.showPreloader('Enviando registro');
            sendDatesServer();
-            setTimeout(function () {
-                myApp.hidePreloader();
-                mainView.router.loadPage('index.html');
-                navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
-            }, 2000);
             
         }
       },
@@ -302,7 +304,10 @@ function datosFin(tx, results){
             console.log('apellido c: '+results.rows.item(0).apellido_m);
             console.log('sexo: '+results.rows.item(0).sexo);
             console.log('telefono: '+results.rows.item(0).telefono);            
-            console.log('nacimiento: '+results.rows.item(0).nacimiento);
+            //console.log('nacimiento: '+results.rows.item(0).nacimiento);
+            var fecha=results.rows.item(0).nacimiento.split("-");
+            var nacimiento=fecha[2]+"/"+fecha[1]+"/"+fecha[0];
+            console.log(nacimiento);
             console.log('enfermedad: '+results.rows.item(0).enfermedad);
             console.log('sangre: '+results.rows.item(0).sangre);
             console.log('mail: '+results.rows.item(0).email);
@@ -310,71 +315,105 @@ function datosFin(tx, results){
             console.log('numero: '+results.rows.item(0).numero);
             console.log('colonia: '+results.rows.item(0).colonia);
             console.log('municipio: '+results.rows.item(0).municipio);
-        //    webServiceURL="https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Service.asmx";
-//            var soapMessage = "<soap:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>"+
-//                  "<soap:Body>"+
-//                    "<RegistrarContacto xmlns='http://tempuri.org/'>"+
-//                      "<pNombre>"+results.rows.item(i).nombre+"</pNombre>"+
-//                      "<pPrimerApelido>"+results.rows.item(0).apellido_p+"</pPrimerApelido>"+
-//                      "<pSegundoApelido>"+results.rows.item(0).apellido_m+"</pSegundoApelido>"+
-//                      "<pFechaNacimiento>"+results.rows.item(0).nacimiento+"</pFechaNacimiento>"+
-//                      "<pEnfermedadesCronicas>"+results.rows.item(0).enfermedad+"</pEnfermedadesCronicas>"+
-//                      "<pTipoSangre>"+results.rows.item(0).sangre+"</pTipoSangre>"+
-//                      "<pCalle>"+results.rows.item(0).calle+"</pCalle>"+
-//                      "<pNumero>"+results.rows.item(0).numero+"</pNumero>"+
-//                      "<pColonia>"+results.rows.item(0).colonia+"</pColonia>"+
-//                      "<pMunicipio>"+results.rows.item(0).municipio+"</pMunicipio>"+
-//                      "<pEmail>"+results.rows.item(0).email+"</pEmail>"+
-//                      "<pTelefonoFijo></pTelefonoFijo>"+
-//                      "<pTelefonoMovil>"+results.rows.item(0).telefono+"</pTelefonoMovil>"+
-//                      "<pEstatus></pEstatus>"+
-//                    "</RegistrarContacto>"+
-//                  "</soap:Body></soap:Envelope>";
-//                  $$.ajax({
-//                        url: webServiceURL,
-//                        method: "POST",
-//                        dataType: "xml", 
-//                        data: soapMessage, 
-//                        processData: false,
-//                        contentType: "text/xml; charset=\"utf-8\"",
-//                        beforeSend:Onbefore,
-//                        success: OnSuccess, 
-//                        error: OnError
-//                    });
-//
-//     function OnSuccess(data, status, xhr)
-//    {
-//        console.log(data);
-//    }
-//
-//    function OnError(xhr, status)
-//    {
-//        console.log('error');
-//    }
-//function Onbefore(xhr){
-//    console.log(xhr);
-//}
-
             $$.ajax({
-                        url:"http://quody.co/sms.php",
+                        url:"https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx",
                         method: "POST", 
-                        data: {To:'6672244900',Body:'mensaje de prueba'},
+                        data: {
+                            op:'rc',
+                            Nombre:results.rows.item(0).nombre,
+                            PrimerApellido:results.rows.item(0).apellido_p,
+                            SegundoApellido:results.rows.item(0).apellido_m,
+                            FechaNacimiento:nacimiento,
+                            EnfermedadesCronicas:results.rows.item(0).enfermedad,
+                            TipoSangre:results.rows.item(0).sangre,
+                            Calle:results.rows.item(0).calle,
+                            Numero:results.rows.item(0).numero,
+                            Colonia:results.rows.item(0).colonia,
+                            Municipio:results.rows.item(0).municipio,
+                            Email:results.rows.item(0).email,
+                            TelefonoFijo:'',
+                            TelefonoMovil:results.rows.item(0).telefono
+                            },
                         beforeSend:Onbefore,
                         success: OnSuccess, 
                         error: OnError
                     });
 }
-     function OnSuccess(data, status, xhr)
-    {
-        myApp.hidePreloader();        
-        mainView.router.loadPage('index.html');
-        navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
+//=SOTO&=21/08/1983&&=joel.diaz@sinaloa.gob.mx&=7587000&TelefonoMovil=6671185976
+function OnSuccess(data, status, xhr){
+    var json = JSON.parse(data);
+    console.log(json.ContactoID);
+//        myApp.hidePreloader();        
+//        mainView.router.loadPage('index.html');
+//        navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
+    db.transaction(
+        function(tx) {              
+        tx.executeSql('INSERT INTO acceso(contacto,confirmacion) VALUES(?,?)',[json.ContactoID,json.CodigoConfirmacion]);
+    });
+    enviocontactos(json.ContactoID,json.CodigoConfirmacion);
     }
-
-    function OnError(xhr, status)
-    {
+//se envian los contactos al servidor
+function enviocontactos(id,verificacion){
+    db.transaction(
+        function(tx) {              
+        tx.executeSql('select * from contactos',[],function(tx, results){
+            var len = results.rows.length;
+            for (var i=0; i<len; i++){
+                   $$.ajax({
+                        url:"https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx",
+                        method: "POST", 
+                        data: {op:'rce',IdContacto:id,CodigoConfirmacion:verificacion,Nombre:results.rows.item(i).nombre,PrimerApellido:'',SegundoApellido:'',TelefonoMovil:results.rows.item(i).telefono},
+                        success: function(result){
+                            console.log("respuesta contactos: "+result);
+                            myApp.hidePreloader();        
+                            mainView.router.loadPage('registro.html');
+                           // navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
+                        }, 
+                        error: function(result){ 
+                            myApp.alert('Ocurrio un error al registrar el contacto de emergencia '+results.rows.item(i).nombre, 'Error');
+                            myApp.hidePreloader();
+                        }
+                        });  
+            }
+        });
+    });
+}
+//finalizar el registro envio de codigo de confirmacion
+function finalizar(){
+    myApp.showPreloader('validando');
+    db.transaction(
+        function(tx) {
+    tx.executeSql('select * from acceso',[],function(tx, results){
+        var contacto=results.rows.item(0).contacto;
+        var verificacion=$$("#codigo_confirmacion").val();
+        console.log(contacto+" "+verificacion);
+            $$.ajax({
+                        url:"https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx",
+                        method: "POST", 
+                        data: {op:'cr',IdContacto:contacto,CodigoConfirmacion:verificacion},
+                        success: function(result){
+                            var json = JSON.parse(result);
+                            if(json.OcurrioError!=0){
+                                myApp.hidePreloader();        
+                            mainView.router.loadPage('index.html');
+                            }else{
+                               myApp.alert(json.MensajeError, 'Error'); 
+                            }
+                            console.log("respuesta confirmacion "+result);
+                            
+                           // navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
+                        }, 
+                        error: function(result){ 
+                            myApp.alert('Ocurrio un error al intentar la verificacion', 'Error');
+                            myApp.hidePreloader();
+                        }
+                        });
+    });
+});
+}
+function OnError(xhr, status){
         console.log('Error');
-    }
+}
 function Onbefore(xhr){
     console.log("enviando mensaje");
 }
@@ -386,56 +425,80 @@ $$('.robo').on('click', function () {
         {
             text: 'Robo habitacion',
             onClick: function () {
-                mainView.router.loadPage('robo.html');
+                mainView.router.loadPage('reporte.html');
                 }
         },
         {
             text: 'Robo a comercio',
             onClick: function () {
-                mainView.router.loadPage('robo.html');
+                mainView.router.loadPage('reporte.html');
             }
         },
         {
             text: 'Robo de auto',
             onClick: function () {
-                mainView.router.loadPage('robo.html');
+                mainView.router.loadPage('reporte.html');
             }
         },
     ];
     myApp.actions(buttons);
 }); 
-function roboaudio(){
+function audio(){
     navigator.device.capture.captureAudio(captureSuccess, captureError, {limit:1});
 }
-function robofoto(){
+function foto(){
     navigator.device.capture.captureImage(captureSuccess, captureError, {limit:1,quality: 0});
 }
-function robovideo(){
+function video(){
     navigator.device.capture.captureVideo(captureSuccess, captureError, {limit:1,quality: 0});
 }
-// capture callback
-var captureSuccess = function(mediaFiles) {
+// captura de audio exitosa
+var captureSuccessaudio = function(mediaFiles) {
     var i, path, len;
     for (i = 0, len = mediaFiles.length; i < len; i += 1) {
         path = mediaFiles[i].fullPath;
         console.log(mediaFiles[i].size);
     }
-
 };
-// capture error callback
-var captureError = function(error) {
+// captura de audio con error
+var captureErroraudio = function(error) {
     console.log(error);
     navigator.notification.alert('Error code: ' + error.code, null, 'Capture Error');
 };
+// captura de foto exitosa
+var captureSuccessfoto = function(mediaFiles) {
+    var i, path, len;
+    for (i = 0, len = mediaFiles.length; i < len; i += 1) {
+        path = mediaFiles[i].fullPath;
+        console.log(mediaFiles[i].size);
+    }
+};
+// captura de foto con error
+var captureErrorfoto = function(error) {
+    console.log(error);
+    navigator.notification.alert('Error code: ' + error.code, null, 'Capture Error');
+};
+// captura de video exitosa
+var captureSuccessvideo = function(mediaFiles) {
+    var i, path, len;
+    for (i = 0, len = mediaFiles.length; i < len; i += 1) {
+        path = mediaFiles[i].fullPath;
+        console.log(mediaFiles[i].size);
+    }
+};
+// captura de video con error
+var captureErrorvideo = function(error) {
+    console.log(error);
+    navigator.notification.alert('Error code: ' + error.code, null, 'Capture Error');
+};
+
+//obtencion de las coordenadas exitosa
 function onSuccessC(position) {
     latitud=position.coords.latitude;
-    longitud=position.coords.longitude;
-    //myApp.alert('Latitude: ' + position.coords.latitude+'<br /> Longitude: ' + position.coords.longitude, 'Ubicacion encontrada', function () {
-//        //myApp.alert('Button clicked!')
-//    });
+
 }
 
-// onError Callback receives a PositionError object
+// obtencion de las coordenadas error
 function onErrorC(error) {
     myApp.alert('Asegurese que tiene habilitada la geolocalizacion', 'Ubicacion no encontrada', function () {
         cordova.plugins.settings.open(function(){
@@ -445,18 +508,15 @@ function onErrorC(error) {
             console.log("failed to open settings")
         });
     });
-    $$("#locacion").html("<span style='color:red'>Asegurese que tiene habilitada la geolocalizacion<span>");
 }
-
+//boton llamada al 911
 function onSuccesscall(result){
-  myApp.alert("Success:"+result);
+  console.log("Success:"+result);
 }
-
 function onErrorcall(result) {
- myApp.alert("Error:"+result);
+ console.log("Error:"+result);
 }
-
 function callNumber(number){
-  myApp.alert("Launching Calling Service for number "+number);
+  console.log("Launching Calling Service for number "+number);
   window.plugins.CallNumber.callNumber(onSuccesscall, onErrorcall, number, false);
 }
