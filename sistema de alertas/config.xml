@@ -72,7 +72,6 @@
     <splash src="www/res/screen/ios/Default~iphone.png" platform="ios" width="320" height="480"/>
   </platform>
   
-  <access origin="http://quody.co/" />
   <access origin="*"/>
   <allow-intent href="http://*/*"/>
   <allow-intent href="https://*/*"/>

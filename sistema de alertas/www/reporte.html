@@ -17,7 +17,7 @@
           <a href="#" class="button button-big active" style="border-color: white;" onclick="foto()">Foto</a>
           <a href="#" class="button button-big active" style="border-color: white;" onclick="video()">Video</a>
         </p>
-        <p id="locacion"></p>
+        
         <h1 class="text-center">&iexcl;&iexcl;&iexcl;Importante!!!</h1>
         <h2 class="text-center">Esta por realizar el reporte de un "INCIDENTE" una vez generado no podr&aacute; ser cancelado y se alertara a las autoridades correspondientes para su atenci&oacute;n</h2>
         <h2 class="text-center">&iquest;ESTA SEGURO DE CONTINUAR CON EL REPORTE?</h2>
@@ -26,9 +26,11 @@
             <a href="#" class="button button-big button-red">Cancelar</a>
           </div>
           <div class="col-50">
-            <a href="#" class="button button-big button-green">Enviar</a>
+            <a href="#" class="button button-big button-green" onclick="sendserver()">Enviar</a>
           </div>
         </div>
+        <div id="demo">Subiendo...</div>
+        <progress id="xxx" value="0" max="100">
     </div>
   </div>
 </div>

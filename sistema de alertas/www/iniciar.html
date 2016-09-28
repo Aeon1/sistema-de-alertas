@@ -1,0 +1,54 @@
+
+        <!-- Top Navbar-->
+        <div class="navbar">
+          <div class="navbar-inner">
+            <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
+            <div class="center sliding">Sistema de alertas</div>
+            <div class="right">
+              <!-- 
+                Right link contains only icon - additional "icon-only" class
+                Additional "open-panel" class tells app to open panel when we click on this link
+              -->
+              <a href="#" class="link icon-only open-panel"><i class="icon icon-menu"></i></a>
+            </div>
+          </div>
+        </div>
+        <!-- Pages container, because we use fixed-through navbar and toolbar, it has additional appropriate classes-->
+        <div class="pages navbar-through toolbar-through">
+          <!-- Page, "data-page" contains page name -->
+          <div data-page="index" class="page">
+            <!-- Scrollable page content -->
+            <div class="page-content">
+            <br />
+              <div class="row">
+                  <div class="col-50">
+                    <div class="button-fill button " style='height: 100px;' onclick="robo()"><p style="margin: 0;padding: 0;">Robo</p><i class="icon icon-thief"></i></div>
+                  </div>
+                  <div class="col-50">
+                    <div class="button button-fill" style='height: 100px;' ><p style="margin: 0;padding: 0;">Abuso de autoridad</p><i class="icon icon-baton"></i></div>
+                  </div>
+              </div> 
+            <br />
+              <div class="row">
+                  <div class="col-50">
+                    <div class="button button-fill" style='height: 100px;'><p style="margin: 0;padding: 0;">Incendio</p><i class="icon icon-house"></i></div>
+                  </div>
+                  <div class="col-50">
+                    <div class="button button-fill" style='height: 100px;' ><p style="margin: 0;padding: 0;">Violencia contra la mujer</p><i class="icon icon-violent-criminal"></i></div>
+                  </div>
+              </div>
+            <br />
+              <div class="row">
+                  <div class="col-50">
+                    <div class="button button-fill" style='height: 100px;'><p style="margin: 0;padding: 0;">Accidente vehicular</p><i class="icon icon-accident"></i></div>
+                  </div>
+                  <div class="col-50">
+                    <div class="button button-fill" style='height: 100px;' ><p style="margin: 0;padding: 0;">Emergencia medica</p><i class="icon icon-ambulance"></i></div>
+                  </div>
+              </div>
+              <br />
+              <a href="#" class="button button-big button-fill "  style='height: 100px;' onclick="callNumber('911')" ><h3>Llamada de emergancia 911<i class="icon icon-phone-call"></i></h3></a>
+            </div>
+          </div>
+        </div>
+   

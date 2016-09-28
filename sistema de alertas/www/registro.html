@@ -11,14 +11,20 @@
   <div data-page="finalizado" class="page">
     <!-- Scrollable page content-->
     <div class="page-content">
-      <div class="content-block">
-        <h3>el registro se ha hecho correctamente</h3>
-        <p>en breve recibira un sms indicandole el codigo de confirmaci&oacute;n</p>
-        <div class="item-input">
-            <input type="text" id="codigo_confirmacion" placeholder="Codigo de confirmacion">
-        </div>
-        <br />
-        <a href="#" class="button button-big button-fill" onclick="finalizar()">Confirmar</a>
+      <div class="list-block">
+        <h3 class="text-center">el registro se ha hecho correctamente</h3>
+        <p class="text-center">en breve recibira un sms indicandole el codigo de confirmaci&oacute;n</p>
+        <ul>
+            <li>
+                <div class="item-input">
+                    <input type="text" class="codigo_confirmacion text-center" placeholder="Codigo de confirmacion">
+                </div>        
+            </li>
+            <li><br /><br /></li>
+            <li>
+                <a href="#" class="button button-big button-fill" onclick="finalizar()">Confirmar</a>
+            </li>
+        </ul>
       </div>
     </div>
   </div>

@@ -1,11 +1,15 @@
 document.addEventListener("deviceready", onDeviceReady, false);
 var db=null;
+var id_contacto="";
+var codigo_confirmacion="";
+var latitud="";
+var longitude="";
 function onDeviceReady() {   
         db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
         db.transaction(populateDB);
 
         //checkConnection();
-        aviso()
+        verificado();
 }
 
 
@@ -18,14 +22,22 @@ var $$ = Dom7;
 // Add view
 var mainView = myApp.addView('.view-main', {
     // Because we use fixed-through navbar we can enable dynamic navbar
-    dynamicNavbar: true
+    dynamicNavbar: true,
+    swipeBackPage:false
 });
-//saber que reporte es
+//saber si el gps esta funcionando
+myApp.onPageInit('index', function (page) {
+  navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
+});
+//comprobar nuevamente que el gps este activo
 myApp.onPageInit('reporte', function (page) {
-  console.log('reporte page initialized');
-  console.log(page);
+    if(latitud=="" || longitude==""){
+  navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
+    }
 });
-
+function iniciar(){
+     mainView.router.loadPage('iniciar.html');
+}
  var online;
  function checkConnection() {
         var networkState = navigator.network.connection.type;
@@ -54,66 +66,105 @@ function transaction_error(tx, error) {
     console.log("Database Error: " + error);
 }
 
-function populateDB(tx) { 
-    tx.executeSql('DROP TABLE IF EXISTS datos');
-    tx.executeSql('DROP TABLE IF EXISTS contactos');
-    tx.executeSql('DROP TABLE IF EXISTS aviso'); 
-    tx.executeSql('DROP TABLE IF EXISTS direccion'); 
+function populateDB(tx) {  
+//    tx.executeSql('DROP TABLE IF EXISTS datos');
+//    tx.executeSql('DROP TABLE IF EXISTS contactos');
+//    tx.executeSql('DROP TABLE IF EXISTS aviso'); 
+//    tx.executeSql('DROP TABLE IF EXISTS direccion'); 
+//    tx.executeSql('DROP TABLE IF EXISTS acceso'); 
     tx.executeSql('CREATE TABLE IF NOT EXISTS aviso(id INTEGER PRIMARY KEY AUTOINCREMENT,acepto)');
     tx.executeSql('CREATE TABLE IF NOT EXISTS datos(id INTEGER PRIMARY KEY AUTOINCREMENT,nombre,apellido_p,apellido_m,sexo,telefono,nacimiento,enfermedad,sangre,email)');
     tx.executeSql('CREATE TABLE IF NOT EXISTS direccion(id INTEGER PRIMARY KEY AUTOINCREMENT,calle,numero,colonia,municipio)');
     tx.executeSql('CREATE TABLE IF NOT EXISTS contactos(id INTEGER PRIMARY KEY AUTOINCREMENT,nombre,telefono)');
-    tx.executeSql('CREATE TABLE IF NOT EXISTS acceso(id INTEGER PRIMARY KEY AUTOINCREMENT,contacto,confirmacion)');
+    tx.executeSql('CREATE TABLE IF NOT EXISTS acceso(id INTEGER PRIMARY KEY AUTOINCREMENT,contacto,confirmacion,verificado)');
 
 }
+function verificado(){
+        db.transaction(
+        function(tx) {
+        tx.executeSql('SELECT * FROM acceso',[],function(tx, results){
+            console.log("iniciado");
+            var len = results.rows.length;
+            console.log(len);
+            if(len==1){
+                if(results.rows.item(0).verificado==1){
+                    id_contacto=results.rows.item(0).contacto;
+                    codigo_confirmacion=results.rows.item(0).confirmacion;
+                  mainView.router.loadPage('iniciar.html');  
+                }                        
+            }else{
+              aviso();  
+            }
+        });
+    });            
+}
+
 function aviso(){
         db.transaction(
         function(tx) {
-        tx.executeSql('SELECT * FROM aviso',[],checkAviso);
+            tx.executeSql('SELECT * FROM aviso',[],function(tx, results){
+            var len = results.rows.length;
+            if(len==0){
+                myApp.popup('.popup-aviso');            
+            }else{
+              checkDatos();  
+            }
+        });
     });            
 }
 //si no se ha registrado le muestra la pantalla de registro
-function checkAviso(tx, results){
-    var len = results.rows.length;
-        if(len==0){
-            myApp.popup('.popup-aviso');            
-        }else{
-          checkDatos();  
-        }
-        //for (var i=0; i<len; i++){
-//            console.log(results.rows.item(i).nombre);         
+//function checkAviso(tx, results){
+//    var len = results.rows.length;
+//        if(len==0){
+//            myApp.popup('.popup-aviso');            
+//        }else{
+//          checkDatos();  
 //        }
-}
+//}
 function aceptAviso(){
    db.transaction(
-        function(tx) {              
+        function(tx) {  
+        tx.executeSql('DELETE FROM aviso',[]);
         tx.executeSql('INSERT INTO aviso(acepto) VALUES(?)',['si']);
-    });             
-      
+    });        
         checkDatos();
         myApp.closeModal('.popup-aviso')
 }
 function checkDatos(){
         db.transaction(
         function(tx) {
-        tx.executeSql('SELECT * FROM datos',[],showDatos);
+        tx.executeSql('SELECT * FROM datos',[],function(tx, results){
+            var len = results.rows.length;
+                if(len==0){
+                    mainView.router.loadPage('personalDates.html');            
+                }else{
+                    checkDireccion();           
+                }
+        });
     });
 }
 //si no se ha registrado le muestra la pantalla de registro
-function showDatos(tx, results){
-    var len = results.rows.length;
-        if(len==0){
-            mainView.router.loadPage('personalDates.html');            
-        }else{
-            checkDireccion();           
-        }
-
-}
+//function showDatos(tx, results){
+//    var len = results.rows.length;
+//        if(len==0){
+//            mainView.router.loadPage('personalDates.html');            
+//        }else{
+//            checkDireccion();           
+//        }
+//}
 //checar si ya tiene direccion guardada
 function checkDireccion(){
     db.transaction(
         function(tx) {
-        tx.executeSql('SELECT * FROM direccion',[],showDatosDireccion);
+        tx.executeSql('SELECT * FROM direccion',[],function(tx, results){
+            var len = results.rows.length;
+                if(len==0){
+                    mainView.router.loadPage('direccion.html');            
+                }else{
+                    //obtener posicion
+                   //navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
+                 }
+        });
     });
 }
 //si no se ha registrado le muestra la pantalla de registro
@@ -123,10 +174,8 @@ function showDatosDireccion(tx, results){
             mainView.router.loadPage('direccion.html');            
         }else{
             //obtener posicion
-           navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
-             
-        }
-
+           //navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
+         }
 }
 //lleva a pantalla de direccion
 function direction(){
@@ -178,7 +227,8 @@ function direction(){
     }else{
         
         db.transaction(
-        function(tx) {              
+        function(tx) {
+        tx.executeSql('DELETE FROM datos',[]);
         tx.executeSql('INSERT INTO datos(nombre,apellido_p,apellido_m,sexo,telefono,nacimiento,enfermedad,sangre,email) VALUES(?,?,?,?,?,?,?,?,?)',[nombre,apellido_p,apellido_m,sexo,telefono,nacimiento,enfermedad,sangre,mail]);
         });
         myApp.closeNotification(".notifications"); 
@@ -209,7 +259,8 @@ function contactos(){
         $$("input[name='colonia']").focus();
     }else{
         db.transaction(
-        function(tx) {              
+        function(tx) {         
+        tx.executeSql('DELETE FROM direccion',[]);
         tx.executeSql('INSERT INTO direccion(calle,numero,colonia,municipio) VALUES(?,?,?,?)',[calle,numero,colonia,municipio]);
         });
     myApp.closeNotification(".notifications"); 
@@ -339,15 +390,13 @@ function datosFin(tx, results){
                         error: OnError
                     });
 }
-//=SOTO&=21/08/1983&&=joel.diaz@sinaloa.gob.mx&=7587000&TelefonoMovil=6671185976
 function OnSuccess(data, status, xhr){
     var json = JSON.parse(data);
-    console.log(json.ContactoID);
-//        myApp.hidePreloader();        
-//        mainView.router.loadPage('index.html');
-//        navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
+    id_contacto=json.ContactoID;
+    codigo_confirmacion=json.CodigoConfirmacion;
     db.transaction(
-        function(tx) {              
+        function(tx) {        
+        tx.executeSql('DELETE FROM acceso',[]);
         tx.executeSql('INSERT INTO acceso(contacto,confirmacion) VALUES(?,?)',[json.ContactoID,json.CodigoConfirmacion]);
     });
     enviocontactos(json.ContactoID,json.CodigoConfirmacion);
@@ -367,8 +416,7 @@ function enviocontactos(id,verificacion){
                             console.log("respuesta contactos: "+result);
                             myApp.hidePreloader();        
                             mainView.router.loadPage('registro.html');
-                           // navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
-                        }, 
+                         }, 
                         error: function(result){ 
                             myApp.alert('Ocurrio un error al registrar el contacto de emergencia '+results.rows.item(i).nombre, 'Error');
                             myApp.hidePreloader();
@@ -381,35 +429,37 @@ function enviocontactos(id,verificacion){
 //finalizar el registro envio de codigo de confirmacion
 function finalizar(){
     myApp.showPreloader('validando');
-    db.transaction(
-        function(tx) {
-    tx.executeSql('select * from acceso',[],function(tx, results){
-        var contacto=results.rows.item(0).contacto;
-        var verificacion=$$("#codigo_confirmacion").val();
-        console.log(contacto+" "+verificacion);
+//    db.transaction(
+//        function(tx) {
+//    tx.executeSql('select * from acceso',[],function(tx, results){
+//       var contacto=results.rows.item(0).contacto;
+        var verificacion=$$(".codigo_confirmacion").val();
+        console.log(id_contacto+" "+verificacion);
             $$.ajax({
                         url:"https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx",
-                        method: "POST", 
-                        data: {op:'cr',IdContacto:contacto,CodigoConfirmacion:verificacion},
+                        method: "POST",
+                        data: {op:'cr',IdContacto:id_contacto,CodigoConfirmacion:verificacion},
                         success: function(result){
+                            myApp.hidePreloader();
                             var json = JSON.parse(result);
-                            if(json.OcurrioError!=0){
-                                myApp.hidePreloader();        
-                            mainView.router.loadPage('index.html');
+                            if(json.OcurrioError==0){   
+                                db.transaction(
+                                function(tx) {              
+                                    tx.executeSql('UPDATE acceso SET verificado=?',[1]);
+                                }); 
+                                mainView.router.loadPage('iniciar.html');
                             }else{
-                               myApp.alert(json.MensajeError, 'Error'); 
+                                myApp.alert(json.MensajeError, 'Error');
                             }
                             console.log("respuesta confirmacion "+result);
-                            
-                           // navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
                         }, 
                         error: function(result){ 
                             myApp.alert('Ocurrio un error al intentar la verificacion', 'Error');
                             myApp.hidePreloader();
                         }
                         });
-    });
-});
+//    });
+//});
 }
 function OnError(xhr, status){
         console.log('Error');
@@ -417,10 +467,8 @@ function OnError(xhr, status){
 function Onbefore(xhr){
     console.log("enviando mensaje");
 }
-
-
 //mensajes de funcion de botones
-$$('.robo').on('click', function () {
+function robo() {
     var buttons = [
         {
             text: 'Robo habitacion',
@@ -442,15 +490,15 @@ $$('.robo').on('click', function () {
         },
     ];
     myApp.actions(buttons);
-}); 
+} 
 function audio(){
-    navigator.device.capture.captureAudio(captureSuccess, captureError, {limit:1});
+    navigator.device.capture.captureAudio(captureSuccessaudio, captureErroraudio, {limit:1});
 }
 function foto(){
-    navigator.device.capture.captureImage(captureSuccess, captureError, {limit:1,quality: 0});
+    navigator.device.capture.captureImage(captureSuccessfoto, captureErrorfoto, {limit:1,quality: 0});
 }
 function video(){
-    navigator.device.capture.captureVideo(captureSuccess, captureError, {limit:1,quality: 0});
+    navigator.device.capture.captureVideo(captureSuccessvideo, captureErrorvideo, {limit:1,quality: 0});
 }
 // captura de audio exitosa
 var captureSuccessaudio = function(mediaFiles) {
@@ -472,6 +520,7 @@ var captureSuccessfoto = function(mediaFiles) {
         path = mediaFiles[i].fullPath;
         console.log(mediaFiles[i].size);
     }
+    sendfoto(path);
 };
 // captura de foto con error
 var captureErrorfoto = function(error) {
@@ -485,19 +534,23 @@ var captureSuccessvideo = function(mediaFiles) {
         path = mediaFiles[i].fullPath;
         console.log(mediaFiles[i].size);
     }
+    
 };
+
 // captura de video con error
 var captureErrorvideo = function(error) {
     console.log(error);
     navigator.notification.alert('Error code: ' + error.code, null, 'Capture Error');
 };
-
 //obtencion de las coordenadas exitosa
 function onSuccessC(position) {
+    myApp.alert(position.coords.latitude);
     latitud=position.coords.latitude;
-
+    longitude=position.coords.longitude;
+    //$$.post("http://quody.co/sms.php",{To:'6672244900',Body:'https://www.google.com.co/maps/place/'+latitud+','+longitude},function(vd){
+//        myApp.alert(vd);
+//    })
 }
-
 // obtencion de las coordenadas error
 function onErrorC(error) {
     myApp.alert('Asegurese que tiene habilitada la geolocalizacion', 'Ubicacion no encontrada', function () {
@@ -508,6 +561,7 @@ function onErrorC(error) {
             console.log("failed to open settings")
         });
     });
+    mainView.router.loadPage('iniciar.html'); 
 }
 //boton llamada al 911
 function onSuccesscall(result){
@@ -519,4 +573,78 @@ function onErrorcall(result) {
 function callNumber(number){
   console.log("Launching Calling Service for number "+number);
   window.plugins.CallNumber.callNumber(onSuccesscall, onErrorcall, number, false);
+}
+
+//envio del reporte
+function sendserver(){
+    if(id_contacto=="" || codigo_confirmacion==""){
+        myApp.alert("campos vacios");
+    }
+    if(latitud=="" || Longitud==""){
+        myApp.alert("campos vacios de gps");
+    }
+    $$.ajax({
+        url:"https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx",
+        method: "POST",
+        data: {op:'ri',IdContacto:id_contacto,CodigoConfirmacion:codigo_confirmacion,IdIncidente:1,Latitud:latitud,Longitud:longitude},
+            success: function(result){
+                myApp.hidePreloader();
+                var json = JSON.parse(result);
+                if(json.OcurrioError==0){   
+                    db.transaction(
+                    function(tx) {              
+                        tx.executeSql('UPDATE acceso SET verificado=?',[1]);
+                    }); 
+                        mainView.router.loadPage('iniciar.html');
+                            }else{
+                                myApp.alert(json.MensajeError, 'Error');
+                            }
+                            console.log("respuesta confirmacion "+result);
+                        }, 
+                        error: function(result){ 
+                            myApp.alert('Ocurrio un error al intentar la verificacion', 'Error');
+                            myApp.hidePreloader();
+                        }
+    });
+    
+}
+
+
+
+//envio de foto
+function win(r) {
+    console.log("Code = " + r.responseCode);
+    console.log("Response = " + r.response);
+    console.log("Sent = " + r.bytesSent);
+}
+ 
+function fail(error) {
+    alert("An error has occurred: Code = " + error.code);
+    console.log("upload error source " + error.source);
+    console.log("upload error target " + error.target);
+}
+//enviar los archivos
+function sendfoto(fileURL){
+    var uri = encodeURI("http://clicsinaloa.gob.mx/clicmazatlan/movil/subir.php");
+ 
+var options = new FileUploadOptions();
+options.fileKey="file";
+options.fileName=fileURL.substr(fileURL.lastIndexOf('/')+1);
+options.mimeType="image/jpeg";
+ 
+var headers={'headerParam':'headerValue'};
+ 
+options.headers = headers;
+ 
+var ft = new FileTransfer();
+ft.onprogress = function(progressEvent) {
+    $$("#xxx").attr('max',progressEvent.total);
+    if (progressEvent.lengthComputable) {
+        $$("#xxx").val(progressEvent.loaded);
+        loadingStatus.setPercentage(progressEvent.loaded / progressEvent.total);
+    } else {
+        loadingStatus.increment();
+    }
+};
+ft.upload(fileURL, uri, win, fail, options);
 }
