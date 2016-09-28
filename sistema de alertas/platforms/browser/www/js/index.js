@@ -65,7 +65,17 @@ function showAlert() {
 function transaction_error(tx, error) {
     console.log("Database Error: " + error);
 }
-
+function vaciar(){
+    db.transaction(
+        function(tx) {
+                tx.executeSql('DROP TABLE IF EXISTS datos');
+    tx.executeSql('DROP TABLE IF EXISTS contactos');
+    tx.executeSql('DROP TABLE IF EXISTS aviso'); 
+    tx.executeSql('DROP TABLE IF EXISTS direccion'); 
+    tx.executeSql('DROP TABLE IF EXISTS acceso'); 
+        });
+        myApp.alert("vaciada");
+}
 function populateDB(tx) {  
 //    tx.executeSql('DROP TABLE IF EXISTS datos');
 //    tx.executeSql('DROP TABLE IF EXISTS contactos');
