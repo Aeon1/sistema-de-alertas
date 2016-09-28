@@ -4,6 +4,13 @@ var id_contacto="";
 var codigo_confirmacion="";
 var latitud="";
 var longitude="";
+var id_reporte="";
+var path_audio="";
+var path_foto="";
+var path_video="";
+var mimeType_xa="";
+var mimeType_xf="";
+var mimeType_xv="";
 function onDeviceReady() {   
         db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
         db.transaction(populateDB);
@@ -30,10 +37,13 @@ myApp.onPageInit('index', function (page) {
   navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
 });
 //comprobar nuevamente que el gps este activo
-myApp.onPageInit('reporte', function (page) {
+myApp.onPageBeforeInit('reporte', function (page) {
+    $$(page.navbarInnerContainer).find('#title_reporte').html(page.query.title);
+    id_reporte=page.query.id;
     if(latitud=="" || longitude==""){
   navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
     }
+    
 });
 function iniciar(){
      mainView.router.loadPage('iniciar.html');
@@ -483,24 +493,56 @@ function robo() {
         {
             text: 'Robo habitacion',
             onClick: function () {
-                mainView.router.loadPage('reporte.html');
+                mainView.router.loadPage('reporte.html?title=Robo casa habitacion&id=1');
                 }
         },
         {
             text: 'Robo a comercio',
             onClick: function () {
-                mainView.router.loadPage('reporte.html');
+                mainView.router.loadPage('reporte.html?title=Robo a comercio&id=2');
+                
             }
         },
         {
             text: 'Robo de auto',
             onClick: function () {
-                mainView.router.loadPage('reporte.html');
+                mainView.router.loadPage('reporte.html?title=Robo de auto&id=3');
             }
         },
     ];
     myApp.actions(buttons);
 } 
+function abuso_autoridad(){
+    mainView.router.loadPage('reporte.html?title=Abuso de autoridad&id=4');
+}
+function incendio(){
+    mainView.router.loadPage('reporte.html?title=Incendio&id=5');
+}
+function violencia_mujeres(){
+    var buttons = [
+        {
+            text: 'Violencia fisica mujeres',
+            onClick: function () {
+                mainView.router.loadPage('reporte.html?title=Violencia fisica mujeres&id=6');
+                }
+        },
+        {
+            text: 'Violencia Psicologica mujeres',
+            onClick: function () {
+                mainView.router.loadPage('reporte.html?title=Violencia Psicologica mujeres&id=7');
+                
+            }
+        },
+    ];
+    myApp.actions(buttons);
+}
+function accidente(){
+    mainView.router.loadPage('reporte.html?title=Accidente veicular&id=8');
+}
+function emergencia(){
+    mainView.router.loadPage('reporte.html?title=Emergencia medica&id=9');
+}
+//funciones de captura de archivos
 function audio(){
     navigator.device.capture.captureAudio(captureSuccessaudio, captureErroraudio, {limit:1});
 }
@@ -516,7 +558,10 @@ var captureSuccessaudio = function(mediaFiles) {
     for (i = 0, len = mediaFiles.length; i < len; i += 1) {
         path = mediaFiles[i].fullPath;
         console.log(mediaFiles[i].size);
+        mimeType=mediaFiles[i].type;
     }
+    mimeType_xa=mimeType;
+    path_audio=path;
 };
 // captura de audio con error
 var captureErroraudio = function(error) {
@@ -529,8 +574,10 @@ var captureSuccessfoto = function(mediaFiles) {
     for (i = 0, len = mediaFiles.length; i < len; i += 1) {
         path = mediaFiles[i].fullPath;
         console.log(mediaFiles[i].size);
+    mimeType=mediaFiles[i].type;
     }
-    sendfoto(path);
+    mimeType_xf=mimeType;
+   path_foto=path ;
 };
 // captura de foto con error
 var captureErrorfoto = function(error) {
@@ -543,8 +590,10 @@ var captureSuccessvideo = function(mediaFiles) {
     for (i = 0, len = mediaFiles.length; i < len; i += 1) {
         path = mediaFiles[i].fullPath;
         console.log(mediaFiles[i].size);
+    mimeType=mediaFiles[i].type;
     }
-    
+    mimeType_xv=mimeType;
+path_video=path;
 };
 
 // captura de video con error
@@ -554,7 +603,6 @@ var captureErrorvideo = function(error) {
 };
 //obtencion de las coordenadas exitosa
 function onSuccessC(position) {
-    myApp.alert(position.coords.latitude);
     latitud=position.coords.latitude;
     longitude=position.coords.longitude;
     //$$.post("http://quody.co/sms.php",{To:'6672244900',Body:'https://www.google.com.co/maps/place/'+latitud+','+longitude},function(vd){
@@ -587,33 +635,38 @@ function callNumber(number){
 
 //envio del reporte
 function sendserver(){
+    myApp.showPreloader('Enviando registro');
     if(id_contacto=="" || codigo_confirmacion==""){
         myApp.alert("campos vacios");
     }
-    if(latitud=="" || Longitud==""){
+    if(latitud=="" || longitude==""){
         myApp.alert("campos vacios de gps");
     }
     $$.ajax({
         url:"https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx",
         method: "POST",
-        data: {op:'ri',IdContacto:id_contacto,CodigoConfirmacion:codigo_confirmacion,IdIncidente:1,Latitud:latitud,Longitud:longitude},
+        data: {op:'ri',IdContacto:id_contacto,CodigoConfirmacion:codigo_confirmacion,IdIncidente:id_reporte,Latitud:latitud,Longitud:longitude},
             success: function(result){
                 myApp.hidePreloader();
                 var json = JSON.parse(result);
-                if(json.OcurrioError==0){   
-                    db.transaction(
-                    function(tx) {              
-                        tx.executeSql('UPDATE acceso SET verificado=?',[1]);
-                    }); 
-                        mainView.router.loadPage('iniciar.html');
+                if(json.OcurrioError==0){
+                        folio=json.FolioIncidente;
+                        if(path_audio!=""){
+                            sendfiles(path_audio,folio,mimeType_xa);
+                        }
+                        if(path_foto!=""){
+                            sendfiles(path_foto,folio,mimeType_xf);
+                        }
+                        if(path_video!=""){
+                            sendfiles(path_video,folio,mimeType_xv);
+                        }
+                        myApp.alert("enviado correctamente", 'enviado');
                             }else{
                                 myApp.alert(json.MensajeError, 'Error');
                             }
-                            console.log("respuesta confirmacion "+result);
                         }, 
                         error: function(result){ 
                             myApp.alert('Ocurrio un error al intentar la verificacion', 'Error');
-                            myApp.hidePreloader();
                         }
     });
     
@@ -634,14 +687,17 @@ function fail(error) {
     console.log("upload error target " + error.target);
 }
 //enviar los archivos
-function sendfoto(fileURL){
-    var uri = encodeURI("http://clicsinaloa.gob.mx/clicmazatlan/movil/subir.php");
- 
+function sendfiles(fileURL,folio,mime){
+    var uri = encodeURI("https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx");
+ console.log(fileURL);
 var options = new FileUploadOptions();
-options.fileKey="file";
+options.fileKey="archivos";
 options.fileName=fileURL.substr(fileURL.lastIndexOf('/')+1);
-options.mimeType="image/jpeg";
- 
+options.mimeType=mime;
+var params = new Object();
+    params.FolioIncidente = folio ;
+    params.op = "sa" ;
+options.params = params;
 var headers={'headerParam':'headerValue'};
  
 options.headers = headers;
@@ -651,9 +707,9 @@ ft.onprogress = function(progressEvent) {
     $$("#xxx").attr('max',progressEvent.total);
     if (progressEvent.lengthComputable) {
         $$("#xxx").val(progressEvent.loaded);
-        loadingStatus.setPercentage(progressEvent.loaded / progressEvent.total);
+        //loadingStatus.setPercentage(progressEvent.loaded / progressEvent.total);
     } else {
-        loadingStatus.increment();
+        //loadingStatus.increment();
     }
 };
 ft.upload(fileURL, uri, win, fail, options);
