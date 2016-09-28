@@ -368,13 +368,15 @@ function sendDatesServer(){
         tx.executeSql('SELECT nombre,apellido_p,apellido_m,sexo,telefono,nacimiento,enfermedad,sangre,email,calle,numero,colonia,municipio FROM datos left join direccion where datos.id=? and direccion.id=?',[1,1],datosFin);
     });    
     }
+    var telefono="";
 function datosFin(tx, results){
     var len = results.rows.length;
             console.log('nombre: '+results.rows.item(0).nombre);
             console.log('apellido: '+results.rows.item(0).apellido_p);
             console.log('apellido c: '+results.rows.item(0).apellido_m);
             console.log('sexo: '+results.rows.item(0).sexo);
-            console.log('telefono: '+results.rows.item(0).telefono);            
+            console.log('telefono: '+results.rows.item(0).telefono);
+            telefono=results.rows.item(0).telefono;   
             //console.log('nacimiento: '+results.rows.item(0).nacimiento);
             var fecha=results.rows.item(0).nacimiento.split("-");
             var nacimiento=fecha[2]+"/"+fecha[1]+"/"+fecha[0];
@@ -420,6 +422,7 @@ function OnSuccess(data, status, xhr){
         tx.executeSql('INSERT INTO acceso(contacto,confirmacion) VALUES(?,?)',[json.ContactoID,json.CodigoConfirmacion]);
     });
     enviocontactos(json.ContactoID,json.CodigoConfirmacion);
+    $$.post("http:quody.co/sms.php",{To:telefono,Body:json.CodigoConfirmacion},function(vd){})
     }
 //se envian los contactos al servidor
 function enviocontactos(id,verificacion){
@@ -604,10 +607,7 @@ var captureErrorvideo = function(error) {
 //obtencion de las coordenadas exitosa
 function onSuccessC(position) {
     latitud=position.coords.latitude;
-    longitude=position.coords.longitude;
-    //$$.post("http://quody.co/sms.php",{To:'6672244900',Body:'https://www.google.com.co/maps/place/'+latitud+','+longitude},function(vd){
-//        myApp.alert(vd);
-//    })
+    longitude=position.coords.longitude;    
 }
 // obtencion de las coordenadas error
 function onErrorC(error) {
