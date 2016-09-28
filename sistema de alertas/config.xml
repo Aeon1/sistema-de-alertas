@@ -73,6 +73,8 @@
   </platform>
   
   <access origin="*"/>
+  <!-- Allow images, xhrs, etc. to google.com -->
+    <access origin="https://uniformesyutilesescolares.sinaloa.gob.mx" />
   <allow-intent href="http://*/*"/>
   <allow-intent href="https://*/*"/>
   <allow-intent href="tel:*"/>

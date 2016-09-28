@@ -6,7 +6,9 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
     <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
-    <meta http-equiv="Content-Security-Policy" content="img-src 'self' data:; default-src 'self' 'unsafe-inline'; style-src 'self' https: 'unsafe-inline';"/>
+    <meta http-equiv="Content-Security-Policy" content="img-src 'self' data:; default-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';"/>
+    <!-- Allows XHRs only over HTTPS on the same domain. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:">
     <!-- Required meta tags-->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
