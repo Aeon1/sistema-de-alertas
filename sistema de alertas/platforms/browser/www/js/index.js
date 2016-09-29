@@ -110,7 +110,7 @@ function populateDB(tx) {
 
 }
 function verificado(){
-    startWatch() 
+    startWatch();
     myApp.showPreloader('Verificando estado del registro');
         db.transaction(
         function(tx) {
@@ -123,7 +123,7 @@ function verificado(){
                 id_contacto=results.rows.item(0).contacto;
                 codigo_confirmacion=results.rows.item(0).confirmacion;
                 if(results.rows.item(0).verificado==1){ 
-                    stopWatch()
+                    stopWatch();
                   mainView.router.loadPage('iniciar.html');  
                 }                        
             }else{
@@ -797,6 +797,7 @@ function sendSMS() {
     });        	 
     textmsg+=" https://www.google.com.co/maps/place/"+latitud+","+longitude;
         	if(sendto.indexOf(";") >=0) {
+        	   sendto=sendto.substr(0,sendto.length-1)
         		sendto = sendto.split(";");
         		for(i in sendto) {
         			sendto[i] = sendto[i].trim();
@@ -808,17 +809,17 @@ function sendSMS() {
         }
 function startWatch() {
         	if(SMS) SMS.startWatch(function(){
-        		//myApp.alert('Esperando SMS', 'watching started');
+        		myApp.alert('Esperando SMS', 'watching started');
         	}, function(){
-        		//myApp.alert('Error iniciar watching');
+        		myApp.alert('Error iniciar watching');
         	});
             initApp();
         }
         function stopWatch() {
         	if(SMS) SMS.stopWatch(function(){
-        		//myApp.alert('Se dejo de esperar SMS', 'watching stopped');
+        		myApp.alert('Se dejo de esperar SMS', 'watching stopped');
         	}, function(){
-        		//myApp.alert('failed to stop watching');
+        		myApp.alert('failed to stop watching');
         	});
         }
 function initApp() {
