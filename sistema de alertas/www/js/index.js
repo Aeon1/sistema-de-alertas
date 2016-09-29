@@ -14,9 +14,8 @@ var mimeType_xv="";
 function onDeviceReady() {   
         db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
         db.transaction(populateDB);
-        //checkConnection();
+        checkConnection();
         verificado();
-         navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
 }
 
 
@@ -34,7 +33,7 @@ var mainView = myApp.addView('.view-main', {
 });
 //saber si el gps esta funcionando
 myApp.onPageInit('index', function (page) {
-  navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
+
 });
 //comprobar nuevamente que el gps este activo
 myApp.onPageBeforeInit('reporte', function (page) {
@@ -43,9 +42,9 @@ myApp.onPageBeforeInit('reporte', function (page) {
     var path_video="";
     $$(page.navbarInnerContainer).find('#title_reporte').html(page.query.title);
     id_reporte=page.query.id;
-    if(latitud=="" || longitude==""){
-  navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
-    }
+//    if(latitud=="" || longitude==""){
+//  navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
+//    }
     
 });
 function iniciar(){
@@ -110,6 +109,7 @@ function populateDB(tx) {
 
 }
 function verificado(){
+    var watchID = navigator.geolocation.watchPosition(onSuccessC, onErrorC, { timeout: 5000 });
     myApp.showPreloader('Verificando estado del registro');
         db.transaction(
         function(tx) {
@@ -476,8 +476,7 @@ function enviocontactos(id,verificacion){
     });
 }
 //finalizar el registro envio de codigo de confirmacion
-function finalizar(verify){
-    stopWatch();
+function finalizar(verify){    
     myApp.showPreloader('validando');
     var verificacion
     if(verify==""){
@@ -497,6 +496,7 @@ function finalizar(verify){
                         data: {op:'cr',IdContacto:id_contacto,CodigoConfirmacion:verificacion},
                         success: function(result){
                             myApp.hidePreloader();
+                            stopWatch();
                             var json = JSON.parse(result);
                             if(json.OcurrioError==0){   
                                 db.transaction(
@@ -789,12 +789,12 @@ function sendSMS() {
 //            }
 //        });
 //    });
-    db.transaction(
-        function(tx) {              
-        tx.executeSql('select * from mensaje',[],function(tx, results){
-                textmsg = results.rows.item(0).mensaje;
-        });
-    });        	 
+//    db.transaction(
+//        function(tx) {              
+//        tx.executeSql('select * from mensaje',[],function(tx, results){
+//                textmsg = results.rows.item(0).mensaje;
+//        });
+//    });        	 
     textmsg+=" https://www.google.com.co/maps/place/"+latitud+","+longitude;
     myApp.alert(textmsg);
         	if(sendto.indexOf(";") >=0) {
@@ -810,7 +810,7 @@ function sendSMS() {
         }
 function startWatch() {
         	if(SMS) SMS.startWatch(function(){
-        		myApp.alert('Esperando SMS', 'watching started');
+        		//myApp.alert('Esperando SMS', 'watching started');
         	}, function(){
         		myApp.alert('Error iniciar watching');
         	});
@@ -818,7 +818,7 @@ function startWatch() {
         }
         function stopWatch() {
         	if(SMS) SMS.stopWatch(function(){
-        		myApp.alert('Se dejo de esperar SMS', 'watching stopped');
+        		//myApp.alert('Se dejo de esperar SMS', 'watching stopped');
         	}, function(){
         		myApp.alert('failed to stop watching');
         	});
