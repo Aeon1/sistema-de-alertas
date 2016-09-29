@@ -816,9 +816,9 @@ function initApp() {
             document.addEventListener('onSMSArrive', function(e){
             	var data = e.data;
             	var datos=JSON.stringify( data );
-                
+                 var jsonobject = JSON.parse(datos);
             	
-            	myApp.alert( datos.address);
+            	myApp.alert( jsonobject.address);
             	
             });
         }
