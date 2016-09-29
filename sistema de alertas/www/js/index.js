@@ -815,10 +815,10 @@ function initApp() {
         	
             document.addEventListener('onSMSArrive', function(e){
             	var data = e.data;
-            	//smsList.push( data );
+            	var datos=JSON.stringify( data );
+                
             	
-            	
-            	myApp.alert(JSON.stringify( data ) );
+            	myApp.alert( datos.address);
             	
             });
         }
