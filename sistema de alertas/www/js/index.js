@@ -14,7 +14,6 @@ var mimeType_xv="";
 function onDeviceReady() {   
         db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
         db.transaction(populateDB);
-
         //checkConnection();
         verificado();
          navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
@@ -790,13 +789,14 @@ function sendSMS() {
 //            }
 //        });
 //    });
-    //db.transaction(
-//        function(tx) {              
-//        tx.executeSql('select * from mensaje',[],function(tx, results){
-//                textmsg = results.rows.item(0).mensaje;
-//        });
-//    });        	 
+    db.transaction(
+        function(tx) {              
+        tx.executeSql('select * from mensaje',[],function(tx, results){
+                textmsg = results.rows.item(0).mensaje;
+        });
+    });        	 
     textmsg+=" https://www.google.com.co/maps/place/"+latitud+","+longitude;
+    myApp.alert(textmsg);
         	if(sendto.indexOf(";") >=0) {
         	   sendto=sendto.substr(0,sendto.length-1)
         		sendto = sendto.split(";");
@@ -804,9 +804,9 @@ function sendSMS() {
         			sendto[i] = sendto[i].trim();
         		}
         	}
-        	if(SMS){
-        	   SMS.sendSMS(sendto, textmsg, function(){myApp.alert("Se ha enviado el mensaje");}, function(str){myApp.alert(str);});
-            }
+        	//if(SMS){
+//        	   SMS.sendSMS(sendto, textmsg, function(){myApp.alert("Se ha enviado el mensaje");}, function(str){myApp.alert(str);});
+//            }
         }
 function startWatch() {
         	if(SMS) SMS.startWatch(function(){
