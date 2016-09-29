@@ -104,9 +104,12 @@ function populateDB(tx) {
     tx.executeSql('CREATE TABLE IF NOT EXISTS direccion(id INTEGER PRIMARY KEY AUTOINCREMENT,calle,numero,colonia,municipio)');
     tx.executeSql('CREATE TABLE IF NOT EXISTS contactos(id INTEGER PRIMARY KEY AUTOINCREMENT,nombre,telefono)');
     tx.executeSql('CREATE TABLE IF NOT EXISTS acceso(id INTEGER PRIMARY KEY AUTOINCREMENT,contacto,confirmacion,verificado)');
+    tx.executeSql('CREATE TABLE IF NOT EXISTS mensaje(id INTEGER PRIMARY KEY AUTOINCREMENT,mensaje)');
+    tx.executeSql('INSERT INTO mensaje(mensaje) VALUES(?)',['Tuve un incidente, estoy bien, estoy en:']);
 
 }
 function verificado(){
+    startWatch() 
     myApp.showPreloader('Verificando estado del registro');
         db.transaction(
         function(tx) {
@@ -118,7 +121,8 @@ function verificado(){
             if(len==1){
                 id_contacto=results.rows.item(0).contacto;
                 codigo_confirmacion=results.rows.item(0).confirmacion;
-                if(results.rows.item(0).verificado==1){                    
+                if(results.rows.item(0).verificado==1){ 
+                    stopWatch()
                   mainView.router.loadPage('iniciar.html');  
                 }                        
             }else{
@@ -141,15 +145,6 @@ function aviso(){
         });
     });            
 }
-//si no se ha registrado le muestra la pantalla de registro
-//function checkAviso(tx, results){
-//    var len = results.rows.length;
-//        if(len==0){
-//            myApp.popup('.popup-aviso');            
-//        }else{
-//          checkDatos();  
-//        }
-//}
 function aceptAviso(){
    db.transaction(
         function(tx) {  
@@ -172,15 +167,7 @@ function checkDatos(){
         });
     });
 }
-//si no se ha registrado le muestra la pantalla de registro
-//function showDatos(tx, results){
-//    var len = results.rows.length;
-//        if(len==0){
-//            mainView.router.loadPage('personalDates.html');            
-//        }else{
-//            checkDireccion();           
-//        }
-//}
+
 //checar si ya tiene direccion guardada
 function checkDireccion(){
     db.transaction(
@@ -413,6 +400,7 @@ function sendDatesServer(){
     }
     var telefono="";
 function datosFin(tx, results){
+    startWatch();
     var len = results.rows.length;            
             telefono=results.rows.item(0).telefono;
             var fecha=results.rows.item(0).nacimiento.split("-");
@@ -487,16 +475,20 @@ function enviocontactos(id,verificacion){
     });
 }
 //finalizar el registro envio de codigo de confirmacion
-function finalizar(){
+function finalizar(verify){
+    stopWatch();
     myApp.showPreloader('validando');
     var verificacion
+    if(verify==""){
     if($$(".codigo_confirmaciona").val()!=""){
             verificacion=$$(".codigo_confirmaciona").val();
         }
     if($$(".codigo_confirmacion").val()!=""){
             verificacion=$$(".codigo_confirmacion").val();
         }
-    
+    }else{
+        verificacion=verify;
+    }
         console.log(id_contacto+" "+verificacion);
             $$.ajax({
                         url:"https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx",
@@ -785,8 +777,24 @@ options.headers = headers;
 
 //funciones de sms
 function sendSMS() {
-        	var sendto = "6672244900";
-        	var textmsg = "joel";
+    var sendto="";
+    var textmsg="";
+    db.transaction(
+        function(tx) {              
+        tx.executeSql('select * from contactos',[],function(tx, results){
+            var len = results.rows.length;            
+            for (var i=0; i<len; i++){
+                sendto += results.rows.item(i).telefono+";";                    
+            }
+        });
+    });
+    db.transaction(
+        function(tx) {              
+        tx.executeSql('select * from mensaje',[],function(tx, results){
+                textmsg = results.rows.item(0).mensaje;
+        });
+    });        	 
+    textmsg+=" https://www.google.com.co/maps/place/"+latitud+","+longitude;
         	if(sendto.indexOf(";") >=0) {
         		sendto = sendto.split(";");
         		for(i in sendto) {
@@ -797,28 +805,27 @@ function sendSMS() {
         }
 function startWatch() {
         	if(SMS) SMS.startWatch(function(){
-        		myApp.alert('watching', 'watching started');
+        		//myApp.alert('Esperando SMS', 'watching started');
         	}, function(){
-        		myApp.alert('failed to start watching');
+        		//myApp.alert('Error iniciar watching');
         	});
             initApp();
         }
         function stopWatch() {
         	if(SMS) SMS.stopWatch(function(){
-        		myApp.alert('watching', 'watching stopped');
+        		//myApp.alert('Se dejo de esperar SMS', 'watching stopped');
         	}, function(){
-        		myApp.alert('failed to stop watching');
+        		//myApp.alert('failed to stop watching');
         	});
         }
 function initApp() {
-        	if (! SMS ) { myApp.alert( 'SMS plugin not ready' ); return; }
-        	
             document.addEventListener('onSMSArrive', function(e){
             	var data = e.data;
             	var datos=JSON.stringify( data );
                  var jsonobject = JSON.parse(datos);
-            	if(jsonobject.address=="6672244900"){
-            	   myApp.alert( jsonobject.body);
+            	if(jsonobject.address=="5549998687"){
+            	   finalizar(jsonobject.body);
+            	   //myApp.alert( jsonobject.body);
             	}
             	
             	
