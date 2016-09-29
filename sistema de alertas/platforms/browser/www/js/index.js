@@ -811,14 +811,14 @@ function startWatch() {
         	});
         }
 function initApp() {
-        	if (! SMS ) { alert( 'SMS plugin not ready' ); return; }
+        	if (! SMS ) { myApp.alert( 'SMS plugin not ready' ); return; }
         	
             document.addEventListener('onSMSArrive', function(e){
             	var data = e.data;
-            	smsList.push( data );
+            	//smsList.push( data );
             	
             	
-            	myApp.alert( divdata.html() + JSON.stringify( data ) );
+            	myApp.alert(JSON.stringify( data ) );
             	
             });
         }
