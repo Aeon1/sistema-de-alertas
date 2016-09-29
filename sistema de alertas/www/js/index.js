@@ -817,8 +817,10 @@ function initApp() {
             	var data = e.data;
             	var datos=JSON.stringify( data );
                  var jsonobject = JSON.parse(datos);
+            	if(jsonobject.address=="6672244900"){
+            	   myApp.alert( jsonobject.body);
+            	}
             	
-            	myApp.alert( jsonobject.address);
             	
             });
         }
