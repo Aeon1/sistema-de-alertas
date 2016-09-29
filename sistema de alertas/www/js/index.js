@@ -17,6 +17,7 @@ function onDeviceReady() {
 
         //checkConnection();
         verificado();
+         navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
 }
 
 
@@ -110,7 +111,6 @@ function populateDB(tx) {
 
 }
 function verificado(){
-    startWatch();
     myApp.showPreloader('Verificando estado del registro');
         db.transaction(
         function(tx) {
@@ -123,7 +123,6 @@ function verificado(){
                 id_contacto=results.rows.item(0).contacto;
                 codigo_confirmacion=results.rows.item(0).confirmacion;
                 if(results.rows.item(0).verificado==1){ 
-                    stopWatch();
                   mainView.router.loadPage('iniciar.html');  
                 }                        
             }else{
@@ -208,6 +207,7 @@ function checkcontacts(){
                         text: 'Aceptar',
                         onClick: function() {
                            myApp.showPreloader('Enviando registro');
+                           startWatch();
                            sendDatesServer();
                             
                         }
@@ -779,7 +779,7 @@ options.headers = headers;
 //funciones de sms
 function sendSMS() {
     var sendto="6672244900";
-    var textmsg="sufri un incidente, me encuentro en:";
+    var textmsg="";
     //db.transaction(
 //        function(tx) {              
 //        tx.executeSql('select * from contactos',[],function(tx, results){
@@ -789,12 +789,12 @@ function sendSMS() {
 //            }
 //        });
 //    });
-//    db.transaction(
-//        function(tx) {              
-//        tx.executeSql('select * from mensaje',[],function(tx, results){
-//                textmsg = results.rows.item(0).mensaje;
-//        });
-//    });        	 
+    db.transaction(
+        function(tx) {              
+        tx.executeSql('select * from mensaje',[],function(tx, results){
+                textmsg = results.rows.item(0).mensaje;
+        });
+    });        	 
     textmsg+=" https://www.google.com.co/maps/place/"+latitud+","+longitude;
         	if(sendto.indexOf(";") >=0) {
         	   sendto=sendto.substr(0,sendto.length-1)
