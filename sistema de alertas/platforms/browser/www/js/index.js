@@ -802,7 +802,9 @@ function sendSMS() {
         			sendto[i] = sendto[i].trim();
         		}
         	}
-        	if(SMS) SMS.sendSMS(sendto, textmsg, function(){}, function(str){myApp.alert(str);});
+        	if(SMS){
+        	   SMS.sendSMS(sendto, textmsg, function(){myApp.alert("Se ha enviado el mensaje "+sendto);}, function(str){myApp.alert(str);});
+            }
         }
 function startWatch() {
         	if(SMS) SMS.startWatch(function(){
