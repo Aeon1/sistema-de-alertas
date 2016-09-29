@@ -779,7 +779,7 @@ options.headers = headers;
 //funciones de sms
 function sendSMS() {
     var sendto="6672244900";
-    var textmsg="";
+    var textmsg="Sufri un incidente, me encuentro en:";
     //db.transaction(
 //        function(tx) {              
 //        tx.executeSql('select * from contactos',[],function(tx, results){
@@ -789,12 +789,12 @@ function sendSMS() {
 //            }
 //        });
 //    });
-    db.transaction(
-        function(tx) {              
-        tx.executeSql('select * from mensaje',[],function(tx, results){
-                textmsg = results.rows.item(0).mensaje;
-        });
-    });        	 
+    //db.transaction(
+//        function(tx) {              
+//        tx.executeSql('select * from mensaje',[],function(tx, results){
+//                textmsg = results.rows.item(0).mensaje;
+//        });
+//    });        	 
     textmsg+=" https://www.google.com.co/maps/place/"+latitud+","+longitude;
         	if(sendto.indexOf(";") >=0) {
         	   sendto=sendto.substr(0,sendto.length-1)
