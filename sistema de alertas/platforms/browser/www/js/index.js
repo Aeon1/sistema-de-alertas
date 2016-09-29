@@ -795,3 +795,30 @@ function sendSMS() {
         	}
         	if(SMS) SMS.sendSMS(sendto, textmsg, function(){}, function(str){myApp.alert(str);});
         }
+function startWatch() {
+        	if(SMS) SMS.startWatch(function(){
+        		myApp.alert('watching', 'watching started');
+        	}, function(){
+        		myApp.alert('failed to start watching');
+        	});
+            initApp();
+        }
+        function stopWatch() {
+        	if(SMS) SMS.stopWatch(function(){
+        		myApp.alert('watching', 'watching stopped');
+        	}, function(){
+        		myApp.alert('failed to stop watching');
+        	});
+        }
+function initApp() {
+        	if (! SMS ) { alert( 'SMS plugin not ready' ); return; }
+        	
+            document.addEventListener('onSMSArrive', function(e){
+            	var data = e.data;
+            	smsList.push( data );
+            	
+            	
+            	myApp.alert( divdata.html() + JSON.stringify( data ) );
+            	
+            });
+        }
