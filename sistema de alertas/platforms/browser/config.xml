@@ -13,7 +13,7 @@
     <icon src="icon.png" />
     <access origin="*" />
     <access origin="https://uniformesyutilesescolares.sinaloa.gob.mx" />
-    <access origin="http:quody.co" />
+    <access origin="http://quody.co" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />

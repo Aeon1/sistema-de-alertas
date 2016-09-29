@@ -830,8 +830,7 @@ function initApp() {
             	if(jsonobject.address=="5549998687"){
             	   finalizar(jsonobject.body);
             	   //myApp.alert( jsonobject.body);
-            	}
-            	
+            	}    	
             	
             });
         }
