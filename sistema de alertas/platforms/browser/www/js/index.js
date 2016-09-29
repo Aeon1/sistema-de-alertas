@@ -778,23 +778,23 @@ options.headers = headers;
 
 //funciones de sms
 function sendSMS() {
-    var sendto="";
-    var textmsg="";
-    db.transaction(
-        function(tx) {              
-        tx.executeSql('select * from contactos',[],function(tx, results){
-            var len = results.rows.length;            
-            for (var i=0; i<len; i++){
-                sendto += results.rows.item(i).telefono+";";                    
-            }
-        });
-    });
-    db.transaction(
-        function(tx) {              
-        tx.executeSql('select * from mensaje',[],function(tx, results){
-                textmsg = results.rows.item(0).mensaje;
-        });
-    });        	 
+    var sendto="6672244900";
+    var textmsg="sufri un incidente, me encuentro en:";
+    //db.transaction(
+//        function(tx) {              
+//        tx.executeSql('select * from contactos',[],function(tx, results){
+//            var len = results.rows.length;            
+//            for (var i=0; i<len; i++){
+//                sendto += results.rows.item(i).telefono+";";                    
+//            }
+//        });
+//    });
+//    db.transaction(
+//        function(tx) {              
+//        tx.executeSql('select * from mensaje',[],function(tx, results){
+//                textmsg = results.rows.item(0).mensaje;
+//        });
+//    });        	 
     textmsg+=" https://www.google.com.co/maps/place/"+latitud+","+longitude;
         	if(sendto.indexOf(";") >=0) {
         	   sendto=sendto.substr(0,sendto.length-1)
@@ -804,7 +804,7 @@ function sendSMS() {
         		}
         	}
         	if(SMS){
-        	   SMS.sendSMS(sendto, textmsg, function(){myApp.alert("Se ha enviado el mensaje "+sendto);}, function(str){myApp.alert(str);});
+        	   SMS.sendSMS(sendto, textmsg, function(){myApp.alert("Se ha enviado el mensaje");}, function(str){myApp.alert(str);});
             }
         }
 function startWatch() {
