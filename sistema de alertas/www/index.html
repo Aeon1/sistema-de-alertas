@@ -27,6 +27,8 @@
     <link rel="stylesheet" href="css/framework7.ios.min.css">
     <!-- Path to Framework7 iOS related color styles -->
     <link rel="stylesheet" href="css/framework7.ios.colors.min.css">
+    <!-- panel 3d -->
+    <link rel="stylesheet" href="css/framework7.3dpanels.min.css">
     <!-- Path to your custom app styles-->
     <link rel="stylesheet" href="css/my-app.css">
     <title>Hello World</title>
@@ -38,8 +40,29 @@
     <div class="panel-overlay"></div>
     <!-- Left panel with reveal effect-->
     <div class="panel panel-left panel-reveal">
-      <div class="content-block">
-        <p>Configuraciones</p>
+      <div class="view">
+        <div class="pages">
+          <div class="page">
+            <div class="page-content">
+            <h3 class="text-center">Configuraci&oacute;n</h3>
+              <div class="list-block">
+                <ul>
+                  <li>
+                    <a href="#" class="item-content item-link" onclick="activar_gps()">
+                      <div class="item-inner">
+                        <div class="item-title">Activar GPS</div>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="content-block">
+                <img src="img/logo.png" style="margin: auto;display: block;" />
+                <p>911 reporte m&oacute;vil</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <!-- Views -->
@@ -50,7 +73,7 @@
         <div class="navbar">
           <div class="navbar-inner">
             <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
-            <div class="center sliding">911 Alerta Movil</div>
+            <div class="center sliding">911 reporte m&oacute;vil</div>
             <div class="right">
               <!-- 
                 Right link contains only icon - additional "icon-only" class
@@ -149,6 +172,8 @@
     <script type="text/javascript" src="cordova.js"></script>
     <!-- Path to Framework7 Library JS-->
     <script type="text/javascript" src="js/framework7.min.js"></script>
+    <!-- panel 3d -->
+    <script src="js/framework7.3dpanels.min.js"></script>
     <!-- Path to your app js-->
     <script type="text/javascript" src="js/index.js"></script>
   </body>

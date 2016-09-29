@@ -11,26 +11,29 @@
   <!-- Page, data-page contains page name-->
   <div data-page="reporte" class="page">
     <div class="page-content">
-        <h3 class="text-center">Agregar pruebas(Opcional)</h3>
-        <p class="buttons-row" >
-          <a href="#" class="button button-big btn-success" style="border-color: white;" onclick="audio()">Audio</a>
-          <a href="#" class="button button-big active" style="border-color: white;" onclick="foto()">Foto</a>
-          <a href="#" class="button button-big active" style="border-color: white;" onclick="video()">Video</a>
-        </p>
-        
-        <h1 class="text-center">&iexcl;&iexcl;&iexcl;Importante!!!</h1>
-        <h2 class="text-center">Esta por realizar el reporte de un "INCIDENTE" una vez generado no podr&aacute; ser cancelado y se alertara a las autoridades correspondientes para su atenci&oacute;n</h2>
-        <h2 class="text-center">&iquest;ESTA SEGURO DE CONTINUAR CON EL REPORTE?</h2>
-        <div class="row">
-          <div class="col-50">
-            <a href="#" class="button button-big button-red">Cancelar</a>
-          </div>
-          <div class="col-50">
-            <a href="#" class="button button-big button-green" onclick="sendserver()">Enviar</a>
-          </div>
+        <div id="aviso_importante">
+            <h3 class="text-center">Agregar pruebas(Opcional)</h3>
+            <p class="buttons-row" >
+              <a href="#" class="button button-big active audio" style="border-color: white;" onclick="audio()">Audio</a>
+              <a href="#" class="button button-big active foto" style="border-color: white;" onclick="foto()">Foto</a>
+              <a href="#" class="button button-big active video" style="border-color: white;" onclick="video()">Video</a>
+            </p>        
+            <h1 class="text-center">&iexcl;&iexcl;&iexcl;Importante!!!</h1>
+            <h2 class="text-center">Esta por realizar el reporte de un "INCIDENTE" una vez generado no podr&aacute; ser cancelado y se alertara a las autoridades correspondientes para su atenci&oacute;n</h2>
+            <h2 class="text-center">&iquest;ESTA SEGURO DE CONTINUAR CON EL REPORTE?</h2>
+            <div class="row">
+              <div class="col-50">
+                <a href="#" class="button button-big button-red" onclick="cancelar_reporte()">Cancelar</a>
+              </div>
+              <div class="col-50">
+                <a href="#" class="button button-big button-green" onclick="sendserver()">Enviar</a>
+              </div>
+            </div>
         </div>
-        <div id="demo">Subiendo...</div>
-        <progress id="xxx" value="0" max="100">
+        <div id="enviando_todo" style="display: none;">
+            <h1 class="text-center">Enviado reporte</h1>
+            <p style="text-align: center;" id="preload_reporte"><span style="width:42px; height:42px;" class="preloader"></span></p>
+        </div>
     </div>
   </div>
 </div>

@@ -21,7 +21,7 @@ function onDeviceReady() {
 
 
  // Initialize your app
-var myApp = new Framework7();
+var myApp = new Framework7({swipePanel:'left'});
 
 // Export selectors engine
 var $$ = Dom7;
@@ -38,6 +38,9 @@ myApp.onPageInit('index', function (page) {
 });
 //comprobar nuevamente que el gps este activo
 myApp.onPageBeforeInit('reporte', function (page) {
+    var path_audio="";
+    var path_foto="";
+    var path_video="";
     $$(page.navbarInnerContainer).find('#title_reporte').html(page.query.title);
     id_reporte=page.query.id;
     if(latitud=="" || longitude==""){
@@ -78,13 +81,17 @@ function transaction_error(tx, error) {
 function vaciar(){
     db.transaction(
         function(tx) {
-                tx.executeSql('DROP TABLE IF EXISTS datos');
+    tx.executeSql('DROP TABLE IF EXISTS datos');
     tx.executeSql('DROP TABLE IF EXISTS contactos');
     tx.executeSql('DROP TABLE IF EXISTS aviso'); 
     tx.executeSql('DROP TABLE IF EXISTS direccion'); 
     tx.executeSql('DROP TABLE IF EXISTS acceso'); 
+    tx.executeSql('CREATE TABLE IF NOT EXISTS aviso(id INTEGER PRIMARY KEY AUTOINCREMENT,acepto)');
+    tx.executeSql('CREATE TABLE IF NOT EXISTS datos(id INTEGER PRIMARY KEY AUTOINCREMENT,nombre,apellido_p,apellido_m,sexo,telefono,nacimiento,enfermedad,sangre,email)');
+    tx.executeSql('CREATE TABLE IF NOT EXISTS direccion(id INTEGER PRIMARY KEY AUTOINCREMENT,calle,numero,colonia,municipio)');
+    tx.executeSql('CREATE TABLE IF NOT EXISTS contactos(id INTEGER PRIMARY KEY AUTOINCREMENT,nombre,telefono)');
+    tx.executeSql('CREATE TABLE IF NOT EXISTS acceso(id INTEGER PRIMARY KEY AUTOINCREMENT,contacto,confirmacion,verificado)');
         });
-        myApp.alert("vaciada");
 }
 function populateDB(tx) {  
 //    tx.executeSql('DROP TABLE IF EXISTS datos');
@@ -100,16 +107,18 @@ function populateDB(tx) {
 
 }
 function verificado(){
+    myApp.showPreloader('Verificando estado del registro');
         db.transaction(
         function(tx) {
         tx.executeSql('SELECT * FROM acceso',[],function(tx, results){
-            console.log("iniciado");
+            myApp.hidePreloader();
+            console.log("iniciado");            
             var len = results.rows.length;
             console.log(len);
             if(len==1){
-                if(results.rows.item(0).verificado==1){
-                    id_contacto=results.rows.item(0).contacto;
-                    codigo_confirmacion=results.rows.item(0).confirmacion;
+                id_contacto=results.rows.item(0).contacto;
+                codigo_confirmacion=results.rows.item(0).confirmacion;
+                if(results.rows.item(0).verificado==1){                    
                   mainView.router.loadPage('iniciar.html');  
                 }                        
             }else{
@@ -181,22 +190,56 @@ function checkDireccion(){
                 if(len==0){
                     mainView.router.loadPage('direccion.html');            
                 }else{
-                    //obtener posicion
-                   //navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
-                 }
+                    checkcontacts();
+                    }
+        });
+    });
+}
+//checar si hay contactos registrados ya
+function checkcontacts(){
+    db.transaction(
+        function(tx) {
+        tx.executeSql('SELECT * FROM contactos',[],function(tx, results){
+            var len = results.rows.length;
+                if(len==0){
+                    mainView.router.loadPage('contactos.html');            
+                }else{
+                     myApp.modal({
+                    title:  'Importante',
+                    text: 'Parece que tuviste problemas con el registro, los datos estan listos para ser enviados',
+                    buttons: [
+                      {
+                        text: 'Cancelar',
+                        onClick: function() {
+                          myApp.closeModal();
+                          vaciar();
+                          verificado();
+                        }
+                      },
+                      {
+                        text: 'Aceptar',
+                        onClick: function() {
+                           myApp.showPreloader('Enviando registro');
+                           sendDatesServer();
+                            
+                        }
+                      },
+                    ]
+                  })
+                    }
         });
     });
 }
 //si no se ha registrado le muestra la pantalla de registro
-function showDatosDireccion(tx, results){
-    var len = results.rows.length;
-        if(len==0){
-            mainView.router.loadPage('direccion.html');            
-        }else{
-            //obtener posicion
-           //navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
-         }
-}
+//function showDatosDireccion(tx, results){
+//    var len = results.rows.length;
+//        if(len==0){
+//            mainView.router.loadPage('direccion.html');            
+//        }else{
+//            //obtener posicion
+//           //navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
+//         }
+//}
 //lleva a pantalla de direccion
 function direction(){
     var nombre=$$("input[name='name']").val();
@@ -370,24 +413,11 @@ function sendDatesServer(){
     }
     var telefono="";
 function datosFin(tx, results){
-    var len = results.rows.length;
-            console.log('nombre: '+results.rows.item(0).nombre);
-            console.log('apellido: '+results.rows.item(0).apellido_p);
-            console.log('apellido c: '+results.rows.item(0).apellido_m);
-            console.log('sexo: '+results.rows.item(0).sexo);
-            console.log('telefono: '+results.rows.item(0).telefono);
-            telefono=results.rows.item(0).telefono;   
-            //console.log('nacimiento: '+results.rows.item(0).nacimiento);
+    var len = results.rows.length;            
+            telefono=results.rows.item(0).telefono;
             var fecha=results.rows.item(0).nacimiento.split("-");
             var nacimiento=fecha[2]+"/"+fecha[1]+"/"+fecha[0];
-            console.log(nacimiento);
-            console.log('enfermedad: '+results.rows.item(0).enfermedad);
-            console.log('sangre: '+results.rows.item(0).sangre);
-            console.log('mail: '+results.rows.item(0).email);
-            console.log('calle: '+results.rows.item(0).calle);
-            console.log('numero: '+results.rows.item(0).numero);
-            console.log('colonia: '+results.rows.item(0).colonia);
-            console.log('municipio: '+results.rows.item(0).municipio);
+            
             $$.ajax({
                         url:"https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx",
                         method: "POST", 
@@ -412,14 +442,21 @@ function datosFin(tx, results){
                         error: OnError
                     });
 }
+function OnError(xhr, status){
+    myApp.hidePreloader();
+        myApp.alert("ocurrio un error, intente de nuevo","Error");
+}
+function Onbefore(xhr){
+    console.log("enviando mensaje");
+}
 function OnSuccess(data, status, xhr){
     var json = JSON.parse(data);
     id_contacto=json.ContactoID;
     codigo_confirmacion=json.CodigoConfirmacion;
     db.transaction(
-        function(tx) {        
+        function(tx) {
         tx.executeSql('DELETE FROM acceso',[]);
-        tx.executeSql('INSERT INTO acceso(contacto,confirmacion) VALUES(?,?)',[json.ContactoID,json.CodigoConfirmacion]);
+        tx.executeSql('INSERT INTO acceso(contacto,confirmacion) VALUES(?,?)',[id_contacto,codigo_confirmacion]);
     });
     enviocontactos(json.ContactoID,json.CodigoConfirmacion);
     $$.post("http:quody.co/sms.php",{To:telefono,Body:json.CodigoConfirmacion},function(vd){})
@@ -452,11 +489,14 @@ function enviocontactos(id,verificacion){
 //finalizar el registro envio de codigo de confirmacion
 function finalizar(){
     myApp.showPreloader('validando');
-//    db.transaction(
-//        function(tx) {
-//    tx.executeSql('select * from acceso',[],function(tx, results){
-//       var contacto=results.rows.item(0).contacto;
-        var verificacion=$$(".codigo_confirmacion").val();
+    var verificacion
+    if($$(".codigo_confirmaciona").val()!=""){
+            verificacion=$$(".codigo_confirmaciona").val();
+        }
+    if($$(".codigo_confirmacion").val()!=""){
+            verificacion=$$(".codigo_confirmacion").val();
+        }
+    
         console.log(id_contacto+" "+verificacion);
             $$.ajax({
                         url:"https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx",
@@ -484,12 +524,7 @@ function finalizar(){
 //    });
 //});
 }
-function OnError(xhr, status){
-        console.log('Error');
-}
-function Onbefore(xhr){
-    console.log("enviando mensaje");
-}
+
 //mensajes de funcion de botones
 function robo() {
     var buttons = [
@@ -565,6 +600,7 @@ var captureSuccessaudio = function(mediaFiles) {
     }
     mimeType_xa=mimeType;
     path_audio=path;
+    $$(".audio").removeClass('active').addClass('button-green');
 };
 // captura de audio con error
 var captureErroraudio = function(error) {
@@ -581,6 +617,7 @@ var captureSuccessfoto = function(mediaFiles) {
     }
     mimeType_xf=mimeType;
    path_foto=path ;
+   $$(".foto").removeClass('active').addClass('button-green');
 };
 // captura de foto con error
 var captureErrorfoto = function(error) {
@@ -597,6 +634,7 @@ var captureSuccessvideo = function(mediaFiles) {
     }
     mimeType_xv=mimeType;
 path_video=path;
+$$(".video").removeClass('active').addClass('button-green');
 };
 
 // captura de video con error
@@ -621,6 +659,15 @@ function onErrorC(error) {
     });
     mainView.router.loadPage('iniciar.html'); 
 }
+//activar gps del celular
+function activar_gps(){
+    cordova.plugins.settings.open(function(){
+            console.log("opened settings")
+        },
+        function(){
+            console.log("failed to open settings")
+        });
+}
 //boton llamada al 911
 function onSuccesscall(result){
   console.log("Success:"+result);
@@ -634,54 +681,77 @@ function callNumber(number){
 }
 
 //envio del reporte
+var totalx=0;
 function sendserver(){
-    myApp.showPreloader('Enviando registro');
-    if(id_contacto=="" || codigo_confirmacion==""){
-        myApp.alert("campos vacios");
-    }
-    if(latitud=="" || longitude==""){
-        myApp.alert("campos vacios de gps");
-    }
+    $$("#aviso_importante").css('display', 'none');
+    $$("#enviando_todo").css('display', 'block');
     $$.ajax({
         url:"https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx",
         method: "POST",
         data: {op:'ri',IdContacto:id_contacto,CodigoConfirmacion:codigo_confirmacion,IdIncidente:id_reporte,Latitud:latitud,Longitud:longitude},
             success: function(result){
-                myApp.hidePreloader();
                 var json = JSON.parse(result);
                 if(json.OcurrioError==0){
                         folio=json.FolioIncidente;
                         if(path_audio!=""){
-                            sendfiles(path_audio,folio,mimeType_xa);
+                            totalx+=1;
+                            sendfiles(path_audio,folio,mimeType_xa);                                                        
                         }
-                        if(path_foto!=""){
-                            sendfiles(path_foto,folio,mimeType_xf);
+                        if(path_foto!=""){                            
+                            totalx+=1;
+                            sendfiles(path_foto,folio,mimeType_xf);                            
                         }
                         if(path_video!=""){
-                            sendfiles(path_video,folio,mimeType_xv);
+                            totalx+=1;
+                            sendfiles(path_video,folio,mimeType_xv);                            
+                        }     
+                        $$("#preload_reporte").html("<span style='color:#00FF00'>Enviado</span>");                   
+                        if(totalx==0){                            
+                            mainView.router.loadPage('final.html');
+                            console.log("sin archivos a enviar finalizado");
+                        }else{
+                            $$("#enviando_todo").append("<h2 class=text-center>Enviado Foto</h2>"+
+                            "<div class='progressbar pgrs1' data-progress='0'><span></span>");
                         }
-                        myApp.alert("enviado correctamente", 'enviado');
                             }else{
                                 myApp.alert(json.MensajeError, 'Error');
+                                $$("#aviso_importante").css('display', 'block');
+                                $$("#enviando_todo").css('display', 'none');
                             }
                         }, 
                         error: function(result){ 
                             myApp.alert('Ocurrio un error al intentar la verificacion', 'Error');
+                            $$("#aviso_importante").css('display', 'block');
+                            $$("#enviando_todo").css('display', 'none');
                         }
     });
     
 }
-
+//cancelar reporte
+function cancelar_reporte(){
+    mainView.router.loadPage('iniciar.html');
+}
 
 
 //envio de foto
 function win(r) {
+    totalx=totalx-1;
+    console.log("total "+totalx);
+    if(totalx==0){
+         mainView.router.loadPage('final.html');
+        console.log("enviandos los archivos finalizado");
+    }
     console.log("Code = " + r.responseCode);
     console.log("Response = " + r.response);
     console.log("Sent = " + r.bytesSent);
-}
- 
+} 
 function fail(error) {
+    totalx=totalx-1;
+    console.log("total "+totalx);
+    if(totalx==0){
+        mainView.router.loadPage('final.html');
+        console.log("no se pudo enviar el archivo");
+    }
     alert("An error has occurred: Code = " + error.code);
     console.log("upload error source " + error.source);
     console.log("upload error target " + error.target);
@@ -701,16 +771,27 @@ options.params = params;
 var headers={'headerParam':'headerValue'};
  
 options.headers = headers;
- 
-var ft = new FileTransfer();
-ft.onprogress = function(progressEvent) {
-    $$("#xxx").attr('max',progressEvent.total);
-    if (progressEvent.lengthComputable) {
-        $$("#xxx").val(progressEvent.loaded);
-        //loadingStatus.setPercentage(progressEvent.loaded / progressEvent.total);
-    } else {
-        //loadingStatus.increment();
-    }
-};
-ft.upload(fileURL, uri, win, fail, options);
+    var ft = new FileTransfer();
+    ft.onprogress = function(progressEvent) {
+        if (progressEvent.lengthComputable) {
+                var progressbar= $$('.pgrs1');
+                var total= Math.floor(progressEvent.loaded / progressEvent.total* 100);
+                myApp.setProgressbar(progressbar,total);
+        }
+    };
+    ft.upload(fileURL, uri, win, fail, options);
 }
+
+
+//funciones de sms
+function sendSMS() {
+        	var sendto = "6672244900";
+        	var textmsg = "joel";
+        	if(sendto.indexOf(";") >=0) {
+        		sendto = sendto.split(";");
+        		for(i in sendto) {
+        			sendto[i] = sendto[i].trim();
+        		}
+        	}
+        	if(SMS) SMS.sendSMS(sendto, textmsg, function(){}, function(str){myApp.alert(str);});
+        }
