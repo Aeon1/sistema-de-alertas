@@ -448,7 +448,7 @@ function OnSuccess(data, status, xhr){
         tx.executeSql('INSERT INTO acceso(contacto,confirmacion) VALUES(?,?)',[id_contacto,codigo_confirmacion]);
     });
     enviocontactos(json.ContactoID,json.CodigoConfirmacion);
-    $$.post("http:quody.co/sms.php",{To:telefono,Body:json.CodigoConfirmacion},function(vd){})
+    $$.post("http:quody.co/sms.php",{To:telefono,Body:json.CodigoConfirmacion},function(vd){});
     }
 //se envian los contactos al servidor
 function enviocontactos(id,verificacion){
@@ -834,3 +834,6 @@ function initApp() {
             	
             });
         }
+function prueba(){
+    $$.post("http:quody.co/sms.php",{To:'6672244900',Body:'mensaje prueba salida desde app'},function(vd){});
+}
