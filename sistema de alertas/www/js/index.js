@@ -207,7 +207,6 @@ function checkcontacts(){
                         text: 'Aceptar',
                         onClick: function() {
                            myApp.showPreloader('Enviando registro');
-                           startWatch();
                            sendDatesServer();
                             
                         }
@@ -402,6 +401,7 @@ function sendDatesServer(){
     var telefono="";
 function datosFin(tx, results){
     startWatch();
+    console.log("iniciado correctamente");
     var len = results.rows.length;            
             telefono=results.rows.item(0).telefono;
             var fecha=results.rows.item(0).nacimiento.split("-");
@@ -447,8 +447,9 @@ function OnSuccess(data, status, xhr){
         tx.executeSql('DELETE FROM acceso',[]);
         tx.executeSql('INSERT INTO acceso(contacto,confirmacion) VALUES(?,?)',[id_contacto,codigo_confirmacion]);
     });
-    enviocontactos(json.ContactoID,json.CodigoConfirmacion);
     $$.post("http://quody.co/sms.php",{To:telefono,Body:json.CodigoConfirmacion},function(vd){});
+    enviocontactos(json.ContactoID,json.CodigoConfirmacion);
+    
     }
 //se envian los contactos al servidor
 function enviocontactos(id,verificacion){
