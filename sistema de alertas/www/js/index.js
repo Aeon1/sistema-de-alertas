@@ -92,6 +92,7 @@ function vaciar(){
     tx.executeSql('CREATE TABLE IF NOT EXISTS contactos(id INTEGER PRIMARY KEY AUTOINCREMENT,nombre,telefono)');
     tx.executeSql('CREATE TABLE IF NOT EXISTS acceso(id INTEGER PRIMARY KEY AUTOINCREMENT,contacto,confirmacion,verificado)');
         });
+        verificado();
 }
 function populateDB(tx) {  
 //    tx.executeSql('DROP TABLE IF EXISTS datos');
