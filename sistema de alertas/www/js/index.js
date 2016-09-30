@@ -477,14 +477,14 @@ function enviocontactos(id,verificacion){
 }
 //finalizar el registro envio de codigo de confirmacion
 function finalizar(verify){    
-    myApp.showPreloader('validando');
+    myApp.showPreloader('validando');    
     var verificacion
-    if(verify==""){
-    if($$(".codigo_confirmaciona").val()!=""){
-            verificacion=$$(".codigo_confirmaciona").val();
+    if(verify=="" || verify=="undefined" || verify==null){
+    if($$("#codigo_confirmaciona").val()!=""){
+            verificacion=$$("#codigo_confirmaciona").val();
         }
-    if($$(".codigo_confirmacion").val()!=""){
-            verificacion=$$(".codigo_confirmacion").val();
+    if($$("#codigo_confirmacion").val()!=""){
+            verificacion=$$("#codigo_confirmacion").val();
         }
     }else{
         verificacion=verify;
@@ -703,7 +703,7 @@ function sendserver(){
                             mainView.router.loadPage('final.html');
                             console.log("sin archivos a enviar finalizado");
                         }else{
-                            $$("#enviando_todo").append("<h2 class=text-center>Enviado Foto</h2>"+
+                            $$("#enviando_todo").append("<h2 class=text-center>Enviando archivo(s)</h2>"+
                             "<div class='progressbar pgrs1' data-progress='0'><span></span>");
                         }
                             }else{
@@ -778,51 +778,52 @@ options.headers = headers;
 
 //funciones de sms
 function sendSMS() {
-    var sendto="6672244900";
-    var textmsg="Sufri un incidente, me encuentro en:";
-    //db.transaction(
-//        function(tx) {              
-//        tx.executeSql('select * from contactos',[],function(tx, results){
-//            var len = results.rows.length;            
-//            for (var i=0; i<len; i++){
-//                sendto += results.rows.item(i).telefono+";";                    
-//            }
-//        });
-//    });
-//    db.transaction(
-//        function(tx) {              
-//        tx.executeSql('select * from mensaje',[],function(tx, results){
-//                textmsg = results.rows.item(0).mensaje;
-//        });
-//    });        	 
-    textmsg+=" https://www.google.com.co/maps/place/"+latitud+","+longitude;
-    myApp.alert(textmsg);
-        	if(sendto.indexOf(";") >=0) {
-        	   sendto=sendto.substr(0,sendto.length-1)
-        		sendto = sendto.split(";");
-        		for(i in sendto) {
-        			sendto[i] = sendto[i].trim();
-        		}
-        	}
-        	//if(SMS){
-//        	   SMS.sendSMS(sendto, textmsg, function(){myApp.alert("Se ha enviado el mensaje");}, function(str){myApp.alert(str);});
-//            }
+    var sendto="";
+    var textmsg="";//"Sufri un incidente, me encuentro en:";
+    db.transaction(
+        function(tx) {              
+        tx.executeSql('select * from contactos',[],function(tx, results){
+            var len = results.rows.length;            
+            for (var i=0; i<len; i++){sendto += results.rows.item(i).telefono+";";}
+            db.transaction(
+                function(tx) {              
+                tx.executeSql('select * from mensaje',[],function(tx, results){
+                        textmsg=results.rows.item(0).mensaje+" https://www.google.com.co/maps/place/"+latitud+","+longitude;
+                    	if(sendto.indexOf(";") >=0) {
+                    	   sendto=sendto.substr(0,sendto.length-1)
+                    		sendto = sendto.split(";");
+                    		for(i in sendto) {
+                    			sendto[i] = sendto[i].trim();
+                    		}
+                    	}
+                        console.log(sendto+" - "+textmsg);
+                    	if(SMS){
+                    	   SMS.sendSMS(sendto, textmsg, function(){myApp.alert("Se ha enviado el mensaje");}, function(str){myApp.alert(str);});
+                        } 
+                });
+            });
+        });
+    });
+
         }
+//empezar a checar la llegada de sms
 function startWatch() {
         	if(SMS) SMS.startWatch(function(){
-        		//myApp.alert('Esperando SMS', 'watching started');
+        		myApp.alert('Esperando SMS', 'watching started');
         	}, function(){
         		myApp.alert('Error iniciar watching');
         	});
             initApp();
         }
-        function stopWatch() {
+//parar de checar que lleguen sms        
+function stopWatch() {
         	if(SMS) SMS.stopWatch(function(){
-        		//myApp.alert('Se dejo de esperar SMS', 'watching stopped');
+        		myApp.alert('Se dejo de esperar SMS', 'watching stopped');
         	}, function(){
         		myApp.alert('failed to stop watching');
         	});
         }
+//revizar el contenido de los sms
 function initApp() {
             document.addEventListener('onSMSArrive', function(e){
             	var data = e.data;
@@ -835,6 +836,3 @@ function initApp() {
             	
             });
         }
-function prueba(){
-    $$.post("http://quody.co/sms.php",{To:'6672244900',Body:'mensaje prueba salida desde app'},function(vd){});
-}
