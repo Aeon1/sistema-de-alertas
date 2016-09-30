@@ -86,7 +86,7 @@ function vaciar(){
     tx.executeSql('DROP TABLE IF EXISTS direccion'); 
     tx.executeSql('DROP TABLE IF EXISTS acceso'); 
     tx.executeSql('CREATE TABLE IF NOT EXISTS aviso(id INTEGER PRIMARY KEY AUTOINCREMENT,acepto)');
-    tx.executeSql('CREATE TABLE IF NOT EXISTS datos(id INTEGER PRIMARY KEY AUTOINCREMENT,nombre,apellido_p,apellido_m,sexo,telefono,nacimiento,enfermedad,sangre,email)');
+    tx.executeSql('CREATE TABLE IF NOT EXISTS datos(id INTEGER PRIMARY KEY AUTOINCREMENT,nombre,apellido_p,apellido_m,sexo,telefono,celular,nacimiento,enfermedad,sangre,email)');
     tx.executeSql('CREATE TABLE IF NOT EXISTS direccion(id INTEGER PRIMARY KEY AUTOINCREMENT,calle,numero,colonia,municipio)');
     tx.executeSql('CREATE TABLE IF NOT EXISTS contactos(id INTEGER PRIMARY KEY AUTOINCREMENT,nombre,telefono)');
     tx.executeSql('CREATE TABLE IF NOT EXISTS acceso(id INTEGER PRIMARY KEY AUTOINCREMENT,contacto,confirmacion,verificado)');
@@ -100,7 +100,7 @@ function populateDB(tx) {
 //    tx.executeSql('DROP TABLE IF EXISTS direccion'); 
 //    tx.executeSql('DROP TABLE IF EXISTS acceso'); 
     tx.executeSql('CREATE TABLE IF NOT EXISTS aviso(id INTEGER PRIMARY KEY AUTOINCREMENT,acepto)');
-    tx.executeSql('CREATE TABLE IF NOT EXISTS datos(id INTEGER PRIMARY KEY AUTOINCREMENT,nombre,apellido_p,apellido_m,sexo,telefono,nacimiento,enfermedad,sangre,email)');
+    tx.executeSql('CREATE TABLE IF NOT EXISTS datos(id INTEGER PRIMARY KEY AUTOINCREMENT,nombre,apellido_p,apellido_m,sexo,telefono,celular,nacimiento,enfermedad,sangre,email)');
     tx.executeSql('CREATE TABLE IF NOT EXISTS direccion(id INTEGER PRIMARY KEY AUTOINCREMENT,calle,numero,colonia,municipio)');
     tx.executeSql('CREATE TABLE IF NOT EXISTS contactos(id INTEGER PRIMARY KEY AUTOINCREMENT,nombre,telefono)');
     tx.executeSql('CREATE TABLE IF NOT EXISTS acceso(id INTEGER PRIMARY KEY AUTOINCREMENT,contacto,confirmacion,verificado)');
@@ -115,7 +115,6 @@ function verificado(){
         function(tx) {
         tx.executeSql('SELECT * FROM acceso',[],function(tx, results){
             myApp.hidePreloader();
-            console.log("iniciado");            
             var len = results.rows.length;
             console.log(len);
             if(len==1){
@@ -234,6 +233,7 @@ function direction(){
     var sexo=$$("select[name='sex']").val();
     var nacimiento=$$("input[name='born']").val();
     var telefono=$$("input[name='tel']").val();
+    var celular=$$("input[name='cel']").val();
     var mail=$$("input[name='mail']").val();
     var enfermedad=$$("input[name='enfermedad']").val();
     var sangre=$$("select[name='blood']").val();
@@ -258,13 +258,13 @@ function direction(){
         message: 'Debe indicar su fecha de nacimiento',
         closeOnClick:true 
         });
-    }else if(telefono=="" || telefono.length!=10){
+    }else if(celular=="" || celular.length!=10){
         myApp.addNotification({
         title: 'Campo requerido',
         message: 'Debe indicar su numero celular a 10 digitos',
         closeOnClick:true 
         });
-        $$("input[name='tel']").focus();
+        $$("input[name='cel']").focus();
     }else if(mail==""){
         myApp.addNotification({
         title: 'Campo requerido',
@@ -278,7 +278,7 @@ function direction(){
         db.transaction(
         function(tx) {
         tx.executeSql('DELETE FROM datos',[]);
-        tx.executeSql('INSERT INTO datos(nombre,apellido_p,apellido_m,sexo,telefono,nacimiento,enfermedad,sangre,email) VALUES(?,?,?,?,?,?,?,?,?)',[nombre,apellido_p,apellido_m,sexo,telefono,nacimiento,enfermedad,sangre,mail]);
+        tx.executeSql('INSERT INTO datos(nombre,apellido_p,apellido_m,sexo,telefono,nacimiento,enfermedad,sangre,email) VALUES(?,?,?,?,?,?,?,?,?,?)',[nombre,apellido_p,apellido_m,sexo,telefono,celular,nacimiento,enfermedad,sangre,mail]);
         });
         myApp.closeNotification(".notifications"); 
      mainView.router.loadPage('direccion.html');
@@ -392,6 +392,7 @@ function registrar(){
 }
 }
 function sendDatesServer(){
+    myApp.hidePreloader();   
     db.transaction(
         function(tx) {              
         tx.executeSql('SELECT nombre,apellido_p,apellido_m,sexo,telefono,nacimiento,enfermedad,sangre,email,calle,numero,colonia,municipio FROM datos left join direccion where datos.id=? and direccion.id=?',[1,1],datosFin);
@@ -422,8 +423,8 @@ function datosFin(tx, results){
                             Colonia:results.rows.item(0).colonia,
                             Municipio:results.rows.item(0).municipio,
                             Email:results.rows.item(0).email,
-                            TelefonoFijo:'',
-                            TelefonoMovil:results.rows.item(0).telefono
+                            TelefonoFijo:results.rows.item(0).telefono,
+                            TelefonoMovil:results.rows.item(0).celular
                             },
                         beforeSend:Onbefore,
                         success: OnSuccess, 
@@ -796,10 +797,10 @@ function sendSMS() {
                     			sendto[i] = sendto[i].trim();
                     		}
                     	}
-                        console.log(sendto+" - "+textmsg);
-                    	if(SMS){
-                    	   SMS.sendSMS(sendto, textmsg, function(){myApp.alert("Se ha enviado el mensaje");}, function(str){myApp.alert(str);});
-                        } 
+                        $$("#resuly").html(sendto);
+                    	//if(SMS){
+//                    	   SMS.sendSMS(sendto, textmsg, function(){myApp.alert("El mensaje a sido enviado");}, function(str){myApp.alert(str);});
+//                        } 
                 });
             });
         });
