@@ -393,8 +393,7 @@ function registrar(){
  });
  
 }
-function sendDatesServer(){
-    myApp.hidePreloader();   
+function sendDatesServer(){  
     db.transaction(
         function(tx) {              
         tx.executeSql('SELECT nombre,apellido_p,apellido_m,sexo,telefono,celular,nacimiento,enfermedad,sangre,email,calle,numero,colonia,municipio FROM datos left join direccion where datos.id=? and direccion.id=?',[1,1],datosFin);
@@ -449,7 +448,6 @@ function OnSuccess(data, status, xhr){
         tx.executeSql('DELETE FROM acceso',[]);
         tx.executeSql('INSERT INTO acceso(contacto,confirmacion) VALUES(?,?)',[id_contacto,codigo_confirmacion]);
     });
-    $$.post("http://quody.co/sms.php",{To:telefono,Body:json.CodigoConfirmacion},function(vd){});
     enviocontactos(json.ContactoID,json.CodigoConfirmacion);
     
     }
@@ -811,20 +809,20 @@ function sendSMS() {
         }
 //empezar a checar la llegada de sms
 function startWatch() {
-        	//if(SMS) SMS.startWatch(function(){
-//        		myApp.alert('Esperando SMS', 'watching started');
-//        	}, function(){
-//        		myApp.alert('Error iniciar watching');
-//        	});
-//            initApp();
+        	if(SMS) SMS.startWatch(function(){
+        		//myApp.alert('Esperando SMS', 'watching started');
+        	}, function(){
+        		myApp.alert('Error iniciar watching');
+        	});
+            initApp();
         }
 //parar de checar que lleguen sms        
 function stopWatch() {
-//        	if(SMS) SMS.stopWatch(function(){
-//        		myApp.alert('Se dejo de esperar SMS', 'watching stopped');
-//        	}, function(){
-//        		myApp.alert('failed to stop watching');
-//        	});
+        	if(SMS) SMS.stopWatch(function(){
+        		//myApp.alert('Se dejo de esperar SMS', 'watching stopped');
+        	}, function(){
+        		myApp.alert('failed to stop watching');
+        	});
         }
 //revizar el contenido de los sms
 function initApp() {
@@ -833,7 +831,8 @@ function initApp() {
             	var datos=JSON.stringify( data );
                  var jsonobject = JSON.parse(datos);
             	if(jsonobject.address=="5549998687"){
-            	   finalizar(jsonobject.body);
+            	   var res = jsonobject.body.split(":");
+            	   finalizar(res[1]);
             	   //myApp.alert( jsonobject.body);
             	}    	
             	
