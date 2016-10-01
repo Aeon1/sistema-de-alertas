@@ -677,7 +677,8 @@ function callNumber(number){
 //envio del reporte
 var totalx=0;
 function sendserver(){
-    $$("#aviso_importante,#co_aviso").css('display', 'none');
+    $$("#aviso_importante").css('display', 'none');
+    $$("#co_aviso").css('display', 'none');
     $$("#enviando_todo").css('display', 'block');
     $$.ajax({
         url:"https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx",
@@ -689,19 +690,21 @@ function sendserver(){
                         folio=json.FolioIncidente;
                         if(path_audio!=""){
                             totalx+=1;
-                            sendfiles(path_audio,folio,mimeType_xa);                                                        
+                            sendfiles(path_audio,folio,mimeType_xa); 
+                            $$("#enviando_todo").append("<h2 class=text-center>Enviando audio</h2>"+
+                            "<div class='progressbar color-orange pgrs1' data-progress='0'><span></span>");                                                        
                         }
                         if(path_foto!=""){                            
                             totalx+=1;
                             sendfiles2(path_foto,folio,mimeType_xf); 
                              $$("#enviando_todo").append("<h2 class=text-center>Enviando foto</h2>"+
-                            "<div class='progressbar pgrs2' data-progress='0'><span></span>");                           
+                            "<div class='progressbar color-orange pgrs2' data-progress='0'><span></span>");                           
                         }
                         if(path_video!=""){
                             totalx+=1;
                             sendfiles3(path_video,folio,mimeType_xv);
                              $$("#enviando_todo").append("<h2 class=text-center>Enviando video</h2>"+
-                            "<div class='progressbar pgrs3' data-progress='0'><span></span>");                            
+                            "<div class='progressbar color-orange pgrs3' data-progress='0'><span></span>");                            
                         }     
                         $$("#preload_reporte").html("<span style='color:#00FF00'>Enviado</span>");                   
                         if(totalx==0){                            
@@ -858,7 +861,7 @@ function sendSMS() {
 //empezar a checar la llegada de sms
 function startWatch() {
         	if(SMS) SMS.startWatch(function(){
-        		//myApp.alert('Esperando SMS', 'watching started');
+//        		//myApp.alert('Esperando SMS', 'watching started');
         	}, function(){
         		myApp.alert('Error iniciar watching');
         	});
@@ -867,7 +870,7 @@ function startWatch() {
 //parar de checar que lleguen sms        
 function stopWatch() {
         	if(SMS) SMS.stopWatch(function(){
-        		//myApp.alert('Se dejo de esperar SMS', 'watching stopped');
+//        		//myApp.alert('Se dejo de esperar SMS', 'watching stopped');
         	}, function(){
         		myApp.alert('failed to stop watching');
         	});
