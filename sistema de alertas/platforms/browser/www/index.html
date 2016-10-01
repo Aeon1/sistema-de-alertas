@@ -44,7 +44,7 @@
         <div class="pages">
           <div class="page">
             <div class="page-content">
-            <h3 class="text-center">Configuraci&oacute;n</h3>
+            <h3 class="text-center">Configuraci&oacute;n &amp; funciones</h3>
               <div class="list-block">
                 <ul>
                   <li>
@@ -55,9 +55,16 @@
                     </a>
                   </li>
                   <li>
-                    <a href="#" class="item-content item-link" onclick="sendSMS()">
+                    <a href="#" class="item-content item-link" onclick="Edit_message()">
                       <div class="item-inner">
-                        <div class="item-title">Enviar mensaje a mis contactos de emergencia</div>
+                        <div class="item-title">Editar mensaje enviar(SMS)</div>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" class="item-content item-link" onclick="view_contacts()">
+                      <div class="item-inner">
+                        <div class="item-title">Ver contactos de emergencia</div>
                       </div>
                     </a>
                   </li>
@@ -71,7 +78,8 @@
                 </ul>
               </div>
               <div class="content-block">
-                <img src="img/logo.png" style="margin: auto;display: block;" />
+                <img src="img/logo.png" style="margin: auto;display: block;" onclick="sendSMS()" />
+                <p style="font-size: small;">Click en la imagen para enviar mensaje a sus contactos de emergencia</p>
                 <p>911 reporte m&oacute;vil</p>
               </div>
               <div id="resuly"></div>
@@ -104,7 +112,7 @@
           <div data-page="inicar" class="page">
             <!-- Scrollable page content -->
             <div class="page-content">
-                <div class="list-block">
+                <div class="list-block inset">
                     <p class="text-center">Ingrese el codigo de confirmacion</p>
                   <ul>
                     <li>
@@ -116,11 +124,9 @@
                         </div>
                       </div>
                     </li>
-                    <li><br /></li>
-                    <li>
-                        <a href="#" class="button button-big button-fill " onclick="finalizar()">Validar</a>
-                    </li>
                   </ul>
+                  <br />
+                  <a href="#" class="button button-big button-gold" onclick="finalizar()">Validar</a>
                 </div>
             </div>
           </div>

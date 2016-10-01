@@ -594,7 +594,7 @@ var captureSuccessaudio = function(mediaFiles) {
     }
     mimeType_xa=mimeType;
     path_audio=path;
-    $$(".audio").removeClass('active').addClass('button-green');
+    $$(".audio").removeClass('button-gold-c').addClass('active');;
 };
 // captura de audio con error
 var captureErroraudio = function(error) {
@@ -611,7 +611,7 @@ var captureSuccessfoto = function(mediaFiles) {
     }
     mimeType_xf=mimeType;
    path_foto=path ;
-   $$(".foto").removeClass('active').addClass('button-green');
+   $$(".foto").removeClass('button-gold-c').addClass('active');
 };
 // captura de foto con error
 var captureErrorfoto = function(error) {
@@ -628,7 +628,7 @@ var captureSuccessvideo = function(mediaFiles) {
     }
     mimeType_xv=mimeType;
 path_video=path;
-$$(".video").removeClass('active').addClass('button-green');
+$$(".video").removeClass('button-gold-c').addClass('active');;
 };
 
 // captura de video con error
@@ -677,7 +677,7 @@ function callNumber(number){
 //envio del reporte
 var totalx=0;
 function sendserver(){
-    $$("#aviso_importante").css('display', 'none');
+    $$("#aviso_importante,#co_aviso").css('display', 'none');
     $$("#enviando_todo").css('display', 'block');
     $$.ajax({
         url:"https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx",
@@ -693,19 +693,20 @@ function sendserver(){
                         }
                         if(path_foto!=""){                            
                             totalx+=1;
-                            sendfiles(path_foto,folio,mimeType_xf);                            
+                            sendfiles2(path_foto,folio,mimeType_xf); 
+                             $$("#enviando_todo").append("<h2 class=text-center>Enviando foto</h2>"+
+                            "<div class='progressbar pgrs2' data-progress='0'><span></span>");                           
                         }
                         if(path_video!=""){
                             totalx+=1;
-                            sendfiles(path_video,folio,mimeType_xv);                            
+                            sendfiles3(path_video,folio,mimeType_xv);
+                             $$("#enviando_todo").append("<h2 class=text-center>Enviando video</h2>"+
+                            "<div class='progressbar pgrs3' data-progress='0'><span></span>");                            
                         }     
                         $$("#preload_reporte").html("<span style='color:#00FF00'>Enviado</span>");                   
                         if(totalx==0){                            
                             mainView.router.loadPage('final.html');
                             console.log("sin archivos a enviar finalizado");
-                        }else{
-                            $$("#enviando_todo").append("<h2 class=text-center>Enviando archivo(s)</h2>"+
-                            "<div class='progressbar pgrs1' data-progress='0'><span></span>");
                         }
                             }else{
                                 myApp.alert(json.MensajeError, 'Error');
@@ -775,7 +776,54 @@ options.headers = headers;
     };
     ft.upload(fileURL, uri, win, fail, options);
 }
-
+function sendfiles2(fileURL,folio,mime){
+    var uri = encodeURI("https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx");
+ console.log(fileURL);
+var options = new FileUploadOptions();
+options.fileKey="archivos";
+options.fileName=fileURL.substr(fileURL.lastIndexOf('/')+1);
+options.mimeType=mime;
+var params = new Object();
+    params.FolioIncidente = folio ;
+    params.op = "sa" ;
+options.params = params;
+var headers={'headerParam':'headerValue'};
+ 
+options.headers = headers;
+    var ft = new FileTransfer();
+    ft.onprogress = function(progressEvent) {
+        if (progressEvent.lengthComputable) {
+                var progressbar= $$('.pgrs2');
+                var total= Math.floor(progressEvent.loaded / progressEvent.total* 100);
+                myApp.setProgressbar(progressbar,total);
+        }
+    };
+    ft.upload(fileURL, uri, win, fail, options);
+}
+function sendfiles3(fileURL,folio,mime){
+    var uri = encodeURI("https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx");
+ console.log(fileURL);
+var options = new FileUploadOptions();
+options.fileKey="archivos";
+options.fileName=fileURL.substr(fileURL.lastIndexOf('/')+1);
+options.mimeType=mime;
+var params = new Object();
+    params.FolioIncidente = folio ;
+    params.op = "sa" ;
+options.params = params;
+var headers={'headerParam':'headerValue'};
+ 
+options.headers = headers;
+    var ft = new FileTransfer();
+    ft.onprogress = function(progressEvent) {
+        if (progressEvent.lengthComputable) {
+                var progressbar= $$('.pgrs3');
+                var total= Math.floor(progressEvent.loaded / progressEvent.total* 100);
+                myApp.setProgressbar(progressbar,total);
+        }
+    };
+    ft.upload(fileURL, uri, win, fail, options);
+}
 
 //funciones de sms
 function sendSMS() {
@@ -838,7 +886,27 @@ function initApp() {
             	
             });
         }
-        //key
-$$("input[name='name']").click(function(e) {
-    myApp.alert('bien');
-});
+//editar mensaje sms a enviar a contactos de emergencia
+function Edit_message(){
+    myApp.closePanel();
+    mainView.router.loadPage('mensaje.html');
+    db.transaction(
+                function(tx) {              
+                tx.executeSql('select * from mensaje',[],function(tx, results){                        
+                        $$("#mensaje_sms").text(results.rows.item(0).mensaje);
+                        $$("#plus_sms").html("https://www.google.com.co/maps/place/"+latitud+","+longitude);
+                });
+            });
+}
+function save_mensaje(){
+    var sms_mens = $$("#mensaje_sms").val();
+    
+    db.transaction(
+    function(tx) {              
+        tx.executeSql('UPDATE mensaje SET mensaje=? where id=?',[sms_mens,1],function(tx,results){
+            myApp.alert("Mensaje guardado correctamente","Guardado");
+        }, function (error) {
+        myApp.alert("Ocurrrio un error al intentar guardar los cambios","Error");
+    });
+    });
+}

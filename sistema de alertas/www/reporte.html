@@ -11,28 +11,33 @@
   <!-- Page, data-page contains page name-->
   <div data-page="reporte" class="page">
     <div class="page-content">
-        <div id="aviso_importante">
-            <h3 class="text-center">Agregar pruebas(Opcional)</h3>
-            <p class="buttons-row" >
-              <a href="#" class="button button-big active audio" style="border-color: white;" onclick="audio()">Audio</a>
-              <a href="#" class="button button-big active foto" style="border-color: white;" onclick="foto()">Foto</a>
-              <a href="#" class="button button-big active video" style="border-color: white;" onclick="video()">Video</a>
+    <p class="text-center" id="co_aviso" style="background: #E6E6E6; padding: 15px 0;margin-top: 0;color: #666666;">Agregar pruebas(Opcional)</p>
+        <div class="list-block inset">
+        <div id="aviso_importante">            
+            <p class="buttons-row" style="margin-top: -20px; position: relative;" >
+              <a href="#" class="button button-big button-gold-c audio sombra" style="border-right-color: white;" onclick="audio()">Audio</a>
+              <a href="#" class="button button-big button-gold-c foto sombra" style="border-right-color: white;" onclick="foto()">Foto</a>
+              <a href="#" class="button button-big button-gold-c video sombra" style="" onclick="video()">Video</a>
             </p>        
-            <h1 class="text-center">&iexcl;&iexcl;&iexcl;Importante!!!</h1>
-            <h2 class="text-center">Esta por realizar el reporte de un "INCIDENTE" una vez generado no podr&aacute; ser cancelado y se alertara a las autoridades correspondientes para su atenci&oacute;n</h2>
-            <h2 class="text-center">&iquest;ESTA SEGURO DE CONTINUAR CON EL REPORTE?</h2>
+            <h1 class="text-center gold">&iexcl;Importante!</h1>
+            <div style="background: #E6E6E6;padding: 10px;border-radius: 10px;font-size: small!important;margin: -20px 10px 0 10px;">
+                <p>Esta por realizar el reporte de un "Incidente" una vez generado no podr&aacute; ser cancelado y se alertara a las autoridades correspondientes para su atenci&oacute;n.</p>
+                <p>El uso indebido de esta aplicaci&oacute;n ser&aacute; sancionado</p>
+                <h3 class="gold text-center">&iquest;ESTA SEGURO DE CONTINUAR CON EL REPORTE?</h3>
+            </div><br />
             <div class="row">
               <div class="col-50">
-                <a href="#" class="button button-big button-red" onclick="cancelar_reporte()">Cancelar</a>
+                <a href="#" class="button button-big button-red sombra-roja" onclick="cancelar_reporte()">Cancelar</a>
               </div>
               <div class="col-50">
-                <a href="#" class="button button-big button-green" onclick="sendserver()">Enviar</a>
+                <a href="#" class="button button-big button-gold-c sombra" onclick="sendserver()">Enviar</a>
               </div>
             </div>
         </div>
         <div id="enviando_todo" style="display: none;">
             <h1 class="text-center">Enviado reporte</h1>
             <p style="text-align: center;" id="preload_reporte"><span style="width:42px; height:42px;" class="preloader"></span></p>
+        </div>
         </div>
     </div>
   </div>
