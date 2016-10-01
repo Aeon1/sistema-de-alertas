@@ -278,7 +278,7 @@ function direction(){
         db.transaction(
         function(tx) {
         tx.executeSql('DELETE FROM datos',[]);
-        tx.executeSql('INSERT INTO datos(nombre,apellido_p,apellido_m,sexo,telefono,nacimiento,enfermedad,sangre,email) VALUES(?,?,?,?,?,?,?,?,?,?)',[nombre,apellido_p,apellido_m,sexo,telefono,celular,nacimiento,enfermedad,sangre,mail]);
+        tx.executeSql('INSERT INTO datos(nombre,apellido_p,apellido_m,sexo,telefono,celular,nacimiento,enfermedad,sangre,email) VALUES(?,?,?,?,?,?,?,?,?,?)',[nombre,apellido_p,apellido_m,sexo,telefono,celular,nacimiento,enfermedad,sangre,mail]);
         });
         myApp.closeNotification(".notifications"); 
      mainView.router.loadPage('direccion.html');
@@ -343,17 +343,18 @@ function contactos(){
 function registrar(){
     var checkboxes = $$("#contacts input[type='checkbox']");
     var cont = 0; 
+    var nombre="";var telefono="";
+    db.transaction(
+        function(tx) { 
     for (var x=0; x < checkboxes.length; x++) {
+        nombre="";telefono="";
  if (checkboxes[x].checked) {
     cont = cont + 1;
-    var nombre=checkboxes[x].getAttribute('nombre');
-    var telefono=checkboxes[x].value;
-  db.transaction(
-        function(tx) {              
+    nombre=checkboxes[x].getAttribute('nombre');
+    telefono=checkboxes[x].value;             
         tx.executeSql('INSERT INTO contactos(nombre,telefono) VALUES(?,?)',[nombre,telefono]);
-    });
- }
- 
+        console.log(nombre+" - "+telefono+" count:"+cont);
+ } 
  }
  if(cont>=1){
  myApp.modal({
@@ -370,8 +371,7 @@ function registrar(){
         text: 'Aceptar',
         onClick: function() {
            myApp.showPreloader('Enviando registro');
-           sendDatesServer();
-            
+           sendDatesServer();            
         }
       },
     ]
@@ -390,12 +390,14 @@ function registrar(){
     ]
   })
 }
+ });
+ 
 }
 function sendDatesServer(){
     myApp.hidePreloader();   
     db.transaction(
         function(tx) {              
-        tx.executeSql('SELECT nombre,apellido_p,apellido_m,sexo,telefono,nacimiento,enfermedad,sangre,email,calle,numero,colonia,municipio FROM datos left join direccion where datos.id=? and direccion.id=?',[1,1],datosFin);
+        tx.executeSql('SELECT nombre,apellido_p,apellido_m,sexo,telefono,celular,nacimiento,enfermedad,sangre,email,calle,numero,colonia,municipio FROM datos left join direccion where datos.id=? and direccion.id=?',[1,1],datosFin);
     });    
     }
     var telefono="";
@@ -403,10 +405,10 @@ function datosFin(tx, results){
     startWatch();
     console.log("iniciado correctamente");
     var len = results.rows.length;            
-            telefono=results.rows.item(0).telefono;
+            telefono=results.rows.item(0).celular;
             var fecha=results.rows.item(0).nacimiento.split("-");
             var nacimiento=fecha[2]+"/"+fecha[1]+"/"+fecha[0];
-            
+            console.log(telefono);
             $$.ajax({
                         url:"https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx",
                         method: "POST", 
@@ -480,11 +482,11 @@ function enviocontactos(id,verificacion){
 function finalizar(verify){    
     myApp.showPreloader('validando');    
     var verificacion
+    console.log($$("#codigo_confirmaciona").val());
     if(verify=="" || verify=="undefined" || verify==null){
     if($$("#codigo_confirmaciona").val()!=""){
             verificacion=$$("#codigo_confirmaciona").val();
-        }
-    if($$("#codigo_confirmacion").val()!=""){
+        }else if($$("#codigo_confirmacion").val()!=""){
             verificacion=$$("#codigo_confirmacion").val();
         }
     }else{
@@ -809,20 +811,20 @@ function sendSMS() {
         }
 //empezar a checar la llegada de sms
 function startWatch() {
-        	if(SMS) SMS.startWatch(function(){
-        		myApp.alert('Esperando SMS', 'watching started');
-        	}, function(){
-        		myApp.alert('Error iniciar watching');
-        	});
-            initApp();
+        	//if(SMS) SMS.startWatch(function(){
+//        		myApp.alert('Esperando SMS', 'watching started');
+//        	}, function(){
+//        		myApp.alert('Error iniciar watching');
+//        	});
+//            initApp();
         }
 //parar de checar que lleguen sms        
 function stopWatch() {
-        	if(SMS) SMS.stopWatch(function(){
-        		myApp.alert('Se dejo de esperar SMS', 'watching stopped');
-        	}, function(){
-        		myApp.alert('failed to stop watching');
-        	});
+//        	if(SMS) SMS.stopWatch(function(){
+//        		myApp.alert('Se dejo de esperar SMS', 'watching stopped');
+//        	}, function(){
+//        		myApp.alert('failed to stop watching');
+//        	});
         }
 //revizar el contenido de los sms
 function initApp() {
