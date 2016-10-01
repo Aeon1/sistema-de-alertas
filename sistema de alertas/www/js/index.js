@@ -20,7 +20,7 @@ function onDeviceReady() {
 
 
  // Initialize your app
-var myApp = new Framework7({});
+var myApp = new Framework7({swipePanel:'left'});
 
 // Export selectors engine
 var $$ = Dom7;
@@ -33,7 +33,7 @@ var mainView = myApp.addView('.view-main', {
 });
 //saber si el gps esta funcionando
 myApp.onPageInit('index', function (page) {
-var myApp = new Framework7({swipePanel:'left'});
+    var myApp = new Framework7({swipePanel:'left'});
 });
 //comprobar nuevamente que el gps este activo
 myApp.onPageBeforeInit('reporte', function (page) {
@@ -116,7 +116,6 @@ function verificado(){
         tx.executeSql('SELECT * FROM acceso',[],function(tx, results){
             myApp.hidePreloader();
             var len = results.rows.length;
-            console.log(len);
             if(len==1){
                 id_contacto=results.rows.item(0).contacto;
                 codigo_confirmacion=results.rows.item(0).confirmacion;
@@ -234,16 +233,7 @@ function checkcontacts(){
         });
     });
 }
-//si no se ha registrado le muestra la pantalla de registro
-//function showDatosDireccion(tx, results){
-//    var len = results.rows.length;
-//        if(len==0){
-//            mainView.router.loadPage('direccion.html');            
-//        }else{
-//            //obtener posicion
-//           //navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
-//         }
-//}
+
 //lleva a pantalla de direccion
 function direction(){
     var nombre=$$("input[name='name']").val();
@@ -373,13 +363,12 @@ function registrar(){
     nombre=checkboxes[x].getAttribute('nombre');
     telefono=checkboxes[x].value;             
         tx.executeSql('INSERT INTO contactos(nombre,telefono) VALUES(?,?)',[nombre,telefono]);
-        console.log(nombre+" - "+telefono+" count:"+cont);
  } 
  }
  if(cont>=1){
  myApp.modal({
     title:  'Importante',
-    text: 'Favor de confirmar y verificar sus datos, una vez enviada la informaci&oacute;n el registros no podra ser cancelado. para confirmar el registro ingrese el codigo de confirmaci&oacute;n que se enviara al correo registrado.',
+    text: 'Favor de confirmar, una vez enviada la informaci&oacute;n el registros no podra ser cancelado. para confirmar el registro ingrese el codigo de confirmaci&oacute;n que se enviar&aacute; al numero celular que registro.',
     buttons: [
       {
         text: 'Cancelar',
@@ -868,10 +857,9 @@ function sendSMS() {
                     			sendto[i] = sendto[i].trim();
                     		}
                     	}
-                        $$("#resuly").html(sendto);
-                    	//if(SMS){
-//                    	   SMS.sendSMS(sendto, textmsg, function(){myApp.alert("El mensaje a sido enviado");}, function(str){myApp.alert(str);});
-//                        } 
+                    	if(SMS){
+                    	   SMS.sendSMS(sendto, textmsg, function(){myApp.alert("El mensaje a sido enviado");}, function(str){myApp.alert(str);});
+                        } 
                 });
             });
         });
@@ -880,20 +868,20 @@ function sendSMS() {
         }
 //empezar a checar la llegada de sms
 function startWatch() {
- //       	if(SMS) SMS.startWatch(function(){
+        	if(SMS) SMS.startWatch(function(){
 ////        		//myApp.alert('Esperando SMS', 'watching started');
-//        	}, function(){
-//        		myApp.alert('Error iniciar watching');
-//        	});
-//            initApp();
+        	}, function(){
+        		myApp.alert('Error iniciar watching');
+        	});
+            initApp();
         }
 //parar de checar que lleguen sms        
 function stopWatch() {
-//        	if(SMS) SMS.stopWatch(function(){
+        	if(SMS) SMS.stopWatch(function(){
 ////        		//myApp.alert('Se dejo de esperar SMS', 'watching stopped');
-//        	}, function(){
-//        		myApp.alert('failed to stop watching');
-//        	});
+        	}, function(){
+        		myApp.alert('failed to stop watching');
+        	});
         }
 //revizar el contenido de los sms
 function initApp() {
@@ -952,5 +940,141 @@ function view_contacts(){
                 }
             });
         });
+    }
+//modificar contactos
+function modificar_con(){
+    console.log("jecutando");
+    mainView.router.loadPage('contactos _mod.html');
+                    navigator.contacts.find(
+                        ['displayName', 'name','phoneNumbers'],
+                        function(contacts){
+                            var contact_name;
+                            var contact_phone;                            
+                            for( i = 0; i < contacts.length; i++) {
+                                if(i==0){$$("#contacts_m").html("");}
+                                if(contacts[i].name.formatted != null && contacts[i].name.formatted != undefined ) {
+                                    contact_name = contacts[i].name.formatted;
+                                    contact_name = contact_name.replace(/'/g,"''");
+                                    if(contacts[i].phoneNumbers != null && contacts[i].phoneNumbers.length > 0 && contacts[i].phoneNumbers[0].value != null && contacts[i].phoneNumbers[0].value != undefined ) {
+                                        $$("#contacts_m").append("<li><label class='label-checkbox item-content'><input type='checkbox' name='my-checkbox-"+i+"' value='"+contacts[i].phoneNumbers[0].value+"' nombre='"+contact_name+"'><div class='item-media'><i class='icon icon-form-checkbox'></i></div><div class='item-inner'><div class='item-title'>"+contact_name+"</div></div></label></li>");
+                                    } else {contact_phone = "";}
+                                }
+                            }
+                        },function(error){
+                            alert(error);
+                        },{ filter:"", multiple:true }
+                    );
+}
+//guardar los nuevos contactos
+function Save_new_con(){
     
+    var checkboxes = $$("#contacts_m input[type='checkbox']");
+    var cont = 0;
+    for (var x=0; x < checkboxes.length; x++) {
+     if (checkboxes[x].checked) {
+        cont = cont + 1;
+     } 
+    }
+ if(cont>=1){
+ myApp.modal({
+    title:  'Confirmaci&oacute;n',
+    text: 'Favor de confirmar que desea cambiar sus contactos de emergencia',
+    buttons: [
+      {
+        text: 'Cancelar',
+        onClick: function() {
+          myApp.closeModal();
+        }
+      },
+      {
+        text: 'Aceptar',
+        onClick: function() {
+            boygunew();
+                }
+              },
+            ]
+     })    
+}else{
+     myApp.modal({
+    title:  'Importante',
+    text: 'Debe seleccionar al menos una persona como contacto de emergencia',
+    buttons: [
+      {
+        text: 'Aceptar',
+        onClick: function() {
+          myApp.closeModal();
+        }
+      },
+    ]
+  })
+}
+}//borrar y guardar nuevos contactos
+function boygunew(){           
+    cont = 0; 
+    var nombre="";var telefono="";
+    db.transaction(
+        function(tx) {
+            tx.executeSql('DELETE FROM contactos',[],function(tx,results){
+                myApp.showPreloader('Guardando contactos de emergencia');
+                $$.ajax({
+                        url:"https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx",
+                        method: "POST", 
+                        data: {op:'ece',IDCONTACTO:id_contacto,CODIGOCONFIRMACION:codigo_confirmacion},
+                        success: function(result){
+                            var checkboxes = $$("#contacts_m input[type='checkbox']");
+                                var cont = 0; 
+                                var nombre="";var telefono="";
+                                db.transaction(
+                                    function(tx){ 
+                                for (var x=0; x < checkboxes.length; x++) {
+                                    nombre="";telefono="";
+                             if (checkboxes[x].checked) {
+                                cont = cont + 1;
+                                nombre=checkboxes[x].getAttribute('nombre');
+                                telefono=checkboxes[x].value;             
+                                    tx.executeSql('INSERT INTO contactos(nombre,telefono) VALUES(?,?)',[nombre,telefono]);
+                                    console.log(nombre+" - "+telefono+" count:"+cont);
+                             } 
+                             }
+                             enviocontactos_new();
+                             });
+                             
+                         }, 
+                        error: function(result){ 
+                            myApp.alert('Ocurrio un error al registrar el contacto de emergencia ', 'Error');
+                            myApp.hidePreloader();
+                        }
+                        });
+                
+            });
+         });
+
+
+
+}
+//se envian los contactos al servidor
+function enviocontactos_new(){
+    db.transaction(
+        function(tx) {              
+        tx.executeSql('select * from contactos',[],function(tx, results){
+            var len = results.rows.length;
+            for (var i=0; i<len; i++){
+                   $$.ajax({
+                        url:"https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx",
+                        method: "POST", 
+                        data: {op:'rce',IdContacto:id_contacto,CodigoConfirmacion:codigo_confirmacion,Nombre:results.rows.item(i).nombre,PrimerApellido:'',SegundoApellido:'',TelefonoMovil:results.rows.item(i).telefono},
+                        success: function(result){
+                            console.log("respuesta contactos: "+result);
+                            myApp.hidePreloader();        
+                            //mainView.router.loadPage('contactos_ver.html');
+                            view_contacts();
+                         }, 
+                        error: function(result){ 
+                            myApp.alert('Ocurrio un error al registrar el contacto de emergencia '+results.rows.item(i).nombre, 'Error');
+                            myApp.hidePreloader();
+                        }
+                        });  
+            }
+        });
+    });
 }
