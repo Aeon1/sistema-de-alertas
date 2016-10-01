@@ -838,17 +838,7 @@ function initApp() {
             	
             });
         }
-        
-//pluging teclado
-window.addEventListener('native.keyboardshow', keyboardShowHandler);
-
-function keyboardShowHandler(e){
-    $("body").addClass("keyboardOn");
-}
-
-// This event fires when the keyboard will show
-window.addEventListener('native.keyboardhide', keyboardHideHandler);
-
-function keyboardHideHandler(e){
-    $("body").removeClass("keyboardOn");
-}
+        //key
+$$("input[name='name']").click(function(e) {
+    myApp.alert('bien');
+});
