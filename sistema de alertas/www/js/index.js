@@ -20,7 +20,7 @@ function onDeviceReady() {
 
 
  // Initialize your app
-var myApp = new Framework7({swipePanel:'left'});
+var myApp = new Framework7({});
 
 // Export selectors engine
 var $$ = Dom7;
@@ -33,7 +33,7 @@ var mainView = myApp.addView('.view-main', {
 });
 //saber si el gps esta funcionando
 myApp.onPageInit('index', function (page) {
-
+var myApp = new Framework7({swipePanel:'left'});
 });
 //comprobar nuevamente que el gps este activo
 myApp.onPageBeforeInit('reporte', function (page) {
@@ -187,7 +187,26 @@ function checkcontacts(){
         tx.executeSql('SELECT * FROM contactos',[],function(tx, results){
             var len = results.rows.length;
                 if(len==0){
-                    mainView.router.loadPage('contactos.html');            
+                    mainView.router.loadPage('contactos.html');
+                    navigator.contacts.find(
+                        ['displayName', 'name','phoneNumbers'],
+                        function(contacts){
+                            var contact_name;
+                            var contact_phone;                            
+                            for( i = 0; i < contacts.length; i++) {
+                                if(i==0){$$("#contacts").html("");}
+                                if(contacts[i].name.formatted != null && contacts[i].name.formatted != undefined ) {
+                                    contact_name = contacts[i].name.formatted;
+                                    contact_name = contact_name.replace(/'/g,"''");
+                                    if(contacts[i].phoneNumbers != null && contacts[i].phoneNumbers.length > 0 && contacts[i].phoneNumbers[0].value != null && contacts[i].phoneNumbers[0].value != undefined ) {
+                                        $$("#contacts").append("<li><label class='label-checkbox item-content'><input type='checkbox' name='my-checkbox-"+i+"' value='"+contacts[i].phoneNumbers[0].value+"' nombre='"+contact_name+"'><div class='item-media'><i class='icon icon-form-checkbox'></i></div><div class='item-inner'><div class='item-title'>"+contact_name+"</div></div></label></li>");
+                                    } else {contact_phone = "";}
+                                }
+                            }
+                        },function(error){
+                            alert(error);
+                        },{ filter:"", multiple:true }
+                    );           
                 }else{
                      myApp.modal({
                     title:  'Importante',
@@ -319,6 +338,7 @@ function contactos(){
     function(contacts){
         var contact_name;
         var contact_phone;
+        
         for( i = 0; i < contacts.length; i++) {
             if(i==0){
                 $$("#contacts").html("");
@@ -860,20 +880,20 @@ function sendSMS() {
         }
 //empezar a checar la llegada de sms
 function startWatch() {
-        	if(SMS) SMS.startWatch(function(){
-//        		//myApp.alert('Esperando SMS', 'watching started');
-        	}, function(){
-        		myApp.alert('Error iniciar watching');
-        	});
-            initApp();
+ //       	if(SMS) SMS.startWatch(function(){
+////        		//myApp.alert('Esperando SMS', 'watching started');
+//        	}, function(){
+//        		myApp.alert('Error iniciar watching');
+//        	});
+//            initApp();
         }
 //parar de checar que lleguen sms        
 function stopWatch() {
-        	if(SMS) SMS.stopWatch(function(){
-//        		//myApp.alert('Se dejo de esperar SMS', 'watching stopped');
-        	}, function(){
-        		myApp.alert('failed to stop watching');
-        	});
+//        	if(SMS) SMS.stopWatch(function(){
+////        		//myApp.alert('Se dejo de esperar SMS', 'watching stopped');
+//        	}, function(){
+//        		myApp.alert('failed to stop watching');
+//        	});
         }
 //revizar el contenido de los sms
 function initApp() {
@@ -893,7 +913,7 @@ function initApp() {
 function Edit_message(){
     myApp.closePanel();
     mainView.router.loadPage('mensaje.html');
-    db.transaction(
+            db.transaction(
                 function(tx) {              
                 tx.executeSql('select * from mensaje',[],function(tx, results){                        
                         $$("#mensaje_sms").text(results.rows.item(0).mensaje);
@@ -912,4 +932,25 @@ function save_mensaje(){
         myApp.alert("Ocurrrio un error al intentar guardar los cambios","Error");
     });
     });
+}
+//ver y cambiar contactos de emergencia
+function view_contacts(){
+    myApp.closePanel();
+    mainView.router.loadPage('contactos_ver.html');
+        db.transaction(
+            function(tx) {              
+                tx.executeSql('select * from contactos',[],function(tx, results){                        
+                var len=results.rows.length;
+                for(var i=0; i<len; i++){
+                    if(i==0){$$("#contacts_view").html("");}
+                    $$("#contacts_view").append("<li class='item-content'>"+
+                          "<div class='item-media'><i class='icon icon-form-name'></i></div>"+
+                          "<div class='item-inner'>"+
+                            "<div class='item-title'>"+results.rows.item(i).nombre+"</div>"+
+                          "</div>"+
+                        "</li>");
+                }
+            });
+        });
+    
 }

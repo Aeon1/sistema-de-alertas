@@ -3,6 +3,7 @@
 <!-- Top Navbar-->
 <div class="navbar">
   <div class="navbar-inner">
+  <div class="left"><a href="#" class="back link"> <i class="icon icon-left-arrow-angle"></i></a></div>
     <div class="center sliding">Contactos de emergencia</div>    
   </div>
 </div>
@@ -18,11 +19,6 @@
  
   <!-- Search Bar overlay -->
   <div class="searchbar-overlay"></div>
-  
-   <!-- Toolbar has additional "toolbar-bottom" class -->
-  <div class="toolbar toolbar-bottom">    
-      <a href="#" class="button button-big button-fill color-blue" onclick="registrar()">Finalizar</a>    
-  </div>
     <!-- Scrollable page content-->
     <div class="page-content hide-toolbar-on-scroll">
     <div class="content-block searchbar-not-found">
@@ -31,11 +27,20 @@
       <div class="content-block">
         <div class="content-block-inner">
             <div class="list-block list-block-search searchbar-found">
-              <ul id="contacts">
+            <div class="content-block-title">Contactos actuales</div>
+              <ul id="contacts_view">
               <li><p><span class="progressbar-infinite color-multi"></span></p></li>
               </ul>
             </div>
-        </div>
+        </div><br />
+        <div class="row">
+              <div class="col-50">
+                <a href="#" class="button button-big button-red sombra-roja" onclick="cancelar_reporte()">Cancelar</a>
+              </div>
+              <div class="col-50">
+                <a href="#" class="button button-big button-gold-c sombra" onclick="modificar_con()">Modificar</a>
+              </div>
+            </div>
       </div>
     </div>
   </div>
