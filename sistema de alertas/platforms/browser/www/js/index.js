@@ -44,8 +44,9 @@ myApp.onPageBeforeInit('reporte', function (page) {
     $$(page.navbarInnerContainer).find('#title_reporte').html(page.query.title);
     id_reporte=page.query.id;
     }else{
+        mainView.router.loadPage('iniciar.html');
         myApp.alert("No puede enviar reportes internet","Internet no encontrado");
-        iniciar();
+        
     }
 //    if(latitud=="" || longitude==""){
 //  navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
@@ -75,7 +76,7 @@ function showAlert() {
     navigator.notification.alert(
     'Algunas caracteristicas no estaran disponibles',     // mensaje (message)
     'Sin internet',            // titulo (title)
-    'Cerrar'                // nombre del botón (buttonName)
+    'Internet no detectado'                // nombre del botón (buttonName)
     );
     }
 
