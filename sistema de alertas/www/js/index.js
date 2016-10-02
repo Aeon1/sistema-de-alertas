@@ -32,6 +32,7 @@ var mainView = myApp.addView('.view-main', {
 });
 //saber si el gps esta funcionando
 myApp.onPageInit('index', function (page) {
+    var watchID = navigator.geolocation.watchPosition(onSuccessC, onErrorC, { timeout: 5000 });
     var myApp = new Framework7({swipePanel:'left'});
     
 });
@@ -54,7 +55,6 @@ myApp.onPageBeforeInit('reporte', function (page) {
     
 });
 function iniciar(){
-    var watchID = navigator.geolocation.watchPosition(onSuccessC, onErrorC, { timeout: 5000 });
      mainView.router.loadPage('iniciar.html');
 }
  var online;
@@ -114,7 +114,6 @@ function populateDB(tx) {
 
 }
 function verificado(){
-    navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
     myApp.showPreloader('Verificando estado del registro');
             db.transaction(
         function(tx) {
