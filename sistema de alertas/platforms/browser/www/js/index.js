@@ -116,7 +116,6 @@ function populateDB(tx) {
 }
 function verificado(){
     myApp.showPreloader('Verificando estado del registro');
-        setTimeout(function(){
             db.transaction(
         function(tx) {
         tx.executeSql('SELECT * FROM acceso',[],function(tx, results){
@@ -133,7 +132,7 @@ function verificado(){
             }
         });
     });
-        },3000);             
+                     
 }
 
 function aviso(){
