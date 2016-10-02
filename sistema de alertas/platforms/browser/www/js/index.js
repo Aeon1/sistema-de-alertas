@@ -114,6 +114,7 @@ function populateDB(tx) {
 
 }
 function verificado(){
+    navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
     myApp.showPreloader('Verificando estado del registro');
             db.transaction(
         function(tx) {
