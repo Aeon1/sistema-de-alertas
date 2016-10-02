@@ -4,6 +4,7 @@
   <author href="http://phonegap.com" email="support@phonegap.com">Innovacion Gubernamental</author>
   <content src="index.html"/>
   <preference name="DisallowOverscroll" value="true"/>
+  <preference name="HideKeyboardFormAccessoryBar" value="true"/>
   <preference name="android-minSdkVersion" value="14"/>
   <plugin name="cordova-plugin-camera" source="npm" spec="~2.1.1"/>
   <plugin name="cordova-plugin-media-capture" source="npm" spec="~1.2.0"/>

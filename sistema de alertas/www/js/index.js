@@ -18,7 +18,6 @@ function onDeviceReady() {
         verificado();
 }
 
-
  // Initialize your app
 var myApp = new Framework7({swipePanel:'left'});
 
@@ -34,20 +33,27 @@ var mainView = myApp.addView('.view-main', {
 //saber si el gps esta funcionando
 myApp.onPageInit('index', function (page) {
     var myApp = new Framework7({swipePanel:'left'});
+    
 });
 //comprobar nuevamente que el gps este activo
 myApp.onPageBeforeInit('reporte', function (page) {
+    if(online==1){
     var path_audio="";
     var path_foto="";
     var path_video="";
     $$(page.navbarInnerContainer).find('#title_reporte').html(page.query.title);
     id_reporte=page.query.id;
+    }else{
+        myApp.alert("No puede enviar reportes internet","Internet no encontrado");
+        iniciar();
+    }
 //    if(latitud=="" || longitude==""){
 //  navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
 //    }
     
 });
 function iniciar(){
+    var watchID = navigator.geolocation.watchPosition(onSuccessC, onErrorC, { timeout: 30000 });
      mainView.router.loadPage('iniciar.html');
 }
  var online;
@@ -109,9 +115,9 @@ function populateDB(tx) {
 
 }
 function verificado(){
-    var watchID = navigator.geolocation.watchPosition(onSuccessC, onErrorC, { timeout: 5000 });
     myApp.showPreloader('Verificando estado del registro');
-        db.transaction(
+        setTimeout(function(){
+            db.transaction(
         function(tx) {
         tx.executeSql('SELECT * FROM acceso',[],function(tx, results){
             myApp.hidePreloader();
@@ -126,7 +132,8 @@ function verificado(){
               aviso();  
             }
         });
-    });            
+    });
+        },3000);             
 }
 
 function aviso(){
@@ -648,7 +655,8 @@ var captureErrorvideo = function(error) {
 //obtencion de las coordenadas exitosa
 function onSuccessC(position) {
     latitud=position.coords.latitude;
-    longitude=position.coords.longitude;    
+    longitude=position.coords.longitude; 
+    console.log(latitud+","+longitude);   
 }
 // obtencion de las coordenadas error
 function onErrorC(error) {
@@ -686,6 +694,7 @@ function callNumber(number){
 //envio del reporte
 var totalx=0;
 function sendserver(){
+    if(latitud!="" && longitude!=""){
     $$("#aviso_importante").css('display', 'none');
     $$("#co_aviso").css('display', 'none');
     $$("#enviando_todo").css('display', 'block');
@@ -732,6 +741,16 @@ function sendserver(){
                             $$("#enviando_todo").css('display', 'none');
                         }
     });
+    }else{
+        myApp.alert('Asegurese que tiene habilitada la geolocalizacion', 'Ubicacion no encontrada', function () {
+        cordova.plugins.settings.open(function(){
+            console.log("opened settings")
+        },
+        function(){
+            console.log("failed to open settings")
+        });
+    });
+    }
     
 }
 //cancelar reporte
@@ -858,7 +877,7 @@ function sendSMS() {
                     		}
                     	}
                     	if(SMS){
-                    	   SMS.sendSMS(sendto, textmsg, function(){myApp.alert("El mensaje a sido enviado");}, function(str){myApp.alert(str);});
+                    	   SMS.sendSMS(sendto, textmsg, function(){myApp.alert("El mensaje a sido enviado",'SMS');}, function(str){myApp.alert(str);});
                         } 
                 });
             });
@@ -871,7 +890,7 @@ function startWatch() {
         	if(SMS) SMS.startWatch(function(){
 ////        		//myApp.alert('Esperando SMS', 'watching started');
         	}, function(){
-        		myApp.alert('Error iniciar watching');
+        		console.log('Error iniciar watching');
         	});
             initApp();
         }
@@ -880,7 +899,7 @@ function stopWatch() {
         	if(SMS) SMS.stopWatch(function(){
 ////        		//myApp.alert('Se dejo de esperar SMS', 'watching stopped');
         	}, function(){
-        		myApp.alert('failed to stop watching');
+        		console.log('failed to stop watching');
         	});
         }
 //revizar el contenido de los sms
