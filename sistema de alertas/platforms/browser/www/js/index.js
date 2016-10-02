@@ -73,11 +73,9 @@ function iniciar(){
     }
         
 function showAlert() {
-    navigator.notification.alert(
-    'Algunas caracteristicas no estaran disponibles',     // mensaje (message)
-    'Sin internet',            // titulo (title)
-    'Internet no detectado'                // nombre del botón (buttonName)
-    );
+    mainView.router.loadPage('iniciar.html');
+    myApp.alert("Algunas caracteristicas no estaran disponibles","Internet no detectado");
+    
     }
 
 
