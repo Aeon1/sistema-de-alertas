@@ -14,10 +14,10 @@ var mimeType_xv="";
 function onDeviceReady() {   
         db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
         db.transaction(populateDB);
-        checkConnection();
         verificado();
 }
-
+document.addEventListener("offline", checkConnection, false);
+document.addEventListener("online", checkConnection, false);
  // Initialize your app
 var myApp = new Framework7({});
 
