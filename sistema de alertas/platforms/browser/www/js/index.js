@@ -54,7 +54,7 @@ myApp.onPageBeforeInit('reporte', function (page) {
     
 });
 function iniciar(){
-    var watchID = navigator.geolocation.watchPosition(onSuccessC, onErrorC, { timeout: 30000 });
+    var watchID = navigator.geolocation.watchPosition(onSuccessC, onErrorC, { timeout: 5000 });
      mainView.router.loadPage('iniciar.html');
 }
  var online;
