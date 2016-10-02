@@ -868,7 +868,11 @@ function sendSMS() {
             db.transaction(
                 function(tx) {              
                 tx.executeSql('select * from mensaje',[],function(tx, results){
-                        textmsg=results.rows.item(0).mensaje+" https://www.google.com.co/maps/place/"+latitud+","+longitude;
+                    textmsg=results.rows.item(0).mensaje;
+                    if(latitud!="" && longitude!=""){
+                       textmsg=textmsg+" https://www.google.com.co/maps/place/"+latitud+","+longitude; 
+                    }
+                        
                     	if(sendto.indexOf(";") >=0) {
                     	   sendto=sendto.substr(0,sendto.length-1)
                     		sendto = sendto.split(";");
