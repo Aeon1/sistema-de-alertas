@@ -709,19 +709,19 @@ function sendserver(){
                         if(path_audio!=""){
                             totalx+=1;
                             sendfiles(path_audio,folio,mimeType_xa); 
-                            $$("#enviando_todo").append("<h2 class=text-center>Enviando audio</h2>"+
+                            $$("#enviando_todo").append("<h2 class='text-center gold'>Enviando audio</h2>"+
                             "<div class='progressbar color-orange pgrs1' data-progress='0'><span></span>");                                                        
                         }
                         if(path_foto!=""){                            
                             totalx+=1;
                             sendfiles2(path_foto,folio,mimeType_xf); 
-                             $$("#enviando_todo").append("<h2 class=text-center>Enviando foto</h2>"+
+                             $$("#enviando_todo").append("<h2 class='text-center gold'>Enviando foto</h2>"+
                             "<div class='progressbar color-orange pgrs2' data-progress='0'><span></span>");                           
                         }
                         if(path_video!=""){
                             totalx+=1;
                             sendfiles3(path_video,folio,mimeType_xv);
-                             $$("#enviando_todo").append("<h2 class=text-center>Enviando video</h2>"+
+                             $$("#enviando_todo").append("<h2 class='text-center gold'>Enviando video</h2>"+
                             "<div class='progressbar color-orange pgrs3' data-progress='0'><span></span>");                            
                         }     
                         $$("#preload_reporte").html("<span style='color:#00FF00'>Enviado</span>");                   
