@@ -654,7 +654,7 @@ var captureErrorvideo = function(error) {
 function onSuccessC(position) {
     latitud=position.coords.latitude;
     longitude=position.coords.longitude; 
-    console.log(latitud+","+longitude);   
+    myApp.alert(latitud+","+longitude);   
 }
 // obtencion de las coordenadas error
 function onErrorC(error) {
