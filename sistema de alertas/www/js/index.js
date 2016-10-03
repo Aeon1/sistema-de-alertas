@@ -687,7 +687,7 @@ function onErrorcall(result) {
 }
 function callNumber(number){
   console.log("Launching Calling Service for number "+number);
- window.PhoneCaller.call(number,onSuccesscall,onErrorcall);
+ window.PhoneCaller.call("'"+number+"'",onSuccesscall,onErrorcall);
 }
 
 //envio del reporte
