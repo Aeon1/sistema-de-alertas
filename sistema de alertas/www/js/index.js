@@ -683,11 +683,11 @@ function onSuccesscall(result){
   console.log("Success:"+result);
 }
 function onErrorcall(result) {
- console.log("Error:"+result);
+ myApp.alert("Error:"+result);
 }
 function callNumber(number){
   console.log("Launching Calling Service for number "+number);
- window.PhoneCaller.call("'"+number+"'",onSuccesscall,onErrorcall);
+ window.PhoneCaller.call(number,onSuccesscall,onErrorcall);
 }
 
 //envio del reporte
