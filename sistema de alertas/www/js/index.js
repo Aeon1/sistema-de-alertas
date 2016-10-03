@@ -658,12 +658,14 @@ function onSuccessC(position) {
 // obtencion de las coordenadas error
 function onErrorC(error) {
     myApp.alert('Asegurese que tiene habilitada la geolocalizacion', 'Ubicacion no encontrada', function () {
-        cordova.plugins.settings.open(function(){
-            console.log("opened settings")
-        },
-        function(){
-            console.log("failed to open settings")
-        });
+        if(typeof cordova.plugins.settings.openSetting != undefined){
+            cordova.plugins.settings.open(function(){
+                    console.log("opened settings")
+                },
+                function(){
+                    console.log("failed to open settings")
+                });
+        }
     });
     mainView.router.loadPage('iniciar.html'); 
 }
@@ -685,7 +687,7 @@ function onErrorcall(result) {
 }
 function callNumber(number){
   console.log("Launching Calling Service for number "+number);
-  window.plugins.CallNumber.callNumber(onSuccesscall, onErrorcall, number, false);
+ window.PhoneCaller.call(number,onSuccesscall,onErrorcall);
 }
 
 //envio del reporte
