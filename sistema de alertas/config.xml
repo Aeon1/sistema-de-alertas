@@ -6,7 +6,6 @@
   <preference name="DisallowOverscroll" value="true"/>
   <preference name="HideKeyboardFormAccessoryBar" value="true"/>
   <preference name="android-minSdkVersion" value="14"/>
-  <uses-permission android:name="android.permission.CALL_PHONE" />
   <plugin name="cordova-plugin-camera" source="npm" spec="~2.1.1"/>
   <plugin name="cordova-plugin-media-capture" source="npm" spec="~1.2.0"/>
   <plugin name="cordova-plugin-console" source="npm" spec="~1.0.2"/>

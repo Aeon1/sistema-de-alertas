@@ -140,7 +140,7 @@ function aviso(){
             tx.executeSql('SELECT * FROM aviso',[],function(tx, results){
             var len = results.rows.length;
             if(len==0){
-                myApp.popup('.popup-aviso');            
+                mainView.router.loadPage('aviso.html');            
             }else{
               checkDatos();  
             }
@@ -154,7 +154,7 @@ function aceptAviso(){
         tx.executeSql('INSERT INTO aviso(acepto) VALUES(?)',['si']);
     });        
         checkDatos();
-        myApp.closeModal('.popup-aviso')
+        //myApp.closeModal('.popup-aviso')
 }
 function checkDatos(){
         db.transaction(
@@ -658,12 +658,14 @@ function onSuccessC(position) {
 // obtencion de las coordenadas error
 function onErrorC(error) {
     myApp.alert('Asegurese que tiene habilitada la geolocalizacion', 'Ubicacion no encontrada', function () {
-        cordova.plugins.settings.open(function(){
-            console.log("opened settings")
-        },
-        function(){
-            console.log("failed to open settings")
-        });
+        if(typeof cordova.plugins.settings.openSetting != undefined){
+            cordova.plugins.settings.open(function(){
+                    console.log("opened settings")
+                },
+                function(){
+                    console.log("failed to open settings")
+                });
+        }
     });
     mainView.router.loadPage('iniciar.html'); 
 }
@@ -681,11 +683,11 @@ function onSuccesscall(result){
   console.log("Success:"+result);
 }
 function onErrorcall(result) {
- console.log("Error:"+result);
+ myApp.alert("Error:"+result);
 }
 function callNumber(number){
   console.log("Launching Calling Service for number "+number);
-  window.plugins.CallNumber.callNumber(onSuccesscall, onErrorcall, number, false);
+ window.PhoneCaller.call(number,onSuccesscall,onErrorcall);
 }
 
 //envio del reporte

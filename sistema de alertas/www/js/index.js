@@ -140,7 +140,7 @@ function aviso(){
             tx.executeSql('SELECT * FROM aviso',[],function(tx, results){
             var len = results.rows.length;
             if(len==0){
-                myApp.popup('.popup-aviso');            
+                mainView.router.loadPage('aviso.html');            
             }else{
               checkDatos();  
             }
@@ -154,7 +154,7 @@ function aceptAviso(){
         tx.executeSql('INSERT INTO aviso(acepto) VALUES(?)',['si']);
     });        
         checkDatos();
-        myApp.closeModal('.popup-aviso')
+        //myApp.closeModal('.popup-aviso')
 }
 function checkDatos(){
         db.transaction(
