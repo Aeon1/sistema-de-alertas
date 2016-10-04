@@ -723,7 +723,7 @@ function sendserver(){
                              $$("#enviando_todo").append("<h2 class='text-center gold'>Enviando video</h2>"+
                             "<div class='progressbar color-orange pgrs3' data-progress='0'><span></span>");                            
                         }     
-                        $$("#preload_reporte").html("<span style='color:#00FF00'>Enviado</span>");                   
+                        $$("#preload_reporte").html("<img src='src/boton palomita-17.png' style='width:42px; height:42px;'/>");                   
                         if(totalx==0){                            
                             mainView.router.loadPage('final.html');
                             console.log("sin archivos a enviar finalizado");
