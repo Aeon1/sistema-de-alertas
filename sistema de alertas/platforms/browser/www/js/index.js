@@ -116,7 +116,6 @@ function populateDB(tx) {
 
 }
 function verificado(){
-    myApp.closePanel();
     myApp.showPreloader('Verificando estado del registro');
             db.transaction(
         function(tx) {
