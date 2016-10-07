@@ -12,20 +12,22 @@ var mimeType_xa="";
 var mimeType_xf="";
 var mimeType_xv="";
 function onDeviceReady() { 
-    navigator.notification.alert(
-            'Iniciado correctamente',     // mensaje (message)
-            'prueba',            // titulo (title)
-            'Cerrar'                // nombre del botón (buttonName)
-            );
-        //db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
-//        db.transaction(populateDB);
+        db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
+        db.transaction(populateDB);
         
 }
 document.addEventListener("offline", checkConnection, false);
 document.addEventListener("online", checkConnection, false);
  // Initialize your app
 var myApp = new Framework7({
-    init:true
+    init:true,
+    preroute: function (view, options) {
+        navigator.notification.alert(
+        'Prueba de inicio',     // mensaje (message)
+        'prueba',            // titulo (title)
+        'Cerrar'                // nombre del botón (buttonName)
+        );
+    }
 });
 
 // Export selectors engine
