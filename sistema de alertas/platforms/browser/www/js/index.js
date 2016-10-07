@@ -14,6 +14,7 @@ var mimeType_xv="";
 function onDeviceReady() {   
         db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
         db.transaction(populateDB);
+        myApp.alert("inicio");
         verificado();
 }
 document.addEventListener("offline", checkConnection, false);
