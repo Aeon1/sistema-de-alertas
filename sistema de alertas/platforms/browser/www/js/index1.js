@@ -35,7 +35,11 @@ var app = {
     onDeviceReady: function() {
         db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
         //db.transaction(populateDB);
-        checkConnection();
+        navigator.notification.alert(
+    'Algunas caracteristicas no estaran disponibles',     // mensaje (message)
+    'Sin internet',            // titulo (title)
+    'Cerrar'                // nombre del botón (buttonName)
+    );
     }
     
 };
@@ -52,27 +56,7 @@ var mainView = myApp.addView('.view-main', {
     dynamicNavbar: true,
     swipeBackPage:false
 });
- var online;
- function checkConnection() {
-        var networkState = navigator.network.connection.type;
-        var states = {};
-    states[Connection.UNKNOWN]  = '1';
-    states[Connection.ETHERNET] = '1';
-    states[Connection.WIFI]     = '1';
-    states[Connection.CELL_2G]  = '1';
-    states[Connection.CELL_3G]  = '1';
-    states[Connection.CELL_4G]  = '1';
-    states[Connection.NONE]     = '0';
-    online=states[networkState];
-    if (online=='1'){showAlert();}
-    }
-    function showAlert() {
-    navigator.notification.alert(
-    'Algunas caracteristicas no estaran disponibles',     // mensaje (message)
-    'Sin internet',            // titulo (title)
-    'Cerrar'                // nombre del botón (buttonName)
-    );
-    }
+
 myApp.onPageInit('index', function (page) {
     myApp.alert("iniciado correctamente");
     
