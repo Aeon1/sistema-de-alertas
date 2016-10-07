@@ -39,11 +39,10 @@ var mainView = myApp.addView('.view-main', {
     dynamicNavbar: true,
     swipeBackPage:false
 });
-$$(document).on('pageInit', function (e) {
-  // Page Data contains all required information about loaded and initialized page 
-  var page = e.page.url;
-  myApp.alert(page);
-})
+myApp.onPageInit('aviso', function (page) {
+   myApp.alert("prueba inicio aviso");
+    
+});
 myApp.onPageInit('inicar', function (page) {
    myApp.alert("prueba inicio");
     
