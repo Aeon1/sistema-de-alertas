@@ -14,7 +14,6 @@ var mimeType_xv="";
 function onDeviceReady() { 
         db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
         db.transaction(populateDB);
-        
 }
 document.addEventListener("offline", checkConnection, false);
 document.addEventListener("online", checkConnection, false);
@@ -23,7 +22,9 @@ var myApp = new Framework7({
     init:true,
     preprocess: function (content, url, next) {
         if (url === 'index.html') {
-            myApp.alert("prueba de inicio");
+            myApp.alert("bien");
+        }else{
+            myApp.alert("mal");
         }
     }
 });
@@ -36,8 +37,8 @@ var mainView = myApp.addView('.view-main', {
     dynamicNavbar: true,
     swipeBackPage:false
 });
-myApp.onPageInit('inicar', function (page) {
-    myApp.alert("prueba de inicio");
+myApp.onPageBeforeInit('inicar', function (page) {
+   myApp.alert("prueba inicio");
     
 });
 //saber si el gps esta funcionando
