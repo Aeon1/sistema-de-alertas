@@ -21,12 +21,10 @@ document.addEventListener("online", checkConnection, false);
  // Initialize your app
 var myApp = new Framework7({
     init:true,
-    preroute: function (view, options) {
-        navigator.notification.alert(
-        'Prueba de inicio',     // mensaje (message)
-        'prueba',            // titulo (title)
-        'Cerrar'                // nombre del botón (buttonName)
-        );
+    preprocess: function (content, url, next) {
+        if (url === 'index.html') {
+            myApp.alert("prueba de inicio");
+        }
     }
 });
 
