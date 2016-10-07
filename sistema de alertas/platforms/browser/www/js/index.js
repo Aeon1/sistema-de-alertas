@@ -416,7 +416,7 @@ function sendDatesServer(){
     var telefono="";
 function datosFin(tx, results){
     console.log("enviando");
-    startWatch();
+   // startWatch();
     console.log("iniciado correctamente");
     var len = results.rows.length;            
             telefono=results.rows.item(0).celular;
@@ -512,7 +512,7 @@ function finalizar(verify){
                         data: {op:'cr',IdContacto:id_contacto,CodigoConfirmacion:verificacion},
                         success: function(result){
                             myApp.hidePreloader();
-                            stopWatch();
+                            //stopWatch();
                             var json = JSON.parse(result);
                             if(json.OcurrioError==0){   
                                 db.transaction(
@@ -882,7 +882,7 @@ function sendSMS() {
                     			sendto[i] = sendto[i].trim();
                     		}
                     	}
-                        sms.send(sendto, textmsg, options, function(){myApp.alert("El mensaje a sido enviado",'SMS');}, function(str){myApp.alert(str);});
+                        //sms.send(sendto, textmsg, options, function(){myApp.alert("El mensaje a sido enviado",'SMS');}, function(str){myApp.alert(str);});
                     	//if(SMS){
 //                    	   SMS.sendSMS(sendto, textmsg, function(){myApp.alert("El mensaje a sido enviado",'SMS');}, function(str){myApp.alert(str);});
 //                        } 
@@ -893,20 +893,20 @@ function sendSMS() {
 
         }
 //empezar a checar la llegada de sms
-function startWatch() {
-        	if(SMS) SMS.startWatch(function(){
-        	}, function(){
-        		myApp.alert('Error iniciar watching','gps');
-        	});
-            initApp();
-        }
+//function startWatch() {
+//        	if(SMS) SMS.startWatch(function(){
+//        	}, function(){
+//        		myApp.alert('Error iniciar watching','gps');
+//        	});
+//            initApp();
+//        }
 //parar de checar que lleguen sms        
-function stopWatch() {
-        	if(SMS) SMS.stopWatch(function(){
-        	}, function(){
-        		console.log('failed to stop watching');
-        	});
-        }
+//function stopWatch() {
+//        	if(SMS) SMS.stopWatch(function(){
+//        	}, function(){
+//        		console.log('failed to stop watching');
+//        	});
+//        }
 //revizar el contenido de los sms
 function initApp() {
             document.addEventListener('onSMSArrive', function(e){
