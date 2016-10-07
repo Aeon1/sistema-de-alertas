@@ -35,7 +35,7 @@ var app = {
     onDeviceReady: function() {
         db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
         //db.transaction(populateDB);
-        checkConnection()
+        checkConnection();
     }
     
 };
@@ -65,6 +65,13 @@ var mainView = myApp.addView('.view-main', {
     states[Connection.NONE]     = '0';
     online=states[networkState];
     if (online=='0'){showAlert();}
+    }
+    function showAlert() {
+    navigator.notification.alert(
+    'Algunas caracteristicas no estaran disponibles',     // mensaje (message)
+    'Sin internet',            // titulo (title)
+    'Cerrar'                // nombre del botón (buttonName)
+    );
     }
 myApp.onPageInit('index', function (page) {
     myApp.alert("iniciado correctamente");
