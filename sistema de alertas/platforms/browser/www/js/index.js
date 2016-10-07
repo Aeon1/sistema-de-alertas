@@ -14,6 +14,7 @@ var mimeType_xv="";
 function onDeviceReady() { 
         db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
         db.transaction(populateDB);
+        verificado();
 }
 document.addEventListener("offline", checkConnection, false);
 document.addEventListener("online", checkConnection, false);
@@ -21,10 +22,10 @@ document.addEventListener("online", checkConnection, false);
 var myApp = new Framework7({
     init:true,
     preprocess: function (content, url, next) {
-        if (url === 'index.html') {
-            myApp.alert("bien");
+        if (url === 'aviso.html') {
+           myApp.alert(url);
         }else{
-            myApp.alert("mal");
+            myApp.alert(url);
         }
     }
 });
@@ -37,7 +38,7 @@ var mainView = myApp.addView('.view-main', {
     dynamicNavbar: true,
     swipeBackPage:false
 });
-myApp.onPageBeforeInit('inicar', function (page) {
+myApp.onPageInit('inicar', function (page) {
    myApp.alert("prueba inicio");
     
 });
