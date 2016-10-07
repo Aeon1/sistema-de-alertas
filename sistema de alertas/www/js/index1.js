@@ -35,7 +35,11 @@ var app = {
     onDeviceReady: function() {
         db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
         db.transaction(populateDB);
-        var myApp = new Framework7({
+        
+    }
+    
+};
+var myApp = new Framework7({
     init:true,
     swipePanel:'left'
 });
@@ -48,9 +52,6 @@ var mainView = myApp.addView('.view-main', {
     dynamicNavbar: true,
     swipeBackPage:false
 });
-    },
-    
-};
 myApp.onPageInit('index', function (page) {
     myApp.alert("iniciado correctamente");
     
