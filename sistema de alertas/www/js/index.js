@@ -19,11 +19,13 @@ function onDeviceReady() {
             'prueba',            // titulo (title)
             'Cerrar'                // nombre del botón (buttonName)
             );
+            myApp.init();
 }
 document.addEventListener("offline", checkConnection, false);
 document.addEventListener("online", checkConnection, false);
  // Initialize your app
 var myApp = new Framework7({
+    init:false
 });
 
 // Export selectors engine
