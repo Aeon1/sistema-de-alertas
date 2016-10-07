@@ -15,12 +15,18 @@ function onDeviceReady() {
         db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
         db.transaction(populateDB);
         myApp.alert("inicio");
-        verificado();
+        
 }
 document.addEventListener("offline", checkConnection, false);
 document.addEventListener("online", checkConnection, false);
  // Initialize your app
-var myApp = new Framework7({});
+var myApp = new Framework7({
+    onPageInit: function (app, page) {
+    if (page.name === 'inicar') {
+      verificado();
+    }
+  }
+});
 
 // Export selectors engine
 var $$ = Dom7;
