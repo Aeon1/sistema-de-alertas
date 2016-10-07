@@ -4,7 +4,7 @@ document.addEventListener("online", checkConnection, false);
 function onDeviceReady() {
         db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
         db.transaction(populateDB);
-        verificado();
+        
 }
 var db=null;
 var id_contacto="";
@@ -80,9 +80,7 @@ function showAlert() {
     myApp.alert("Algunas caracteristicas no estaran disponibles","Internet no detectado");
     
     }
-function alerta(){
-    myApp.alert("Algunas caracteristicas no estaran disponibles","Internet no detectado");
-}
+
 
 function transaction_error(tx, error) {
     console.log("Database Error: " + error);
