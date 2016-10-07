@@ -22,6 +22,7 @@ document.addEventListener("online", checkConnection, false);
 var myApp = new Framework7({
     init:true,
     preprocess: function (content, url, next) {
+        myApp.alert(url);
         if (url === 'aviso.html') {
            myApp.alert(url);
         }else{
