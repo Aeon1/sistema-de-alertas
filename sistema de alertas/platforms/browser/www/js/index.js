@@ -667,8 +667,8 @@ function onErrorC(error) {
 //                    console.log("failed to open settings")
 //                });
 //        }
-    });
-    mainView.router.loadPage('iniciar.html'); 
+    //});
+    //mainView.router.loadPage('iniciar.html'); 
 }
 //activar gps del celular
 function activar_gps(){
@@ -743,12 +743,14 @@ function sendserver(){
     });
     }else{
         myApp.alert('Asegurese que tiene habilitada la geolocalizacion', 'Ubicacion no encontrada', function () {
-        cordova.plugins.settings.open(function(){
-            console.log("opened settings")
-        },
-        function(){
-            console.log("failed to open settings")
-        });
+        if(typeof cordova.plugins.settings.openSetting != undefined){
+            cordova.plugins.settings.open(function(){
+                    console.log("opened settings")
+                },
+                function(){
+                    console.log("failed to open settings")
+                });
+        }
     });
     }
     
