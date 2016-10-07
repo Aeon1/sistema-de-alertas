@@ -64,7 +64,7 @@ var mainView = myApp.addView('.view-main', {
     states[Connection.CELL_4G]  = '1';
     states[Connection.NONE]     = '0';
     online=states[networkState];
-    if (online=='0'){showAlert();}
+    if (online=='1'){showAlert();}
     }
     function showAlert() {
     navigator.notification.alert(
