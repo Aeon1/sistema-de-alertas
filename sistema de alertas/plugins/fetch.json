@@ -158,5 +158,29 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "com.phonegap.plugins.nativesettingsopener": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-nativesettings"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-phonecaller": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-phonecaller"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-sms": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-sms"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

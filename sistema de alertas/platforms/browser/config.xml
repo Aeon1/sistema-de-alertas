@@ -10,12 +10,14 @@
     <description>Hello World sample application that responds to the deviceready event.</description>
     <author email="support@phonegap.com" href="http://phonegap.com">Innovacion Gubernamental</author>
     <content src="index.html" />
-    <icon src="icon.png" />
+    <icon src="www/icon.png" />
     <access origin="*" />
-    <access origin="https://uniformesyutilesescolares.sinaloa.gob.mx" />
+    <access origin="https://*.sinaloa.gob.mx" />
+    <access origin="http://*.sinaloa.gob.mx" />
     <access origin="http://quody.co" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
+    <allow-navigation href="data:*" />
     <allow-intent href="tel:*" />
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />

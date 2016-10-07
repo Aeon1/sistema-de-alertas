@@ -1,0 +1,44 @@
+
+<!-- We don't need full layout here, because this page will be parsed with Ajax-->
+<!-- Top Navbar-->
+<div class="navbar">
+  <div class="navbar-inner">
+  <div class="left"><a href="#" class="back link"> <i class="icon icon-left-arrow-angle"></i></a></div>
+    <div class="center sliding" id="title_reporte"></div>    
+  </div>
+</div>
+<div class="pages">
+  <!-- Page, data-page contains page name-->
+  <div data-page="reporte" class="page">
+    <div class="page-content">
+    <p class="text-center" id="co_aviso" style="background: #E6E6E6; padding: 15px 0;margin-top: 0;color: #666666;">Agregar pruebas(Opcional)</p>
+        <div class="list-block inset">
+        <div id="aviso_importante">            
+            <p class="buttons-row" style="margin-top: -20px; position: relative;" >
+              <a href="#" class="button button-big button-gold-c audio sombra" style="border-right-color: white;" onclick="audio()">Audio</a>
+              <a href="#" class="button button-big button-gold-c foto sombra" style="border-right-color: white;" onclick="foto()">Foto</a>
+              <a href="#" class="button button-big button-gold-c video sombra" style="" onclick="video()">Video</a>
+            </p>        
+            <h1 class="text-center gold">&iexcl;Importante!</h1>
+            <div style="background: #E6E6E6;padding: 10px;border-radius: 10px;font-size: small!important;margin: -20px 10px 0 10px;">
+                <p>Esta por realizar el reporte de un "Incidente" una vez generado no podr&aacute; ser cancelado y se alertara a las autoridades correspondientes para su atenci&oacute;n.</p>
+                <p>El uso indebido de esta aplicaci&oacute;n ser&aacute; sancionado</p>
+                <h3 class="gold text-center">&iquest;ESTA SEGURO DE CONTINUAR CON EL REPORTE?</h3>
+            </div><br />
+            <div class="row">
+              <div class="col-50">
+                <a href="#" class="button button-big button-red sombra-roja" onclick="cancelar_reporte()">Cancelar</a>
+              </div>
+              <div class="col-50">
+                <a href="#" class="button button-big button-gold-c sombra" onclick="sendserver()">Enviar</a>
+              </div>
+            </div>
+        </div>
+        <div id="enviando_todo" style="display: none;">
+            <h1 class="text-center">Enviado reporte</h1>
+            <p style="text-align: center;" id="preload_reporte"><span style="width:42px; height:42px;" class="preloader"></span></p>
+        </div>
+        </div>
+    </div>
+  </div>
+</div>

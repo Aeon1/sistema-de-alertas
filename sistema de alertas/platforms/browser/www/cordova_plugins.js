@@ -602,6 +602,30 @@ module.exports = [
         "merges": [
             ""
         ]
+    },
+    {
+        "file": "plugins/com.phonegap.plugins.nativesettingsopener/www/settings.js",
+        "id": "com.phonegap.plugins.nativesettingsopener.Settings",
+        "pluginId": "com.phonegap.plugins.nativesettingsopener",
+        "clobbers": [
+            "cordova.plugins.settings"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-phonecaller/www/phonecaller.js",
+        "id": "cordova-plugin-phonecaller.PhoneCaller",
+        "pluginId": "cordova-plugin-phonecaller",
+        "clobbers": [
+            "PhoneCaller"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-sms/www/SMS.js",
+        "id": "cordova-plugin-sms.SMS",
+        "pluginId": "cordova-plugin-sms",
+        "clobbers": [
+            "window.SMS"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -626,7 +650,10 @@ module.exports.metadata =
     "cordova-plugin-battery-status": "1.1.2",
     "cordova-plugin-device-motion": "1.2.1",
     "cordova-plugin-device-orientation": "1.0.3",
-    "cordova-plugin-inappbrowser": "1.3.0"
+    "cordova-plugin-inappbrowser": "1.3.0",
+    "com.phonegap.plugins.nativesettingsopener": "1.1.0",
+    "cordova-plugin-phonecaller": "0.0.2",
+    "cordova-plugin-sms": "1.0.5"
 }
 // BOTTOM OF METADATA
 });
