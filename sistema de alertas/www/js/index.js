@@ -14,19 +14,16 @@ var mimeType_xv="";
 function onDeviceReady() {   
         db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
         db.transaction(populateDB);
-        myApp.alert("inicio");
+        navigator.notification.alert(
+            'Iniciado correctamente',     // mensaje (message)
+            'prueba',            // titulo (title)
+            'Cerrar'                // nombre del botón (buttonName)
+            );
 }
 document.addEventListener("offline", checkConnection, false);
 document.addEventListener("online", checkConnection, false);
  // Initialize your app
 var myApp = new Framework7({
-    init: true,
-    onPageInit: function (app, page) {
-    if (page.name === 'inicar') {
-        myApp.alert("ejecotandose");
-      verificado();
-    }
-  }
 });
 
 // Export selectors engine
@@ -34,7 +31,6 @@ var $$ = Dom7;
 
 // Add view
 var mainView = myApp.addView('.view-main', {
-    // Because we use fixed-through navbar we can enable dynamic navbar
     dynamicNavbar: true,
     swipeBackPage:false
 });
