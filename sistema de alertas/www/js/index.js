@@ -1,4 +1,9 @@
 document.addEventListener("deviceready", onDeviceReady, false);
+function onDeviceReady() {
+        db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
+        db.transaction(populateDB);
+        
+}
 var db=null;
 var id_contacto="";
 var codigo_confirmacion="";
@@ -11,11 +16,6 @@ var path_video="";
 var mimeType_xa="";
 var mimeType_xf="";
 var mimeType_xv="";
-function onDeviceReady() {
-        db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
-        db.transaction(populateDB);
-        
-}
 document.addEventListener("offline", checkConnection, false);
 document.addEventListener("online", checkConnection, false);
  // Initialize your app
@@ -57,9 +57,6 @@ myApp.onPageBeforeInit('reporte', function (page) {
 //    }
     
 });
-function iniciar(){
-     mainView.router.loadPage('iniciar.html');
-}
  var online;
  function checkConnection() {
         var networkState = navigator.network.connection.type;
@@ -679,6 +676,7 @@ var captureErrorvideo = function(error) {
 function onSuccessC(position) {
     latitud=position.coords.latitude;
     longitude=position.coords.longitude;
+    navigator.notification.alert('latitud: ' + longitude, null, 'Capture');
 }
 // obtencion de las coordenadas error
 function onErrorC(error) {

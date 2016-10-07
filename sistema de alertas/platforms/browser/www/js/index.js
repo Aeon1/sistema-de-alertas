@@ -57,9 +57,6 @@ myApp.onPageBeforeInit('reporte', function (page) {
 //    }
     
 });
-function iniciar(){
-     mainView.router.loadPage('iniciar.html');
-}
  var online;
  function checkConnection() {
         var networkState = navigator.network.connection.type;
