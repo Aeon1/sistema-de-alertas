@@ -129,6 +129,7 @@ function verificado(){
                   mainView.router.loadPage('index.html');  
                 }                        
             }else{
+                myApp.hidePreloader();
               aviso();  
             }
         });
