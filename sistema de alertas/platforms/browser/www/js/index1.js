@@ -34,8 +34,8 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
-        db.transaction(populateDB);
-        
+        //db.transaction(populateDB);
+        checkConnection()
     }
     
 };
@@ -52,6 +52,20 @@ var mainView = myApp.addView('.view-main', {
     dynamicNavbar: true,
     swipeBackPage:false
 });
+ var online;
+ function checkConnection() {
+        var networkState = navigator.network.connection.type;
+        var states = {};
+    states[Connection.UNKNOWN]  = '1';
+    states[Connection.ETHERNET] = '1';
+    states[Connection.WIFI]     = '1';
+    states[Connection.CELL_2G]  = '1';
+    states[Connection.CELL_3G]  = '1';
+    states[Connection.CELL_4G]  = '1';
+    states[Connection.NONE]     = '0';
+    online=states[networkState];
+    if (online=='0'){showAlert();}
+    }
 myApp.onPageInit('index', function (page) {
     myApp.alert("iniciado correctamente");
     
