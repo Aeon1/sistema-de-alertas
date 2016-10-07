@@ -424,7 +424,7 @@ function datosFin(tx, results){
             var nacimiento=fecha[2]+"/"+fecha[1]+"/"+fecha[0];
             console.log(telefono);
             $$.ajax({
-                        url:"https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx",
+                        url:"http://201.134.126.30/BackEnd911WebService/Servicio.aspx",
                         method: "POST", 
                         data: {
                             op:'rc',
@@ -474,7 +474,7 @@ function enviocontactos(id,verificacion){
             var len = results.rows.length;
             for (var i=0; i<len; i++){
                    $$.ajax({
-                        url:"https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx",
+                        url:"http://201.134.126.30/BackEnd911WebService/Servicio.aspx",
                         method: "POST", 
                         data: {op:'rce',IdContacto:id,CodigoConfirmacion:verificacion,Nombre:results.rows.item(i).nombre,PrimerApellido:'',SegundoApellido:'',TelefonoMovil:results.rows.item(i).telefono},
                         success: function(result){
@@ -507,7 +507,7 @@ function finalizar(verify){
     }
         console.log(id_contacto+" "+verificacion);
             $$.ajax({
-                        url:"https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx",
+                        url:"http://201.134.126.30/BackEnd911WebService/Servicio.aspx",
                         method: "POST",
                         data: {op:'cr',IdContacto:id_contacto,CodigoConfirmacion:verificacion},
                         success: function(result){
@@ -658,15 +658,15 @@ function onSuccessC(position) {
 }
 // obtencion de las coordenadas error
 function onErrorC(error) {
-    myApp.alert('Asegurese que tiene habilitada la geolocalizacion', 'Ubicacion no encontrada', function () {
-        if(typeof cordova.plugins.settings.openSetting != undefined){
-            cordova.plugins.settings.open(function(){
-                    console.log("opened settings")
-                },
-                function(){
-                    console.log("failed to open settings")
-                });
-        }
+    //myApp.alert('Asegurese que tiene habilitada la geolocalizacion', 'Ubicacion no encontrada', function () {
+//        if(typeof cordova.plugins.settings.openSetting != undefined){
+//            cordova.plugins.settings.open(function(){
+//                    console.log("opened settings")
+//                },
+//                function(){
+//                    console.log("failed to open settings")
+//                });
+//        }
     });
     mainView.router.loadPage('iniciar.html'); 
 }
@@ -699,7 +699,7 @@ function sendserver(){
     $$("#co_aviso").css('display', 'none');
     $$("#enviando_todo").css('display', 'block');
     $$.ajax({
-        url:"https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx",
+        url:"http://201.134.126.30/BackEnd911WebService/Servicio.aspx",
         method: "POST",
         data: {op:'ri',IdContacto:id_contacto,CodigoConfirmacion:codigo_confirmacion,IdIncidente:id_reporte,Latitud:latitud,Longitud:longitude},
             success: function(result){
@@ -784,7 +784,7 @@ function fail(error) {
 }
 //enviar los archivos
 function sendfiles(fileURL,folio,mime){
-    var uri = encodeURI("https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx");
+    var uri = encodeURI("http://201.134.126.30/BackEnd911WebService/Servicio.aspx");
  console.log(fileURL);
 var options = new FileUploadOptions();
 options.fileKey="archivos";
@@ -808,7 +808,7 @@ options.headers = headers;
     ft.upload(fileURL, uri, win, fail, options);
 }
 function sendfiles2(fileURL,folio,mime){
-    var uri = encodeURI("https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx");
+    var uri = encodeURI("http://201.134.126.30/BackEnd911WebService/Servicio.aspx");
  console.log(fileURL);
 var options = new FileUploadOptions();
 options.fileKey="archivos";
@@ -832,7 +832,7 @@ options.headers = headers;
     ft.upload(fileURL, uri, win, fail, options);
 }
 function sendfiles3(fileURL,folio,mime){
-    var uri = encodeURI("https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx");
+    var uri = encodeURI("http://201.134.126.30/BackEnd911WebService/Servicio.aspx");
  console.log(fileURL);
 var options = new FileUploadOptions();
 options.fileKey="archivos";
@@ -1035,7 +1035,7 @@ function boygunew(){
             tx.executeSql('DELETE FROM contactos',[],function(tx,results){
                 myApp.showPreloader('Guardando contactos de emergencia');
                 $$.ajax({
-                        url:"https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx",
+                        url:"http://201.134.126.30/BackEnd911WebService/Servicio.aspx",
                         method: "POST", 
                         data: {op:'ece',IDCONTACTO:id_contacto,CODIGOCONFIRMACION:codigo_confirmacion},
                         success: function(result){
@@ -1075,7 +1075,7 @@ function enviocontactos_new(){
             var len = results.rows.length;
             for (var i=0; i<len; i++){
                    $$.ajax({
-                        url:"https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx",
+                        url:"http://201.134.126.30/BackEnd911WebService/Servicio.aspx",
                         method: "POST", 
                         data: {op:'rce',IdContacto:id_contacto,CodigoConfirmacion:codigo_confirmacion,Nombre:results.rows.item(i).nombre,PrimerApellido:'',SegundoApellido:'',TelefonoMovil:results.rows.item(i).telefono},
                         success: function(result){

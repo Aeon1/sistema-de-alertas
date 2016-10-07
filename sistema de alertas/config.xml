@@ -83,14 +83,17 @@
         <param name="ios-package" value="CDVCapture" />
     </feature>
     <feature name="File">
-    <param name="ios-package" value="CDVFile" />
-</feature>
-<feature name="FileTransfer">
-    <param name="ios-package" value="CDVFileTransfer" />
-</feature>
-<feature name="NetworkStatus">
-    <param name="ios-package" value="CDVConnection" />
-</feature>
+        <param name="ios-package" value="CDVFile" />
+    </feature>
+    <feature name="FileTransfer">
+        <param name="ios-package" value="CDVFileTransfer" />
+    </feature>
+    <feature name="NetworkStatus">
+        <param name="ios-package" value="CDVConnection" />
+    </feature>
+    <feature name="Camera">
+        <param name="ios-package" value="CDVCamera" />
+    </feature>
   <access origin="*"/>
   <!-- Allow images, xhrs, etc. to google.com -->
     <access origin="https://uniformesyutilesescolares.sinaloa.gob.mx" />
