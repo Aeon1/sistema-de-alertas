@@ -4,7 +4,7 @@ document.addEventListener("online", checkConnection, false);
 function onDeviceReady() {
         db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
         db.transaction(populateDB);
-        
+        verificado();
 }
 var db=null;
 var id_contacto="";
