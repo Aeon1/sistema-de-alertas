@@ -20,8 +20,10 @@ document.addEventListener("offline", checkConnection, false);
 document.addEventListener("online", checkConnection, false);
  // Initialize your app
 var myApp = new Framework7({
+    init: true,
     onPageInit: function (app, page) {
     if (page.name === 'inicar') {
+        myApp.alert("ejecotandose");
       verificado();
     }
   }
