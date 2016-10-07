@@ -73,7 +73,24 @@
     <splash src="www/res/screen/ios/Default@2x~iphone.png" platform="ios" width="640" height="960"/>
     <splash src="www/res/screen/ios/Default~iphone.png" platform="ios" width="320" height="480"/>
   </platform>
-  
+    <feature name="Geolocation">
+        <param name="ios-package" value="CDVLocation" />
+    </feature>
+    <feature name="Contacts">
+        <param name="ios-package" value="CDVContacts" />
+    </feature>
+    <feature name="Capture">
+        <param name="ios-package" value="CDVCapture" />
+    </feature>
+    <feature name="File">
+    <param name="ios-package" value="CDVFile" />
+</feature>
+<feature name="FileTransfer">
+    <param name="ios-package" value="CDVFileTransfer" />
+</feature>
+<feature name="NetworkStatus">
+    <param name="ios-package" value="CDVConnection" />
+</feature>
   <access origin="*"/>
   <!-- Allow images, xhrs, etc. to google.com -->
     <access origin="https://uniformesyutilesescolares.sinaloa.gob.mx" />

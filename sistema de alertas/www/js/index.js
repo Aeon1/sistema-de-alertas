@@ -415,6 +415,7 @@ function sendDatesServer(){
     }
     var telefono="";
 function datosFin(tx, results){
+    console.log("enviando");
     startWatch();
     console.log("iniciado correctamente");
     var len = results.rows.length;            
@@ -891,16 +892,14 @@ function sendSMS() {
 //empezar a checar la llegada de sms
 function startWatch() {
         	if(SMS) SMS.startWatch(function(){
-////        		//myApp.alert('Esperando SMS', 'watching started');
         	}, function(){
-        		console.log('Error iniciar watching');
+        		myApp.alert('Error iniciar watching','gps');
         	});
             initApp();
         }
 //parar de checar que lleguen sms        
 function stopWatch() {
         	if(SMS) SMS.stopWatch(function(){
-////        		//myApp.alert('Se dejo de esperar SMS', 'watching stopped');
         	}, function(){
         		console.log('failed to stop watching');
         	});
@@ -914,9 +913,7 @@ function initApp() {
             	if(jsonobject.address=="5549998687"){
             	   var res = jsonobject.body.split(":");
             	   finalizar(res[1]);
-            	   //myApp.alert( jsonobject.body);
-            	}    	
-            	
+            	}           	
             });
         }
 //editar mensaje sms a enviar a contactos de emergencia
@@ -988,8 +985,7 @@ function modificar_con(){
                     );
 }
 //guardar los nuevos contactos
-function Save_new_con(){
-    
+function Save_new_con(){    
     var checkboxes = $$("#contacts_m input[type='checkbox']");
     var cont = 0;
     for (var x=0; x < checkboxes.length; x++) {
@@ -1070,9 +1066,6 @@ function boygunew(){
                 
             });
          });
-
-
-
 }
 //se envian los contactos al servidor
 function enviocontactos_new(){
