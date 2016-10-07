@@ -1,4 +1,6 @@
 document.addEventListener("deviceready", onDeviceReady, false);
+document.addEventListener("offline", checkConnection, false);
+document.addEventListener("online", checkConnection, false);
 function onDeviceReady() {
         db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
         db.transaction(populateDB);
@@ -16,8 +18,7 @@ var path_video="";
 var mimeType_xa="";
 var mimeType_xf="";
 var mimeType_xv="";
-document.addEventListener("offline", checkConnection, false);
-document.addEventListener("online", checkConnection, false);
+
  // Initialize your app
 var myApp = new Framework7({
     init:true,
@@ -32,7 +33,9 @@ var mainView = myApp.addView('.view-main', {
     dynamicNavbar: true,
     swipeBackPage:false
 });
-
+myApp.onPageInit('*', function (page) {
+  myApp.alert(page.name + ' initialized'); 
+});
 //saber si el gps esta funcionando
 myApp.onPageInit('index', function (page) {
     var watchID = navigator.geolocation.watchPosition(onSuccessC, onErrorC, { timeout: 5000 });
