@@ -69,6 +69,13 @@
                     </a>
                   </li>
                   <li>
+                    <a href="#" class="item-content item-link" onclick="verificado()">
+                      <div class="item-inner">
+                        <div class="item-title">Registrar</div>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
                     <a href="#" class="item-content item-link" onclick="vaciar()">
                       <div class="item-inner">
                         <div class="item-title">Vaciar registros</div>
@@ -107,25 +114,38 @@
         <!-- Pages container, because we use fixed-through navbar and toolbar, it has additional appropriate classes-->
         <div class="pages navbar-through toolbar-through">
           <!-- Page, "data-page" contains page name -->
-          <div data-page="inicar" class="page">
+          <div data-page="index" class="page">
             <!-- Scrollable page content -->
-            <div class="page-content">
+            <div class="page-content ">
                 <div class="list-block inset">
-                    <p class="text-center">Ingrese el codigo de confirmacion</p>
-                  <ul>
-                    <li>
-                      <div class="item-content">
-                        <div class="item-inner">
-                          <div class="item-input">
-                              <input type="text" name="registrar" placeholder="Codigo de confirmacion" class="text-center" id="codigo_confirmacion">
+                      <div class="row" >
+                          <div class="col-50" >
+                            <div class="button " style='height: 100%;border:none;' onclick="robo()"><img src="img/botones-03.png" style="width: 80%" /></div>
                           </div>
-                        </div>
+                          <div class="col-50">
+                            <div class="button" style='height: 100%;border:none;' onclick="abuso_autoridad()" ><img src="img/botones-04.png" style="width: 80%;" /></div>
+                          </div>
+                      </div> 
+                      <div class="row">
+                          <div class="col-50">
+                            <div class="button" style='height: 100%;border: none;' onclick="incendio()"><img src="img/botones-05.png" style="width: 80%;" /></div>
+                          </div>
+                          <div class="col-50">
+                            <div class="button" style='height: 100%;border: none;' onclick="violencia_mujeres()" ><img src="img/botones-06.png" style="width: 80%;" /></div>
+                          </div>
                       </div>
-                    </li>
-                  </ul>
-                  <br />
-                  <a href="#" class="button button-big button-gold-c sombra" onclick="finalizar()">Validar</a>
-                </div>
+                      <div class="row">
+                          <div class="col-50">
+                            <div class="button" style='height: 100%;border: none;' onclick="accidente()"><img src="img/botones-07.png" style="width: 80%;" /></div>
+                          </div>
+                          <div class="col-50">
+                            <div class="button" style='height: 100%;border: none;' onclick="emergencia()" ><img src="img/botones-08.png" style="width: 80%;" /></div>
+                          </div>
+                      </div>
+                      <br />
+                      <a href="#" class="button button-red sombra-roja"  style='height: 60px;border:none;' onclick="callNumber('911')" ><h3>Llamada de emergancia 911&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon icon-phone-call" style="color: white;"></i></h3></a>
+                    
+                </div>            
             </div>
           </div>
         </div>
@@ -138,6 +158,6 @@
     <!-- panel 3d -->
     <script src="js/framework7.3dpanels.min.js"></script>
     <!-- Path to your app js-->
-    <script type="text/javascript" src="js/my-app.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
   </body>
 </html>

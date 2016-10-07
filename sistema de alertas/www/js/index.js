@@ -14,21 +14,13 @@ var mimeType_xv="";
 function onDeviceReady() { 
         db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
         db.transaction(populateDB);
-        verificado();
 }
 document.addEventListener("offline", checkConnection, false);
 document.addEventListener("online", checkConnection, false);
  // Initialize your app
 var myApp = new Framework7({
     init:true,
-    preprocess: function (content, url, next) {
-        myApp.alert(url);
-        if (url === 'aviso.html') {
-           myApp.alert(url);
-        }else{
-            myApp.alert(url);
-        }
-    }
+    swipePanel:'left'
 });
 
 // Export selectors engine
@@ -39,22 +31,15 @@ var mainView = myApp.addView('.view-main', {
     dynamicNavbar: true,
     swipeBackPage:false
 });
-myApp.onPageInit('aviso', function (page) {
-   myApp.alert("prueba inicio aviso");
-    
-});
-myApp.onPageInit('inicar', function (page) {
-   myApp.alert("prueba inicio");
-    
-});
+
 //saber si el gps esta funcionando
 myApp.onPageInit('index', function (page) {
     var watchID = navigator.geolocation.watchPosition(onSuccessC, onErrorC, { timeout: 5000 });
-    var myApp = new Framework7({swipePanel:'left'});
     
 });
 //comprobar nuevamente que el gps este activo
 myApp.onPageBeforeInit('reporte', function (page) {
+    verificado();
     if(online==1){
     var path_audio="";
     var path_foto="";
@@ -131,6 +116,7 @@ function populateDB(tx) {
 
 }
 function verificado(){
+    myApp.closePanel();
     myApp.showPreloader('Verificando estado del registro');
             db.transaction(
         function(tx) {
@@ -671,7 +657,7 @@ var captureErrorvideo = function(error) {
 //obtencion de las coordenadas exitosa
 function onSuccessC(position) {
     latitud=position.coords.latitude;
-    longitude=position.coords.longitude;  
+    longitude=position.coords.longitude;
 }
 // obtencion de las coordenadas error
 function onErrorC(error) {
