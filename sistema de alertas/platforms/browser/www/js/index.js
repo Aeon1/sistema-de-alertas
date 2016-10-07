@@ -17,7 +17,6 @@ function onDeviceReady() {
             'prueba',            // titulo (title)
             'Cerrar'                // nombre del botón (buttonName)
             );
-            myApp.init();
         //db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
 //        db.transaction(populateDB);
         
@@ -26,7 +25,7 @@ document.addEventListener("offline", checkConnection, false);
 document.addEventListener("online", checkConnection, false);
  // Initialize your app
 var myApp = new Framework7({
-    init:false
+    init:true
 });
 
 // Export selectors engine
