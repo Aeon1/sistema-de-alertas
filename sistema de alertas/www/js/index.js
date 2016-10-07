@@ -11,15 +11,16 @@ var path_video="";
 var mimeType_xa="";
 var mimeType_xf="";
 var mimeType_xv="";
-function onDeviceReady() {   
-        db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
-        db.transaction(populateDB);
-        navigator.notification.alert(
+function onDeviceReady() { 
+    navigator.notification.alert(
             'Iniciado correctamente',     // mensaje (message)
             'prueba',            // titulo (title)
             'Cerrar'                // nombre del botón (buttonName)
             );
             myApp.init();
+        //db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
+//        db.transaction(populateDB);
+        
 }
 document.addEventListener("offline", checkConnection, false);
 document.addEventListener("online", checkConnection, false);
@@ -35,6 +36,10 @@ var $$ = Dom7;
 var mainView = myApp.addView('.view-main', {
     dynamicNavbar: true,
     swipeBackPage:false
+});
+myApp.onPageInit('inicar', function (page) {
+    myApp.alert("prueba de inicio");
+    
 });
 //saber si el gps esta funcionando
 myApp.onPageInit('index', function (page) {
