@@ -24,7 +24,7 @@
   <plugin name="cordova-plugin-nativesettings" source="npm"/>
   <plugin name="cordova-plugin-phonecaller" source="npm"/>
   <plugin name="cordova-plugin-sms" source="npm" />
-  <icon src="icon.png"/>
+  <icon src="www/icon.png"/>
   <platform name="android">
     <icon src="www/res/icon/android/drawable-ldpi-icon.png" density="ldpi"/>
     <icon src="www/res/icon/android/drawable-mdpi-icon.png" density="mdpi"/>
@@ -76,10 +76,13 @@
   
   <access origin="*"/>
   <!-- Allow images, xhrs, etc. to google.com -->
-    <access origin="https://uniformesyutilesescolares.sinaloa.gob.mx" />
+
+    <access origin="https://*.sinaloa.gob.mx" />
+    <access origin="http://*.sinaloa.gob.mx" />
     <access origin="http://quody.co" />
   <allow-intent href="http://*/*"/>
   <allow-intent href="https://*/*"/>
+  <allow-navigation href="data:*" />
   <allow-intent href="tel:*"/>
   <allow-intent href="sms:*"/>
   <allow-intent href="mailto:*"/>
@@ -90,5 +93,21 @@
   <platform name="ios">
     <allow-intent href="itms:*"/>
     <allow-intent href="itms-apps:*"/>
+    <config-file target="*-Info.plist" parent="CFBundleURLTypes">
+      <array>
+          <dict>
+              <key>NSContactsUsageDescription</key>
+              <string>$(PRODUCT_NAME) contact use</string>
+              <key>NSCameraUsageDescription</key>
+              <string>$(PRODUCT_NAME) contact use</string>
+              <key>NSMicrophoneUsageDescription</key>
+              <string>$(PRODUCT_NAME) contact use</string>
+              <key>NSLocationWhenInUseUsageDescription</key>
+              <string>$(PRODUCT_NAME) contact use</string>
+              <key>NSPhotoLibraryUsageDescription</key>
+              <string>$(PRODUCT_NAME) contact use</string>
+          </dict>
+      </array>
+    </config-file>
   </platform>
 </widget>
