@@ -19,5 +19,8 @@ var mainView = myApp.addView('.view-main', {
     // Because we use fixed-through navbar we can enable dynamic navbar
     dynamicNavbar: true
 });
-
+$$(document).on('pageInit', function (e) {
+  // Page Data contains all required information about loaded and initialized page 
+  mainView.router.loadPage('iniciar.html');
+})
 
