@@ -882,9 +882,10 @@ function sendSMS() {
                     			sendto[i] = sendto[i].trim();
                     		}
                     	}
-                    	if(SMS){
-                    	   SMS.sendSMS(sendto, textmsg, function(){myApp.alert("El mensaje a sido enviado",'SMS');}, function(str){myApp.alert(str);});
-                        } 
+                        sms.send(sendto, textmsg, options, function(){myApp.alert("El mensaje a sido enviado",'SMS');}, function(str){myApp.alert(str);});
+                    	//if(SMS){
+//                    	   SMS.sendSMS(sendto, textmsg, function(){myApp.alert("El mensaje a sido enviado",'SMS');}, function(str){myApp.alert(str);});
+//                        } 
                 });
             });
         });

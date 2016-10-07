@@ -23,7 +23,7 @@
   <plugin name="cordova-plugin-whitelist" source="npm" spec="~1.2.1"/>
   <plugin name="cordova-plugin-nativesettings" source="npm"/>
   <plugin name="cordova-plugin-phonecaller" source="npm"/>
-  <plugin name="cordova-plugin-sms" source="npm" />
+  <plugin name="cordova-sms-plugin" source="npm" />
   <icon src="icon.png"/>
   <platform name="android">
     <icon src="www/res/icon/android/drawable-ldpi-icon.png" density="ldpi"/>
