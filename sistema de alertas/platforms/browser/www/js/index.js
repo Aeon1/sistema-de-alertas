@@ -11,9 +11,10 @@ var path_video="";
 var mimeType_xa="";
 var mimeType_xf="";
 var mimeType_xv="";
-function onDeviceReady() { 
+function onDeviceReady() {
         db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
         db.transaction(populateDB);
+        
 }
 document.addEventListener("offline", checkConnection, false);
 document.addEventListener("online", checkConnection, false);
@@ -39,7 +40,7 @@ myApp.onPageInit('index', function (page) {
 });
 //comprobar nuevamente que el gps este activo
 myApp.onPageBeforeInit('reporte', function (page) {
-    verificado();
+    onDeviceReady();
     if(online==1){
     var path_audio="";
     var path_foto="";
@@ -47,7 +48,7 @@ myApp.onPageBeforeInit('reporte', function (page) {
     $$(page.navbarInnerContainer).find('#title_reporte').html(page.query.title);
     id_reporte=page.query.id;
     }else{
-        mainView.router.loadPage('iniciar.html');
+        mainView.router.loadPage('index.html');
         myApp.alert("No puede enviar reportes internet","Internet no encontrado");
         
     }
@@ -113,11 +114,12 @@ function populateDB(tx) {
     tx.executeSql('CREATE TABLE IF NOT EXISTS acceso(id INTEGER PRIMARY KEY AUTOINCREMENT,contacto,confirmacion,verificado)');
     tx.executeSql('CREATE TABLE IF NOT EXISTS mensaje(id INTEGER PRIMARY KEY AUTOINCREMENT,mensaje)');
     tx.executeSql('INSERT INTO mensaje(mensaje) VALUES(?)',['Tuve un incidente, estoy bien, estoy en:']);
-
+verificado();
 }
 function verificado(){
     myApp.showPreloader('Verificando estado del registro');
-            db.transaction(
+    console.log('verificando');
+        db.transaction(
         function(tx) {
         tx.executeSql('SELECT * FROM acceso',[],function(tx, results){
             myApp.hidePreloader();
