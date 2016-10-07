@@ -77,7 +77,9 @@ function showAlert() {
     myApp.alert("Algunas caracteristicas no estaran disponibles","Internet no detectado");
     
     }
-
+function alerta(){
+    myApp.alert("Algunas caracteristicas no estaran disponibles","Internet no detectado");
+}
 
 function transaction_error(tx, error) {
     console.log("Database Error: " + error);
@@ -676,7 +678,6 @@ var captureErrorvideo = function(error) {
 function onSuccessC(position) {
     latitud=position.coords.latitude;
     longitude=position.coords.longitude;
-    navigator.notification.alert('latitud: ' + longitude, null, 'Capture');
 }
 // obtencion de las coordenadas error
 function onErrorC(error) {
