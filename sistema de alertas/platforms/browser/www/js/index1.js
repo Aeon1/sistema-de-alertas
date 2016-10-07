@@ -33,17 +33,25 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
-        app.receivedEvent('deviceready');
+        db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
+        db.transaction(populateDB);
+        var myApp = new Framework7({
+    init:true,
+    swipePanel:'left'
+});
+
+// Export selectors engine
+var $$ = Dom7;
+
+// Add view
+var mainView = myApp.addView('.view-main', {
+    dynamicNavbar: true,
+    swipeBackPage:false
+});
     },
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
-
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
-
-        console.log('Received Event: ' + id);
-    }
+    
 };
+myApp.onPageInit('index', function (page) {
+    myApp.alert("iniciado correctamente");
+    
+});
