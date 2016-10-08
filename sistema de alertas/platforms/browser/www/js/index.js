@@ -2,21 +2,11 @@ document.addEventListener("deviceready", onDeviceReady, false);
 document.addEventListener("offline", checkConnection, false);
 document.addEventListener("online", checkConnection, false);
 function onDeviceReady() {    
-       // db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
-//        db.transaction(populateDB);
-//        verificado();
-//        checkConnection();
-       var cameraPopoverHandle = navigator.camera.getPicture(onSuccess, onFail,
-     { destinationType: Camera.DestinationType.FILE_URI,
-       sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-       popoverOptions: new CameraPopoverOptions(300, 300, 100, 100, Camera.PopoverArrowDirection.ARROW_ANY)
-     });
+        db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
+        db.transaction(populateDB);
+        verificado();
+        checkConnection();
 
- // Reposition the popover if the orientation changes.
- window.onorientationchange = function() {
-     var cameraPopoverOptions = new CameraPopoverOptions(0, 0, 100, 100, Camera.PopoverArrowDirection.ARROW_ANY);
-     cameraPopoverHandle.setPosition(cameraPopoverOptions);
- }
 }
 var db=null;
 var id_contacto="";
@@ -131,6 +121,7 @@ myApp.onPageInit('index', function (page) {mainView.router.loadPage('iniciar.htm
 });
 //comprobar nuevamente que el gps este activo
 myApp.onPageBeforeInit('reporte', function (page) {
+    navigator.device.capture.captureAudio(captureSuccessaudio, captureErroraudio, {});
     if(online==1){
     var path_audio="";
     var path_foto="";
