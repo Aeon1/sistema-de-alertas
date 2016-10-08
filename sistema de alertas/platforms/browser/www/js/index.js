@@ -123,7 +123,7 @@ function verificado(){
                 id_contacto=results.rows.item(0).contacto;
                 codigo_confirmacion=results.rows.item(0).confirmacion;
                 if(results.rows.item(0).verificado==1){ 
-                  mainView.router.loadPage('index.html');  
+                  mainView.router.loadPage('iniciar.html');  
                 }                        
             }else{
                 myApp.hidePreloader();
@@ -144,7 +144,7 @@ function verificado_panel(){
                 id_contacto=results.rows.item(0).contacto;
                 codigo_confirmacion=results.rows.item(0).confirmacion;
                 if(results.rows.item(0).verificado==1){ 
-                  mainView.router.loadPage('index.html');  
+                  mainView.router.loadPage('iniciar.html');  
                 }                        
             }else{
               aviso();  
