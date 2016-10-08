@@ -12,7 +12,7 @@
     <content src="index.html" />
     <icon src="icon.png" />
     <access origin="*" />
-    <access origin="https://uniformesyutilesescolares.sinaloa.gob.mx" />
+    <access origin="http://201.134.126.30" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
