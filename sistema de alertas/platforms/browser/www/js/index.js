@@ -2,10 +2,10 @@ document.addEventListener("deviceready", onDeviceReady, false);
 document.addEventListener("offline", checkConnection, false);
 document.addEventListener("online", checkConnection, false);
 function onDeviceReady() {    
-        db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
-        db.transaction(populateDB);
-        verificado();
-        checkConnection();
+       // db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
+//        db.transaction(populateDB);
+//        verificado();
+//        checkConnection();
         navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
     destinationType: Camera.DestinationType.DATA_URL
 });
