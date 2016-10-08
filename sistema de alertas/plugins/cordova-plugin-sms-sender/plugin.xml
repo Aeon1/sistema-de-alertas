@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="cordova-plugin-sms-sender"
+        version="1.0.0">
+    <name>SMS Sender Cordova Plugin</name>
+    <description></description>
+    <license>Apache 2.0</license>
+    <keywords>cordova,sms,sender</keywords>
+    <repo></repo>
+    <issue></issue>
+    <engines>
+        <engine name="cordova-plugman" version=">=4.2.0"/>
+    </engines>
+
+    <js-module src="www/smssenderplugin.js" name="SMSSenderPlugin">
+        <merges target="sMSSenderPlugin" />
+    </js-module>
+    
+    <platform name="android">
+        <config-file target="config.xml" parent="/*">
+            <feature name="SMSSenderPlugin" >
+                <param name="android-package" value="com.ferdinandsilva.android.SMSSenderPlugin"/>
+            </feature>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/*">
+            <uses-permission android:name="android.permission.SEND_SMS" />
+        </config-file>
+        <source-file src="src/android/SMSSenderPlugin.java" target-dir="src/com/ferdinandsilva/android" />
+    </platform>
+
+    <platform name="ios">
+        <hook type="after_plugin_install" src="hooks/add_swift_support.js" />
+
+        <config-file target="config.xml" parent="/*">
+          <feature name="SMSSenderPlugin">
+            <param name="ios-package" value="SMSSenderPlugin"/>
+          </feature>
+        </config-file>
+
+        <header-file src="src/ios/SMSSenderPlugin-Bridging-Header.h" />
+        <source-file src="src/ios/SMSSenderPlugin.swift"/>
+
+    </platform>
+
+</plugin>

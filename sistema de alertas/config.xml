@@ -21,7 +21,7 @@
   <plugin name="cordova-plugin-splashscreen" source="npm" spec="~3.2.1"/>
   <plugin name="cordova-plugin-statusbar" source="npm" spec="~2.1.2"/>
   <plugin name="cordova-plugin-whitelist" source="npm" spec="~1.2.1"/>
-  <plugin name="cordova-plugin-sms" source="npm" spec="*"/>
+  <plugin name="cordova-plugin-sms-sender" source="npm" spec="*"/>
   <plugin name="cordova-plugin-nativesettings" source="npm" spec="*"/>
   <plugin name="cordova-plugin-phonecaller" source="npm" spec="*"/>
   <icon src="icon.png"/>

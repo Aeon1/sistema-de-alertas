@@ -37,6 +37,12 @@ myApp.onPageInit('index', function (page) {
     var myApp = new Framework7({swipePanel:'left'});
     
 });
+myApp.onPageInit('enviado', function (page) {
+    path_audio="";
+    path_foto="";
+    path_video="";
+    
+});
 //comprobar nuevamente que el gps este activo
 myApp.onPageBeforeInit('reporte', function (page) {
     if(online==1){
@@ -868,7 +874,7 @@ function sendSMS() {
         function(tx) {              
         tx.executeSql('select * from contactos',[],function(tx, results){
             var len = results.rows.length;            
-            for (var i=0; i<len; i++){sendto += results.rows.item(i).telefono+";";}
+            
             db.transaction(
                 function(tx) {              
                 tx.executeSql('select * from mensaje',[],function(tx, results){
@@ -876,40 +882,47 @@ function sendSMS() {
                     if(latitud!="" && longitude!=""){
                        textmsg=textmsg+" https://www.google.com.co/maps/place/"+latitud+","+longitude; 
                     }
-                        
-                    	if(sendto.indexOf(";") >=0) {
-                    	   sendto=sendto.substr(0,sendto.length-1)
-                    		sendto = sendto.split(";");
-                    		for(i in sendto) {
-                    			sendto[i] = sendto[i].trim();
-                    		}
-                    	}
-                    	if(SMS){
-                    	   SMS.sendSMS(sendto, textmsg, function(){myApp.alert("El mensaje a sido enviado",'SMS');}, function(str){myApp.alert('str');});
-                        } 
+                     //   
+//                    	if(sendto.indexOf(";") >=0) {
+//                    	   sendto=sendto.substr(0,sendto.length-1)
+//                    		sendto = sendto.split(";");
+//                    		for(i in sendto) {
+//                    			sendto[i] = sendto[i].trim();
+//                    		}
+//                    	}
+//                    	if(SMS){
+//                    	   SMS.sendSMS(sendto, textmsg, function(){myApp.alert("El mensaje a sido enviado",'SMS');}, function(str){myApp.alert('str');});
+//                        } 
                 });
             });
+            for (var i=0; i<len; i++){sendto += results.rows.item(i).telefono+";";
+                window.sMSSenderPlugin.sendMessage(results.rows.item(i).telefono, textmsg, function(e){
+                    myApp.alert("El mensaje a sido enviado",'SMS');
+            }, function(e){
+                myApp.alert('error '+e);
+            });
+            }
         });
     });
 
         }
-//empezar a checar la llegada de sms
-function startWatch() {
-        	if(SMS) SMS.startWatch(function(){
-        		myApp.alert('Esperando SMS', 'watching started');
-        	}, function(){
-        		console.log('Error iniciar watching');
-        	});
-            initApp();
-        }
-//parar de checar que lleguen sms        
-function stopWatch() {
-        	if(SMS) SMS.stopWatch(function(){
-        		myApp.alert('Se dejo de esperar SMS', 'watching stopped');
-        	}, function(){
-        		console.log('failed to stop watching');
-        	});
-        }
+
+//function startWatch() {
+//        	if(SMS) SMS.startWatch(function(){
+//        		myApp.alert('Esperando SMS', 'watching started');
+//        	}, function(){
+//        		console.log('Error iniciar watching');
+//        	});
+//            initApp();
+//        }
+////parar de checar que lleguen sms        
+//function stopWatch() {
+//        	if(SMS) SMS.stopWatch(function(){
+//        		myApp.alert('Se dejo de esperar SMS', 'watching stopped');
+//        	}, function(){
+//        		console.log('failed to stop watching');
+//        	});
+//        }
 //revizar el contenido de los sms
 function initApp() {
             document.addEventListener('onSMSArrive', function(e){
