@@ -33,9 +33,6 @@ var mainView = myApp.addView('.view-main', {
     dynamicNavbar: true,
     swipeBackPage:false
 });
-myApp.onPageInit('*', function (page) {
-  myApp.alert(page.name + ' initialized'); 
-});
 //saber si el gps esta funcionando
 myApp.onPageInit('index', function (page) {
     var watchID = navigator.geolocation.watchPosition(onSuccessC, onErrorC, { timeout: 5000 });
@@ -43,7 +40,6 @@ myApp.onPageInit('index', function (page) {
 });
 //comprobar nuevamente que el gps este activo
 myApp.onPageBeforeInit('reporte', function (page) {
-    onDeviceReady();
     if(online==1){
     var path_audio="";
     var path_foto="";
@@ -114,7 +110,6 @@ function populateDB(tx) {
     tx.executeSql('CREATE TABLE IF NOT EXISTS acceso(id INTEGER PRIMARY KEY AUTOINCREMENT,contacto,confirmacion,verificado)');
     tx.executeSql('CREATE TABLE IF NOT EXISTS mensaje(id INTEGER PRIMARY KEY AUTOINCREMENT,mensaje)');
     tx.executeSql('INSERT INTO mensaje(mensaje) VALUES(?)',['Tuve un incidente, estoy bien, estoy en:']);
-verificado();
 }
 function verificado(){
     myApp.showPreloader('Verificando estado del registro');
