@@ -634,6 +634,14 @@ module.exports = [
         "merges": [
             "sMSSenderPlugin"
         ]
+    },
+    {
+        "file": "plugins/com.cordova.plugins.sms/www/sms.js",
+        "id": "com.cordova.plugins.sms.Sms",
+        "pluginId": "com.cordova.plugins.sms",
+        "clobbers": [
+            "window.sms"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -662,7 +670,8 @@ module.exports.metadata =
     "cordova-plugin-sms": "1.0.5",
     "cordova-plugin-phonecaller": "0.0.2",
     "com.phonegap.plugins.nativesettingsopener": "1.1.0",
-    "cordova-plugin-sms-sender": "1.0.0"
+    "cordova-plugin-sms-sender": "1.0.0",
+    "com.cordova.plugins.sms": "0.1.10"
 }
 // BOTTOM OF METADATA
 });

@@ -93,6 +93,9 @@
         },
         "cordova-plugin-sms-sender": {
             "PACKAGE_NAME": "com.innovacion.alertas"
+        },
+        "com.cordova.plugins.sms": {
+            "PACKAGE_NAME": "com.innovacion.alertas"
         }
     },
     "dependent_plugins": {},
@@ -731,6 +734,14 @@
             "merges": [
                 "sMSSenderPlugin"
             ]
+        },
+        {
+            "file": "plugins/com.cordova.plugins.sms/www/sms.js",
+            "id": "com.cordova.plugins.sms.Sms",
+            "pluginId": "com.cordova.plugins.sms",
+            "clobbers": [
+                "window.sms"
+            ]
         }
     ],
     "plugin_metadata": {
@@ -757,6 +768,7 @@
         "cordova-plugin-sms": "1.0.5",
         "cordova-plugin-phonecaller": "0.0.2",
         "com.phonegap.plugins.nativesettingsopener": "1.1.0",
-        "cordova-plugin-sms-sender": "1.0.0"
+        "cordova-plugin-sms-sender": "1.0.0",
+        "com.cordova.plugins.sms": "0.1.10"
     }
 }
