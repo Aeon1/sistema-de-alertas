@@ -7,6 +7,7 @@ function onDeviceReady() {
         verificado();
         checkConnection();
         console.log(navigator.device.capture);
+        navigator.notification.alert(navigator.device.capture, null, 'Capture');
 }
 var db=null;
 var id_contacto="";
