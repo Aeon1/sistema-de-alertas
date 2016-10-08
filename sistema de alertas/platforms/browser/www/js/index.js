@@ -614,7 +614,7 @@ var captureSuccessaudio = function(mediaFiles) {
 // captura de audio con error
 var captureErroraudio = function(error) {
     console.log(error);
-    navigator.notification.alert('Error code: ' + error.code, null, 'Capture Error');
+    navigator.notification.alert('No se capturo nada', 'Captura');
 };
 // captura de foto exitosa
 var captureSuccessfoto = function(mediaFiles) {
@@ -631,7 +631,7 @@ var captureSuccessfoto = function(mediaFiles) {
 // captura de foto con error
 var captureErrorfoto = function(error) {
     console.log(error);
-    navigator.notification.alert('Error code: ' + error.code, null, 'Capture Error');
+    navigator.notification.alert('No se capturo nada', 'Captura');
 };
 // captura de video exitosa
 var captureSuccessvideo = function(mediaFiles) {
@@ -649,7 +649,7 @@ $$(".video").removeClass('button-gold-c').addClass('active');;
 // captura de video con error
 var captureErrorvideo = function(error) {
     console.log(error);
-    navigator.notification.alert('Error code: ' + error.code, null, 'Capture Error');
+    navigator.notification.alert('No se capturo nada', 'Captura');
 };
 //obtencion de las coordenadas exitosa
 function onSuccessC(position) {
@@ -744,13 +744,15 @@ function sendserver(){
                         }
     });
     }else{
-        myApp.alert('Asegurese que tiene habilitada la geolocalizacion', 'Ubicacion no encontrada', function () {
-        cordova.plugins.settings.open(function(){
-            console.log("opened settings")
-        },
-        function(){
-            console.log("failed to open settings")
-        });
+        myApp.alert('Asegurese que tiene habilitada la geolocalizacion', 'Ubicacion no encontrada', function (){
+        if(typeof cordova.plugins.settings.openSetting != undefined){
+            cordova.plugins.settings.open(function(){
+                    console.log("opened settings")
+                },
+                function(){
+                    console.log("failed to open settings")
+                });
+        }
     });
     }
     
@@ -883,7 +885,7 @@ function sendSMS() {
                     		}
                     	}
                     	if(SMS){
-                    	   SMS.sendSMS(sendto, textmsg, function(){myApp.alert("El mensaje a sido enviado",'SMS');}, function(str){myApp.alert(str);});
+                    	   SMS.sendSMS(sendto, textmsg, function(){myApp.alert("El mensaje a sido enviado",'SMS');}, function(str){myApp.alert('str');});
                         } 
                 });
             });
