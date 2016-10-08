@@ -5,12 +5,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
-    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
-    <meta http-equiv="Content-Security-Policy" content="img-src 'self' data:; default-src 'self' https: http: 'unsafe-inline'; style-src 'self' 'unsafe-inline';"/>
-     
+    <!--
+<meta http-equiv="Content-Security-Policy" content="default-src *; object-src *; media-src *; connect-src 'self' data: https: http:">
+    <meta http-equiv="X-Content-Security-Policy" content="default-src *; object-src *; media-src *; connect-src 'self' data: https: http:">
+    <meta http-equiv="X-WebKit-CSP" content="default-src *; object-src *; media-src *; connect-src 'self' data: https: http:">
+--><meta http-equiv="Content-Security-Policy" content="default-src *; object-src *; media-src *; connect-src 'self' data: https: http:"/>
     <!-- Required meta tags-->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui"/>
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <!-- Good default declaration:
@@ -100,7 +102,8 @@
               <!-- 
                 Right link contains only icon - additional "icon-only" class
                 Additional "open-panel" class tells app to open panel when we click on this link
-              -->              
+              -->
+              
             </div>
           </div>
         </div>
@@ -132,15 +135,12 @@
         
       </div>
     </div>
-    <script type="text/javascript" src="phonegap.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
     <!-- Path to Framework7 Library JS-->
     <script type="text/javascript" src="js/framework7.min.js"></script>
     <!-- panel 3d -->
     <script src="js/framework7.3dpanels.min.js"></script>
     <!-- Path to your app js-->
     <script type="text/javascript" src="js/index.js"></script>
-    <script>
-    onDeviceReady();
-    </script>
   </body>
 </html>
