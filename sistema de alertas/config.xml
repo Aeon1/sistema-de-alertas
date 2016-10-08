@@ -4,31 +4,27 @@
   <author href="http://phonegap.com" email="support@phonegap.com">Innovacion Gubernamental</author>
   <content src="index.html"/>
   <preference name="DisallowOverscroll" value="true"/>
-  <preference name="HideKeyboardFormAccessoryBar" value="true"/>
   <preference name="android-minSdkVersion" value="14"/>
-  <preference name="phonegap-version" value="cli-6.3.0" />
-  <gap:plugin name="cordova-plugin-battery-status" source="npm" spec="~1.1.1"/>
-  <gap:plugin name="cordova-plugin-camera" source="npm" spec="~2.1.1"/>
-  <gap:plugin name="cordova-plugin-media-capture" source="npm" spec="~1.2.0"/>
-  <gap:plugin name="cordova-plugin-console" source="npm" spec="~1.0.2"/>
-  <gap:plugin name="cordova-plugin-contacts" source="npm" spec="~2.0.1"/>
-  <gap:plugin name="cordova-plugin-device" source="npm" spec="~1.1.1"/>
-  <gap:plugin name="cordova-plugin-device-motion" source="npm" spec="~1.2.0"/>
-  <gap:plugin name="cordova-plugin-device-orientation" source="npm" spec="~1.0.2"/>
-  <gap:plugin name="cordova-plugin-dialogs" source="npm" spec="~1.2.0"/>
-  <gap:plugin name="cordova-plugin-file" source="npm" spec="~4.1.1"/>
-  <gap:plugin name="cordova-plugin-file-transfer" source="npm" spec="~1.5.0"/>
-  <gap:plugin name="cordova-plugin-geolocation" source="npm" spec="~2.1.0"/>
-  <gap:plugin name="cordova-plugin-globalization" source="npm" spec="~1.0.3"/>
-  <gap:plugin name="cordova-plugin-inappbrowser" source="npm" spec="~1.3.0"/>
-  <gap:plugin name="cordova-plugin-media" source="npm" spec="~2.2.0"/>
-  <gap:plugin name="cordova-plugin-network-information" source="npm" spec="~1.2.0"/>
-  <gap:plugin name="cordova-plugin-splashscreen" source="npm" spec="~3.2.1"/>
-  <gap:plugin name="cordova-plugin-statusbar" source="npm" spec="~2.1.2"/>
-  <gap:plugin name="cordova-plugin-vibration" source="npm" spec="~2.1.0"/>
-  <gap:plugin name="cordova-plugin-whitelist" source="npm" spec="~1.2.1"/>
-  <gap:plugin name="cordova-plugin-nativesettings" source="npm"/>
-  <gap:plugin name="cordova-plugin-phonecaller" source="npm"/>
+  <plugin name="cordova-plugin-battery-status" source="npm" spec="~1.1.1"/>
+  <plugin name="cordova-plugin-camera" source="npm" spec="~2.1.1"/>
+  <plugin name="cordova-plugin-media-capture" source="npm" spec="~1.2.0"/>
+  <plugin name="cordova-plugin-console" source="npm" spec="~1.0.2"/>
+  <plugin name="cordova-plugin-contacts" source="npm" spec="~2.0.1"/>
+  <plugin name="cordova-plugin-device" source="npm" spec="~1.1.1"/>
+  <plugin name="cordova-plugin-device-motion" source="npm" spec="~1.2.0"/>
+  <plugin name="cordova-plugin-device-orientation" source="npm" spec="~1.0.2"/>
+  <plugin name="cordova-plugin-dialogs" source="npm" spec="~1.2.0"/>
+  <plugin name="cordova-plugin-file" source="npm" spec="~4.1.1"/>
+  <plugin name="cordova-plugin-file-transfer" source="npm" spec="~1.5.0"/>
+  <plugin name="cordova-plugin-geolocation" source="npm" spec="~2.1.0"/>
+  <plugin name="cordova-plugin-globalization" source="npm" spec="~1.0.3"/>
+  <plugin name="cordova-plugin-inappbrowser" source="npm" spec="~1.3.0"/>
+  <plugin name="cordova-plugin-media" source="npm" spec="~2.2.0"/>
+  <plugin name="cordova-plugin-network-information" source="npm" spec="~1.2.0"/>
+  <plugin name="cordova-plugin-splashscreen" source="npm" spec="~3.2.1"/>
+  <plugin name="cordova-plugin-statusbar" source="npm" spec="~2.1.2"/>
+  <plugin name="cordova-plugin-vibration" source="npm" spec="~2.1.0"/>
+  <plugin name="cordova-plugin-whitelist" source="npm" spec="~1.2.1"/>
   <icon src="icon.png"/>
   <platform name="android">
     <icon src="www/res/icon/android/drawable-ldpi-icon.png" density="ldpi"/>
@@ -78,42 +74,29 @@
     <splash src="www/res/screen/ios/Default@2x~iphone.png" platform="ios" width="640" height="960"/>
     <splash src="www/res/screen/ios/Default~iphone.png" platform="ios" width="320" height="480"/>
   </platform>
-    <feature name="Geolocation">
-        <param name="ios-package" value="CDVLocation" />
-        <param name="onload" value="true" />
-    </feature>
-    <feature name="Contacts">
-        <param name="ios-package" value="CDVContacts" />
-        <param name="onload" value="true" />
-    </feature>
-    <feature name="Capture">
-        <param name="ios-package" value="CDVCapture" />
-        <param name="onload" value="true" />
-    </feature>
-    <feature name="Media">
-        <param name="ios-package" value="CDVSound" />
-        <param name="onload" value="true" />
-    </feature>
-    <feature name="File">
-        <param name="ios-package" value="CDVFile" />
-        <param name="onload" value="true" />
-    </feature>
-    <feature name="FileTransfer">
-        <param name="ios-package" value="CDVFileTransfer" />
-        <param name="onload" value="true" />
-    </feature>
-    <feature name="NetworkStatus">
-        <param name="ios-package" value="CDVConnection" />
-        <param name="onload" value="true" />
-    </feature>
-    <feature name="Camera">
-        <param name="ios-package" value="CDVCamera" />
-        <param name="onload" value="true" />
-    </feature>
+  <platform name="wp8">
+    <icon src="www/res/icon/wp8/ApplicationIcon.png" platform="wp8" width="99" height="99"/>
+    <icon src="www/res/icon/wp8/Background.png" platform="wp8" width="159" height="159"/>
+    <splash src="www/res/screen/wp8/screen-portrait.jpg" platform="wp8" width="768" height="1280"/>
+  </platform>
+  <platform name="windows">
+    <icon src="www/res/icon/windows/Square150x150Logo.scale-100.png" platform="windows" width="150" height="150"/>
+    <icon src="www/res/icon/windows/Square30x30Logo.scale-100.png" platform="windows" width="30" height="30"/>
+    <icon src="www/res/icon/windows/StoreLogo.scale-100.png" platform="windows" width="50" height="50"/>
+    <splash src="www/res/screen/windows/SplashScreen.scale-100.png" platform="windows" width="620" height="300"/>
+    <icon src="www/res/icon/windows/StoreLogo.scale-240.png" platform="windows" width="120" height="120"/>
+    <icon src="www/res/icon/windows/Square44x44Logo.scale-100.png" platform="windows" width="44" height="44"/>
+    <icon src="www/res/icon/windows/Square44x44Logo.scale-240.png" platform="windows" width="106" height="106"/>
+    <icon src="www/res/icon/windows/Square70x70Logo.scale-100.png" platform="windows" width="70" height="70"/>
+    <icon src="www/res/icon/windows/Square71x71Logo.scale-100.png" platform="windows" width="71" height="71"/>
+    <icon src="www/res/icon/windows/Square71x71Logo.scale-240.png" platform="windows" width="170" height="170"/>
+    <icon src="www/res/icon/windows/Square150x150Logo.scale-240.png" platform="windows" width="360" height="360"/>
+    <icon src="www/res/icon/windows/Square310x310Logo.scale-100.png" platform="windows" width="310" height="310"/>
+    <icon src="www/res/icon/windows/Wide310x150Logo.scale-100.png" platform="windows" width="310" height="150"/>
+    <icon src="www/res/icon/windows/Wide310x150Logo.scale-240.png" platform="windows" width="744" height="360"/>
+    <splash src="www/res/screen/windows/SplashScreenPhone.scale-240.png" platform="windows" width="1152" height="1920"/>
+  </platform>
   <access origin="*"/>
-  <!-- Allow images, xhrs, etc. to google.com -->
-    <access origin="https://uniformesyutilesescolares.sinaloa.gob.mx" />
-    <access origin="http://quody.co" />
   <allow-intent href="http://*/*"/>
   <allow-intent href="https://*/*"/>
   <allow-intent href="tel:*"/>

@@ -1,146 +1,56 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>Capture Image</title>
 
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="msapplication-tap-highlight" content="no" />
-    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
-    <meta http-equiv="Content-Security-Policy" content="img-src 'self' data:; default-src 'self' https: http: 'unsafe-inline'; style-src 'self' 'unsafe-inline';"/>
-     
-    <!-- Required meta tags-->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <!-- Good default declaration:
-    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
-    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-        * Enable inline JS: add 'unsafe-inline' to default-src
-        * Enable eval(): add 'unsafe-eval' to default-src
-    * Create your own at http://cspisawesome.com
-    -->
-    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script type="text/javascript" charset="utf-8">
 
-     <!-- Path to Framework7 iOS CSS theme styles-->
-    <link rel="stylesheet" href="css/framework7.ios.min.css">
-    <!-- Path to Framework7 iOS related color styles -->
-    <link rel="stylesheet" href="css/framework7.ios.colors.min.css">
-    <!-- panel 3d -->
-    <link rel="stylesheet" href="css/framework7.3dpanels.min.css">
-    <!-- Path to your custom app styles-->
-    <link rel="stylesheet" href="css/my-app.css">
-    <title>Hello World</title>
-</head>
-<body>
-    <!-- Status bar overlay for full screen mode (PhoneGap) -->
-    <div class="statusbar-overlay"></div>
-    <!-- Panels overlay-->
-    <div class="panel-overlay"></div>
-    <!-- Left panel with reveal effect-->
-    <div class="panel panel-left panel-reveal">
-      <div class="view">
-        <div class="pages">
-          <div class="page">
-            <div class="page-content">
-            <h3 class="text-center">Configuraci&oacute;n &amp; funciones</h3>
-              <div class="list-block">
-                <ul>
-                  <li>
-                    <a href="#" class="item-content item-link" onclick="activar_gps()">
-                      <div class="item-inner">
-                        <div class="item-title">Activar GPS</div>
-                      </div>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" class="item-content item-link" onclick="Edit_message()">
-                      <div class="item-inner">
-                        <div class="item-title">Editar mensaje enviar(SMS)</div>
-                      </div>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" class="item-content item-link" onclick="view_contacts()">
-                      <div class="item-inner">
-                        <div class="item-title">Ver contactos de emergencia</div>
-                      </div>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" class="item-content item-link" onclick="vaciar()">
-                      <div class="item-inner">
-                        <div class="item-title">Vaciar registros</div>
-                      </div>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <div class="content-block">
-                <img src="img/logo.png" style="margin: auto;display: block;" onclick="sendSMS()" />
-                <p style="font-size: small;">Click en la imagen para enviar mensaje a sus contactos de emergencia</p>
-                <p>911 reporte m&oacute;vil</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Views -->
-    <div class="views">
-      <!-- Your main view, should have "view-main" class -->
-      <div class="view view-main">
-        <!-- Top Navbar-->
-        <div class="navbar">
-          <div class="navbar-inner">
-            <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
-            <div class="center sliding">911 reporte m&oacute;vil</div>
-            <div class="right">
-              <!-- 
-                Right link contains only icon - additional "icon-only" class
-                Additional "open-panel" class tells app to open panel when we click on this link
-              -->              
-            </div>
-          </div>
-        </div>
-        <!-- Pages container, because we use fixed-through navbar and toolbar, it has additional appropriate classes-->
-        <div class="pages navbar-through toolbar-through">
-          <!-- Page, "data-page" contains page name -->
-          <div data-page="inicar" class="page">
-            <!-- Scrollable page content -->
-            <div class="page-content">
-                <div class="list-block inset">
-                    <p class="text-center">Ingrese el codigo de confirmacion</p>
-                  <ul>
-                    <li>
-                      <div class="item-content">
-                        <div class="item-inner">
-                          <div class="item-input">
-                              <input type="text" name="registrar" placeholder="Codigo de confirmacion" class="text-center" id="codigo_confirmacion">
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                  <br />
-                  <a href="#" class="button button-big button-gold-c sombra" onclick="finalizar()">Validar</a>
-                </div>
-            </div>
-          </div>
-        </div>
-        
-      </div>
-    </div>
-    <script type="text/javascript" src="phonegap.js"></script>
-    <!-- Path to Framework7 Library JS-->
-    <script type="text/javascript" src="js/framework7.min.js"></script>
-    <!-- panel 3d -->
-    <script src="js/framework7.3dpanels.min.js"></script>
-    <!-- Path to your app js-->
-    <script type="text/javascript" src="js/index.js"></script>
-    <script>
-    onDeviceReady();
+    // Called when capture operation is finished
+    //
+    function captureSuccess(mediaFiles) {
+        var i, len;
+        for (i = 0, len = mediaFiles.length; i < len; i += 1) {
+            uploadFile(mediaFiles[i]);
+        }
+    }
+
+    // Called if something bad happens.
+    //
+    function captureError(error) {
+        var msg = 'An error occurred during capture: ' + error.code;
+        navigator.notification.alert(msg, null, 'Uh oh!');
+    }
+
+    // A button will call this function
+    //
+    function captureImage() {
+        // Launch device camera application,
+        // allowing user to capture up to 2 images
+        navigator.device.capture.captureImage(captureSuccess, captureError, {limit: 2});
+    }
+
+    // Upload files to server
+    function uploadFile(mediaFile) {
+        var ft = new FileTransfer(),
+            path = mediaFile.fullPath,
+            name = mediaFile.name;
+
+        ft.upload(path,
+            "http://my.domain.com/upload.php",
+            function(result) {
+                console.log('Upload success: ' + result.responseCode);
+                console.log(result.bytesSent + ' bytes sent');
+            },
+            function(error) {
+                console.log('Error uploading file ' + path + ': ' + error.code);
+            },
+            { fileName: name });
+    }
+
     </script>
-  </body>
+    </head>
+    <body>
+        <button onclick="captureImage();">Capture Image</button> <br>
+    </body>
 </html>
