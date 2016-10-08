@@ -124,17 +124,5 @@
   <platform name="ios">
     <allow-intent href="itms:*"/>
     <allow-intent href="itms-apps:*"/>
-    <config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
-            <string></string>
-        </config-file>
-        <config-file target="*-Info.plist" parent="NSCameraUsageDescription ">
-            <string></string>
-        </config-file>
-        <config-file target="*-Info.plist" parent="NSMicrophoneUsageDescription  ">
-            <string></string>
-        </config-file>
-        <config-file target="*-Info.plist" parent="NSPhotoLibraryUsageDescriptionentry  ">
-            <string></string>
-        </config-file>
   </platform>
 </widget>
