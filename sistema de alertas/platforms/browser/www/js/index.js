@@ -422,7 +422,6 @@ function sendDatesServer(){
     }
     var telefono="";
 function datosFin(tx, results){
-    startWatch();
     console.log("iniciado correctamente");
     var len = results.rows.length;            
             telefono=results.rows.item(0).celular;
@@ -518,7 +517,6 @@ function finalizar(verify){
                         data: {op:'cr',IdContacto:id_contacto,CodigoConfirmacion:verificacion},
                         success: function(result){
                             myApp.hidePreloader();
-                            stopWatch();
                             var json = JSON.parse(result);
                             if(json.OcurrioError==0){   
                                 db.transaction(
@@ -902,23 +900,6 @@ function sendSMS() {
     });
 
         }
-
-//function startWatch() {
-//        	if(SMS) SMS.startWatch(function(){
-//        		myApp.alert('Esperando SMS', 'watching started');
-//        	}, function(){
-//        		console.log('Error iniciar watching');
-//        	});
-//            initApp();
-//        }
-////parar de checar que lleguen sms        
-//function stopWatch() {
-//        	if(SMS) SMS.stopWatch(function(){
-//        		myApp.alert('Se dejo de esperar SMS', 'watching stopped');
-//        	}, function(){
-//        		console.log('failed to stop watching');
-//        	});
-//        }
 //revizar el contenido de los sms
 function initApp() {
             document.addEventListener('onSMSArrive', function(e){
