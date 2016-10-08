@@ -877,7 +877,7 @@ function sendSMS() {
             
             db.transaction(
                 function(tx) {              
-                tx.executeSql('select * from mensaje',[],function(tx, results){
+                tx.executeSql('select * from mensaje where id=?',[1],function(tx, results){
                     textmsg=results.rows.item(0).mensaje;
                     if(latitud!="" && longitude!=""){
                        textmsg=textmsg+" https://www.google.com.co/maps/place/"+latitud+","+longitude; 
@@ -896,16 +896,11 @@ function sendSMS() {
                 });
             });
             for (var i=0; i<len; i++){sendto += results.rows.item(i).telefono+";";
-                var messageInfo = {
-                	phoneNumber: results.rows.item(i).telefono,
-                	textMessage: textmsg
-                };
-                
-                sms.sendMessage(messageInfo, function(message) {
-                	myApp.alert("El mensaje a sido enviado",'SMS');
-                }, function(error) {
-                	myApp.alert("error: " + error.code + ", mensaje: " + error.message);
-                });
+                window.sMSSenderPlugin.sendMessage(results.rows.item(i).telefono, textmsg, function(e){
+                    myApp.alert("El mensaje a sido enviado",'SMS');
+            }, function(e){
+                myApp.alert('error '+e);
+            });
             }
         });
     });
@@ -948,7 +943,7 @@ function Edit_message(){
     mainView.router.loadPage('mensaje.html');
             db.transaction(
                 function(tx) {              
-                tx.executeSql('select * from mensaje',[],function(tx, results){                        
+                tx.executeSql('select * from mensaje where id=?',[1],function(tx, results){                        
                         $$("#mensaje_sms").text(results.rows.item(0).mensaje);
                         $$("#plus_sms").html("https://www.google.com.co/maps/place/"+latitud+","+longitude);
                 });
@@ -1081,8 +1076,7 @@ function boygunew(){
                              } 
                              }
                              enviocontactos_new();
-                             });
-                             
+                             });                             
                          }, 
                         error: function(result){ 
                             myApp.alert('Ocurrio un error al registrar el contacto de emergencia ', 'Error');
