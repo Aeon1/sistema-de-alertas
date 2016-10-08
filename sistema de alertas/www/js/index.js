@@ -137,6 +137,11 @@ myApp.onPageBeforeInit('reporte', function (page) {
   $$('#audio').on('click', function (e) {
     navigator.device.capture.captureAudio(captureSuccessaudio, captureErroraudio, {});
 }); 
+$$("#foto").on("click",function(e){
+    navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
+    destinationType: Camera.DestinationType.DATA_URL
+});
+})
 });
 // captura de audio exitosa
 var captureSuccessaudio = function(mediaFiles) {
@@ -173,4 +178,13 @@ function onErrorC(error) {
         }
     });
     //mainView.router.loadPage('iniciar.html'); 
+}
+//camara
+function onSuccess(imageData) {
+    var image = document.getElementById('myImage');
+    image.src = "data:image/jpeg;base64," + imageData;
+}
+
+function onFail(message) {
+    alert('Failed because: ' + message);
 }
