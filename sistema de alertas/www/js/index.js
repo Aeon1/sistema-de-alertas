@@ -11,6 +11,7 @@ var path_video="";
 var mimeType_xa="";
 var mimeType_xf="";
 var mimeType_xv="";
+ var online=0;
 function onDeviceReady() {   
         db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
         db.transaction(populateDB);
@@ -57,7 +58,7 @@ myApp.onPageBeforeInit('reporte', function (page) {
 function iniciar(){
      mainView.router.loadPage('iniciar.html');
 }
- var online;
+
  function checkConnection() {
         var networkState = navigator.network.connection.type;
         var states = {};
