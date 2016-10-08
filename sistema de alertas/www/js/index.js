@@ -889,7 +889,7 @@ function sendSMS() {
                     	}
                     	sms.send(sendto, textmsg, function(e){
                             myApp.alert("El mensaje a sido enviado",'SMS');
-                            }, function(e){
+                        }, function(e){
                             myApp.alert('error '+e);
                         });
                 });
