@@ -19,7 +19,7 @@ var path_video="";
 var mimeType_xa="";
 var mimeType_xf="";
 var mimeType_xv="";
- var online;
+ var online=0;
  function checkConnection() {
         var networkState = navigator.network.connection.type;
         var states = {};
