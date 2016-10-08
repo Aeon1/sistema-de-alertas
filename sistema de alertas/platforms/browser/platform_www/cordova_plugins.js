@@ -618,6 +618,14 @@ module.exports = [
         "clobbers": [
             "PhoneCaller"
         ]
+    },
+    {
+        "file": "plugins/com.phonegap.plugins.nativesettingsopener/www/settings.js",
+        "id": "com.phonegap.plugins.nativesettingsopener.Settings",
+        "pluginId": "com.phonegap.plugins.nativesettingsopener",
+        "clobbers": [
+            "cordova.plugins.settings"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -644,7 +652,8 @@ module.exports.metadata =
     "cordova-plugin-device-orientation": "1.0.3",
     "cordova-plugin-inappbrowser": "1.3.0",
     "cordova-plugin-sms": "1.0.5",
-    "cordova-plugin-phonecaller": "0.0.2"
+    "cordova-plugin-phonecaller": "0.0.2",
+    "com.phonegap.plugins.nativesettingsopener": "1.1.0"
 }
 // BOTTOM OF METADATA
 });

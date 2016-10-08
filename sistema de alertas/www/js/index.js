@@ -657,8 +657,21 @@ function onSuccessC(position) {
 }
 // obtencion de las coordenadas error
 function onErrorC(error) {
-    myApp.alert('Asegurese que tiene habilitada la geolocalizacion', 'Ubicacion no encontrada', function () {
-        if(typeof cordova.plugins.settings.openSetting != undefined){
+   // myApp.alert('Asegurese que tiene habilitada la geolocalizacion', 'Ubicacion no encontrada', function () {
+//        if(typeof cordova.plugins.settings.openSetting != undefined){
+//            cordova.plugins.settings.open(function(){
+//                    console.log("opened settings")
+//                },
+//                function(){
+//                    console.log("failed to open settings")
+//                });
+//        }
+//    });
+//    mainView.router.loadPage('iniciar.html'); 
+}
+//activar gps del celular
+function activar_gps(){
+    if(typeof cordova.plugins.settings.openSetting != undefined){
             cordova.plugins.settings.open(function(){
                     console.log("opened settings")
                 },
@@ -666,17 +679,6 @@ function onErrorC(error) {
                     console.log("failed to open settings")
                 });
         }
-    });
-    mainView.router.loadPage('iniciar.html'); 
-}
-//activar gps del celular
-function activar_gps(){
-    cordova.plugins.settings.open(function(){
-            console.log("opened settings")
-        },
-        function(){
-            console.log("failed to open settings")
-        });
 }
 //boton llamada al 911
 function onSuccesscall(result){

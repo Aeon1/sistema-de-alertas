@@ -174,5 +174,13 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "com.phonegap.plugins.nativesettingsopener": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-nativesettings@*"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

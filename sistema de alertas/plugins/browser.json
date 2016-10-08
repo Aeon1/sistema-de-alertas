@@ -72,6 +72,9 @@
         },
         "cordova-plugin-phonecaller": {
             "PACKAGE_NAME": "com.innovacion.alertas"
+        },
+        "com.phonegap.plugins.nativesettingsopener": {
+            "PACKAGE_NAME": "com.innovacion.alertas"
         }
     },
     "dependent_plugins": {}
