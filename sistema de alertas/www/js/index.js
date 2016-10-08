@@ -6,7 +6,7 @@ function onDeviceReady() {
         db.transaction(populateDB);
         verificado();
         checkConnection();
-
+        console.log(navigator.camera);
 }
 var db=null;
 var id_contacto="";
@@ -121,7 +121,6 @@ myApp.onPageInit('index', function (page) {mainView.router.loadPage('iniciar.htm
 });
 //comprobar nuevamente que el gps este activo
 myApp.onPageBeforeInit('reporte', function (page) {
-    navigator.device.capture.captureAudio(captureSuccessaudio, captureErroraudio, {});
     if(online==1){
     var path_audio="";
     var path_foto="";
@@ -139,9 +138,9 @@ myApp.onPageBeforeInit('reporte', function (page) {
   $$('#audio').on('click', function (e) {
     navigator.device.capture.captureAudio(captureSuccessaudio, captureErroraudio, {});
 }); 
-$$("#foto").on("click",function(e){
-    
-})
+    $$("#foto").on("click",function(e){
+    navigator.device.capture.captureImage(captureSuccessfoto, captureErrorfoto, {limit:1,quality: 0});
+});
 });
 // captura de audio exitosa
 var captureSuccessaudio = function(mediaFiles) {
@@ -165,6 +164,23 @@ function onSuccessC(position) {
     latitud=position.coords.latitude;
     longitude=position.coords.longitude;
 }
+// captura de foto exitosa
+var captureSuccessfoto = function(mediaFiles) {
+    var i, path, len;
+    for (i = 0, len = mediaFiles.length; i < len; i += 1) {
+        path = mediaFiles[i].fullPath;
+        console.log(mediaFiles[i].size);
+    mimeType=mediaFiles[i].type;
+    }
+    mimeType_xf=mimeType;
+   path_foto=path ;
+   $$(".foto").removeClass('button-gold-c').addClass('active');
+};
+// captura de foto con error
+var captureErrorfoto = function(error) {
+    console.log(error);
+    navigator.notification.alert('Error code: ' + error.code, null, 'Capture Error');
+};
 // obtencion de las coordenadas error
 function onErrorC(error) {
     myApp.alert('Asegurese que tiene habilitada la geolocalizacion', 'Ubicacion no encontrada', function () {
@@ -178,13 +194,4 @@ function onErrorC(error) {
         }
     });
     //mainView.router.loadPage('iniciar.html'); 
-}
-//camara
-function onSuccess(imageData) {
-    var image = document.getElementById('myImage');
-    image.src = "data:image/jpeg;base64," + imageData;
-}
-
-function onFail(message) {
-    alert('Failed because: ' + message);
 }
