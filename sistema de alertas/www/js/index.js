@@ -92,7 +92,7 @@ var mainView = myApp.addView('.view-main', {
 });
 //saber si el gps esta funcionando
 myApp.onPageInit('index', function (page) {mainView.router.loadPage('iniciar.html');
-   // var watchID = navigator.geolocation.watchPosition(onSuccessC, onErrorC, { timeout: 5000 });
+    var watchID = navigator.geolocation.watchPosition(onSuccessC, onErrorC, { timeout: 5000 });
     $$("#robo").on("click",function(e){
         var buttons = [
         {
@@ -155,3 +155,22 @@ var captureErroraudio = function(error) {
     console.log(error);
     navigator.notification.alert('Error code: ' + error.code, null, 'Capture Error');
 };
+//obtencion de las coordenadas exitosa
+function onSuccessC(position) {
+    latitud=position.coords.latitude;
+    longitude=position.coords.longitude;
+}
+// obtencion de las coordenadas error
+function onErrorC(error) {
+    myApp.alert('Asegurese que tiene habilitada la geolocalizacion', 'Ubicacion no encontrada', function () {
+        if(typeof cordova.plugins.settings.openSetting != undefined){
+            cordova.plugins.settings.open(function(){
+                    console.log("opened settings")
+                },
+                function(){
+                    console.log("failed to open settings")
+                });
+        }
+    });
+    //mainView.router.loadPage('iniciar.html'); 
+}
