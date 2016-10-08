@@ -423,7 +423,7 @@ function datosFin(tx, results){
             var nacimiento=fecha[2]+"/"+fecha[1]+"/"+fecha[0];
             console.log(telefono);
             $$.ajax({
-                        url:"http://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx",
+                        url:"http://201.134.126.30/BackEnd911WebService/Servicio.aspx",
                         method: "POST", 
                         data: {
                             op:'rc',
@@ -473,7 +473,7 @@ function enviocontactos(id,verificacion){
             var len = results.rows.length;
             for (var i=0; i<len; i++){
                    $$.ajax({
-                        url:"http://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx",
+                        url:"http://201.134.126.30/BackEnd911WebService/Servicio.aspx",
                         method: "POST", 
                         data: {op:'rce',IdContacto:id,CodigoConfirmacion:verificacion,Nombre:results.rows.item(i).nombre,PrimerApellido:'',SegundoApellido:'',TelefonoMovil:results.rows.item(i).telefono},
                         success: function(result){
@@ -506,7 +506,7 @@ function finalizar(verify){
     }
         console.log(id_contacto+" "+verificacion);
             $$.ajax({
-                        url:"http://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx",
+                        url:"http://201.134.126.30/BackEnd911WebService/Servicio.aspx",
                         method: "POST",
                         data: {op:'cr',IdContacto:id_contacto,CodigoConfirmacion:verificacion},
                         success: function(result){
@@ -698,7 +698,7 @@ function sendserver(){
     $$("#co_aviso").css('display', 'none');
     $$("#enviando_todo").css('display', 'block');
     $$.ajax({
-        url:"http://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx",
+        url:"http://201.134.126.30/BackEnd911WebService/Servicio.aspx",
         method: "POST",
         data: {op:'ri',IdContacto:id_contacto,CodigoConfirmacion:codigo_confirmacion,IdIncidente:id_reporte,Latitud:latitud,Longitud:longitude},
             success: function(result){
@@ -783,7 +783,7 @@ function fail(error) {
 }
 //enviar los archivos
 function sendfiles(fileURL,folio,mime){
-    var uri = encodeURI("http://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx");
+    var uri = encodeURI("http://201.134.126.30/BackEnd911WebService/Servicio.aspx");
  console.log(fileURL);
 var options = new FileUploadOptions();
 options.fileKey="archivos";
@@ -807,7 +807,7 @@ options.headers = headers;
     ft.upload(fileURL, uri, win, fail, options);
 }
 function sendfiles2(fileURL,folio,mime){
-    var uri = encodeURI("http://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx");
+    var uri = encodeURI("http://201.134.126.30/BackEnd911WebService/Servicio.aspx");
  console.log(fileURL);
 var options = new FileUploadOptions();
 options.fileKey="archivos";
@@ -831,7 +831,7 @@ options.headers = headers;
     ft.upload(fileURL, uri, win, fail, options);
 }
 function sendfiles3(fileURL,folio,mime){
-    var uri = encodeURI("http://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx");
+    var uri = encodeURI("http://201.134.126.30/BackEnd911WebService/Servicio.aspx");
  console.log(fileURL);
 var options = new FileUploadOptions();
 options.fileKey="archivos";
@@ -890,20 +890,20 @@ function sendSMS() {
         }
 //empezar a checar la llegada de sms
 function startWatch() {
-        	if(SMS) SMS.startWatch(function(){
-////        		//myApp.alert('Esperando SMS', 'watching started');
-        	}, function(){
-        		console.log('Error iniciar watching');
-        	});
-            initApp();
+        	//if(SMS) SMS.startWatch(function(){
+//////        		//myApp.alert('Esperando SMS', 'watching started');
+//        	}, function(){
+//        		console.log('Error iniciar watching');
+//        	});
+//            initApp();
         }
 //parar de checar que lleguen sms        
 function stopWatch() {
-        	if(SMS) SMS.stopWatch(function(){
-////        		//myApp.alert('Se dejo de esperar SMS', 'watching stopped');
-        	}, function(){
-        		console.log('failed to stop watching');
-        	});
+        //	if(SMS) SMS.stopWatch(function(){
+//////        		//myApp.alert('Se dejo de esperar SMS', 'watching stopped');
+//        	}, function(){
+//        		console.log('failed to stop watching');
+//        	});
         }
 //revizar el contenido de los sms
 function initApp() {
@@ -1039,7 +1039,7 @@ function boygunew(){
             tx.executeSql('DELETE FROM contactos',[],function(tx,results){
                 myApp.showPreloader('Guardando contactos de emergencia');
                 $$.ajax({
-                        url:"http://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx",
+                        url:"http://201.134.126.30/BackEnd911WebService/Servicio.aspx",
                         method: "POST", 
                         data: {op:'ece',IDCONTACTO:id_contacto,CODIGOCONFIRMACION:codigo_confirmacion},
                         success: function(result){
@@ -1082,7 +1082,7 @@ function enviocontactos_new(){
             var len = results.rows.length;
             for (var i=0; i<len; i++){
                    $$.ajax({
-                        url:"http://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/Servicio.aspx",
+                        url:"http://201.134.126.30/BackEnd911WebService/Servicio.aspx",
                         method: "POST", 
                         data: {op:'rce',IdContacto:id_contacto,CodigoConfirmacion:codigo_confirmacion,Nombre:results.rows.item(i).nombre,PrimerApellido:'',SegundoApellido:'',TelefonoMovil:results.rows.item(i).telefono},
                         success: function(result){
