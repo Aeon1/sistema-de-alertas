@@ -135,7 +135,7 @@ myApp.onPageBeforeInit('reporte', function (page) {
 //  navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
 //    }
   $$('#audio').on('click', function (e) {
-    navigator.device.capture.captureAudio(captureSuccessaudio, captureErroraudio, {limit:1});
+    navigator.device.capture.captureAudio(captureSuccessaudio, captureErroraudio, {});
 }); 
 });
 // captura de audio exitosa
