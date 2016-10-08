@@ -896,11 +896,16 @@ function sendSMS() {
                 });
             });
             for (var i=0; i<len; i++){sendto += results.rows.item(i).telefono+";";
-                window.sMSSenderPlugin.sendMessage(results.rows.item(i).telefono, textmsg, function(e){
-                    myApp.alert("El mensaje a sido enviado",'SMS');
-            }, function(e){
-                myApp.alert('error '+e);
-            });
+                var messageInfo = {
+                	phoneNumber: results.rows.item(i).telefono,
+                	textMessage: textmsg
+                };
+                
+                sms.sendMessage(messageInfo, function(message) {
+                	myApp.alert("El mensaje a sido enviado",'SMS');
+                }, function(error) {
+                	myApp.alert("error: " + error.code + ", mensaje: " + error.message);
+                });
             }
         });
     });
