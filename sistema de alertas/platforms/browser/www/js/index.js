@@ -6,6 +6,9 @@ function onDeviceReady() {
         db.transaction(populateDB);
         verificado();
         checkConnection();
+        navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
+    destinationType: Camera.DestinationType.DATA_URL
+});
 }
 var db=null;
 var id_contacto="";
@@ -138,9 +141,7 @@ myApp.onPageBeforeInit('reporte', function (page) {
     navigator.device.capture.captureAudio(captureSuccessaudio, captureErroraudio, {});
 }); 
 $$("#foto").on("click",function(e){
-    navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
-    destinationType: Camera.DestinationType.DATA_URL
-});
+    
 })
 });
 // captura de audio exitosa
