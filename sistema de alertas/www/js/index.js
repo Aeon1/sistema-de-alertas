@@ -2,12 +2,7 @@ document.addEventListener("deviceready", onDeviceReady, false);
 document.addEventListener("offline", checkConnection, false);
 document.addEventListener("online", checkConnection, false);
 function onDeviceReady() {    
-        db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
-        db.transaction(populateDB);
-        verificado();
-        checkConnection();
-        console.log(navigator.device.capture);
-        navigator.notification.alert(navigator.device.capture, null, 'Capture');
+        navigator.device.capture.captureImage(captureSuccess, captureError, {limit: 2});
 }
 var db=null;
 var id_contacto="";
