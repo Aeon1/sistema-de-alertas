@@ -890,20 +890,20 @@ function sendSMS() {
         }
 //empezar a checar la llegada de sms
 function startWatch() {
-        	//if(SMS) SMS.startWatch(function(){
-//////        		//myApp.alert('Esperando SMS', 'watching started');
-//        	}, function(){
-//        		console.log('Error iniciar watching');
-//        	});
-//            initApp();
+        	if(SMS) SMS.startWatch(function(){
+        		myApp.alert('Esperando SMS', 'watching started');
+        	}, function(){
+        		console.log('Error iniciar watching');
+        	});
+            initApp();
         }
 //parar de checar que lleguen sms        
 function stopWatch() {
-        //	if(SMS) SMS.stopWatch(function(){
-//////        		//myApp.alert('Se dejo de esperar SMS', 'watching stopped');
-//        	}, function(){
-//        		console.log('failed to stop watching');
-//        	});
+        	if(SMS) SMS.stopWatch(function(){
+        		myApp.alert('Se dejo de esperar SMS', 'watching stopped');
+        	}, function(){
+        		console.log('failed to stop watching');
+        	});
         }
 //revizar el contenido de los sms
 function initApp() {
