@@ -7,11 +7,8 @@
   <preference name="HideKeyboardFormAccessoryBar" value="true"/>
   <preference name="android-minSdkVersion" value="14"/>
   <plugin name="cordova-plugin-camera" source="npm" spec="~2.1.1"/>
-  <plugin name="cordova-plugin-media-capture" source="npm" spec="*">
-  <variable name="CAMERA_USAGE_DESCRIPTION" value="App would like to access the camera." />
-  <variable name="MICROPHONE_USAGE_DESCRIPTION" value="App would like to access the microphone." />
-  <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="App would like to access the library." />
-</plugin>
+  
+  <gap:plugin name="org.apache.cordova.media-capture" />
   <plugin name="cordova-plugin-console" source="npm" spec="~1.0.2"/>
   <plugin name="cordova-plugin-contacts" source="npm" spec="~2.0.1"/>
   <plugin name="cordova-plugin-device" source="npm" spec="~1.1.1"/>
