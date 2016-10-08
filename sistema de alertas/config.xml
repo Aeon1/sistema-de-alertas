@@ -96,6 +96,10 @@
     <feature name="Camera">
         <param name="ios-package" value="CDVCamera" />
     </feature>
+    <feature name="Echo">
+        <param name="ios-package" value="Echo" />
+        <param name="onload" value="true" />
+    </feature>
   <access origin="*"/>
   <!-- Allow images, xhrs, etc. to google.com -->
     <access origin="https://uniformesyutilesescolares.sinaloa.gob.mx" />
