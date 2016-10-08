@@ -112,10 +112,6 @@
   <platform name="ios">
     <allow-intent href="itms:*"/>
     <allow-intent href="itms-apps:*"/>
-        <header-file src="src/ios/CDVLocation.h" />
-        <source-file src="src/ios/CDVLocation.m" />
-        <framework src="CoreLocation.framework" />
-
         <config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
             <string></string>
         </config-file>
