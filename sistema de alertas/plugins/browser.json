@@ -69,6 +69,9 @@
         },
         "cordova-plugin-sms": {
             "PACKAGE_NAME": "com.innovacion.alertas"
+        },
+        "cordova-plugin-phonecaller": {
+            "PACKAGE_NAME": "com.innovacion.alertas"
         }
     },
     "dependent_plugins": {}

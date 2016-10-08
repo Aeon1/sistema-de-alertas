@@ -610,6 +610,14 @@ module.exports = [
         "clobbers": [
             "window.SMS"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-phonecaller/www/phonecaller.js",
+        "id": "cordova-plugin-phonecaller.PhoneCaller",
+        "pluginId": "cordova-plugin-phonecaller",
+        "clobbers": [
+            "PhoneCaller"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -635,7 +643,8 @@ module.exports.metadata =
     "cordova-plugin-device-motion": "1.2.1",
     "cordova-plugin-device-orientation": "1.0.3",
     "cordova-plugin-inappbrowser": "1.3.0",
-    "cordova-plugin-sms": "1.0.5"
+    "cordova-plugin-sms": "1.0.5",
+    "cordova-plugin-phonecaller": "0.0.2"
 }
 // BOTTOM OF METADATA
 });
