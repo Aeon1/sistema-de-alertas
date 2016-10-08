@@ -950,8 +950,7 @@ function Edit_message(){
             });
 }
 function save_mensaje(){
-    var sms_mens = $$("#mensaje_sms").val();
-    
+    var sms_mens = $$("#mensaje_sms").val();    
     db.transaction(
     function(tx) {              
         tx.executeSql('UPDATE mensaje SET mensaje=? where id=?',[sms_mens,1],function(tx,results){
