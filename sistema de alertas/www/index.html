@@ -5,7 +5,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
-  
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    
     <!-- Required meta tags-->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
@@ -122,8 +123,7 @@
                     </li>
                   </ul>
                   <br />
-                  <a href="#" class="button button-big button-gold-c sombra" onclick="captureImage()">Validar</a>
-                  <button class="button button-big button-gold-c sombra" onclick="captureImage()">lanzar camara</button>
+                  <a href="#" class="button button-big button-gold-c sombra" onclick="finalizar()">Validar</a>
                 </div>
             </div>
           </div>
@@ -132,6 +132,10 @@
       </div>
     </div>
     <script type="text/javascript" src="cordova.js"></script>
+    <!-- Path to Framework7 Library JS-->
+    <script type="text/javascript" src="js/framework7.min.js"></script>
+    <!-- panel 3d -->
+    <script src="js/framework7.3dpanels.min.js"></script>
     <!-- Path to your app js-->
     <script type="text/javascript" src="js/index.js"></script>
   </body>
