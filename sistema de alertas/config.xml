@@ -112,8 +112,5 @@
   <platform name="ios">
     <allow-intent href="itms:*"/>
     <allow-intent href="itms-apps:*"/>
-        <config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
-            <string></string>
-        </config-file>
   </platform>
 </widget>
