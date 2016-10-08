@@ -66,6 +66,9 @@
         },
         "cordova-plugin-inappbrowser": {
             "PACKAGE_NAME": "com.innovacion.alertas"
+        },
+        "cordova-plugin-sms": {
+            "PACKAGE_NAME": "com.innovacion.alertas"
         }
     },
     "dependent_plugins": {}
