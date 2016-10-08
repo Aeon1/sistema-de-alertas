@@ -879,18 +879,17 @@ function sendSMS() {
                     textmsg=results.rows.item(0).mensaje;
                     if(latitud!="" && longitude!=""){
                        textmsg=textmsg+" https://www.google.com.co/maps/place/"+latitud+","+longitude; 
-                    }
-                     //   
-//                    	if(sendto.indexOf(";") >=0) {
-//                    	   sendto=sendto.substr(0,sendto.length-1)
-//                    		sendto = sendto.split(";");
-//                    		for(i in sendto) {
-//                    			sendto[i] = sendto[i].trim();
-//                    		}
-//                    	}
+                    }                        
+                    	if(sendto.indexOf(";") >=0) {
+                    	   sendto=sendto.substr(0,sendto.length-1)
+                    		sendto = sendto.split(";");
+                    		for(i in sendto) {
+                    			sendto[i] = sendto[i].trim();
+                    		}
+                    	}
                     	sms.send(sendto, textmsg, function(e){
                             myApp.alert("El mensaje a sido enviado",'SMS');
-                        }, function(e){
+                            }, function(e){
                             myApp.alert('error '+e);
                         });
                 });
