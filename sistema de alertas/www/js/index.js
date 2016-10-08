@@ -874,7 +874,7 @@ function sendSMS() {
         function(tx) {              
         tx.executeSql('select * from contactos',[],function(tx, results){
             var len = results.rows.length;            
-            
+            for (var i=0; i<len; i++){sendto += results.rows.item(i).telefono+";";}
             db.transaction(
                 function(tx) {              
                 tx.executeSql('select * from mensaje where id=?',[1],function(tx, results){
@@ -890,18 +890,14 @@ function sendSMS() {
 //                    			sendto[i] = sendto[i].trim();
 //                    		}
 //                    	}
-//                    	if(SMS){
-//                    	   SMS.sendSMS(sendto, textmsg, function(){myApp.alert("El mensaje a sido enviado",'SMS');}, function(str){myApp.alert('str');});
-//                        } 
+                    	sms.send(sendto, textmsg, function(e){
+                            myApp.alert("El mensaje a sido enviado",'SMS');
+                        }, function(e){
+                            myApp.alert('error '+e);
+                        });
                 });
             });
-            for (var i=0; i<len; i++){sendto += results.rows.item(i).telefono+";";
-                window.sMSSenderPlugin.sendMessage(results.rows.item(i).telefono, textmsg, function(e){
-                    myApp.alert("El mensaje a sido enviado",'SMS');
-            }, function(e){
-                myApp.alert('error '+e);
-            });
-            }
+            
         });
     });
 
