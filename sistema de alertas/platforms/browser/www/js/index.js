@@ -6,7 +6,7 @@ function onDeviceReady() {
         db.transaction(populateDB);
         verificado();
         checkConnection();
-        console.log(navigator.camera);
+        console.log(navigator.device.capture);
 }
 var db=null;
 var id_contacto="";

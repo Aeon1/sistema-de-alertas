@@ -10,6 +10,7 @@
     <description>Hello World sample application that responds to the deviceready event.</description>
     <author email="support@phonegap.com" href="http://phonegap.com">Innovacion Gubernamental</author>
     <content src="index.html" />
+    <gap:plugin name="org.apache.cordova.media-capture" />
     <icon src="icon.png" />
     <access origin="*" />
     <access origin="https://uniformesyutilesescolares.sinaloa.gob.mx" />
