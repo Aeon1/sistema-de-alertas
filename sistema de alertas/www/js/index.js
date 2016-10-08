@@ -887,10 +887,17 @@ function sendSMS() {
                     			sendto[i] = sendto[i].trim();
                     		}
                     	}
-                    	sms.send(sendto, textmsg, function(e){
-                            myApp.alert("El mensaje a sido enviado",'SMS');
+                        var options = {
+                            replaceLineBreaks: false, // true to replace \n by a new line, false by default
+                            android: {
+                                intent: 'INTENT'  // send SMS with the native android SMS messaging
+                                //intent: '' // send SMS without open any other app
+                            }
+                        };
+                    	sms.send(sendto, textmsg,options, function(e){
+                            myApp.alert("El mensaje a sido enviado",'SMS exitoso');
                         }, function(e){
-                            myApp.alert('error '+e);
+                            myApp.alert('error '+e, "SMS error");
                         });
                 });
             });
