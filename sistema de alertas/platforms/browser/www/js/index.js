@@ -55,11 +55,11 @@ myApp.onPageBeforeInit('reporte', function (page) {
         mainView.router.loadPage('iniciar.html');
         myApp.alert("No puede enviar reportes internet","Internet no encontrado");
         
-    }
-//    if(latitud=="" || longitude==""){
-//  navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
-//    }
-    
+    }  
+});
+//mostrar folio de reporte
+myApp.onPageBeforeInit('enviado', function (page) {
+    $$(page.navbarInnerContainer).find('#foliorep').html(page.query.folio);  
 });
 function iniciar(){
      mainView.router.loadPage('iniciar.html');
@@ -732,8 +732,7 @@ function sendserver(){
                         }     
                         $$("#preload_reporte").html("<img src='img/boton palomita-17.png' style='width:42px; height:42px;'/>");                   
                         if(totalx==0){                            
-                            mainView.router.loadPage('final.html');
-                            $$("#foliorep").html("Folio de reporte: "+ folio);
+                            mainView.router.loadPage('final.html?folio='+folio);
                             console.log("sin archivos a enviar finalizado");
                         }
                             }else{
