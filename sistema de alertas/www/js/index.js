@@ -282,14 +282,14 @@ function direction(){
     }else if(celular=="" || celular.length!=10){
         myApp.addNotification({
         title: 'Campo requerido',
-        message: 'Debe indicar su numero celular a 10 digitos',
+        message: 'Debe indicar su n&uacute;mero celular a 10 d&iacute;gitos',
         closeOnClick:true 
         });
         $$("input[name='cel']").focus();
     }else if(mail==""){
         myApp.addNotification({
         title: 'Campo requerido',
-        message: 'Debe indicar su correo electronico',
+        message: 'Debe indicar su correo electr&oacute;nico',
         closeOnClick:true 
         });
     $$("input[name='mail']").focus();
@@ -380,7 +380,7 @@ function registrar(){
  if(cont>=1){
  myApp.modal({
     title:  'Importante',
-    text: 'Favor de confirmar, una vez enviada la informaci&oacute;n el registros no podra ser cancelado. para confirmar el registro ingrese el codigo de confirmaci&oacute;n que se enviar&aacute; al numero celular que registro.',
+    text: 'Favor de confirmar, una vez enviada la informaci&oacute;n el registro no podra ser cancelado. para confirmar el registro ingrese el codigo de confirmaci&oacute;n que se enviar&aacute; al n&uacute;mero celular que registro.',
     buttons: [
       {
         text: 'Cancelar',
@@ -893,7 +893,7 @@ function sendSMS() {
                     	sms.send(sendto, textmsg,options, function(e){
                             myApp.alert("El mensaje a sido enviado",'SMS exitoso');
                         }, function(e){
-                            myApp.alert('error '+e, "SMS error");
+                            myApp.alert('error: '+e, "SMS error");
                         });
                 });
             });
@@ -901,20 +901,6 @@ function sendSMS() {
         });
     });
 
-        }
-//revizar el contenido de los sms
-function initApp() {
-            document.addEventListener('onSMSArrive', function(e){
-            	var data = e.data;
-            	var datos=JSON.stringify( data );
-                 var jsonobject = JSON.parse(datos);
-            	if(jsonobject.address=="5549998687"){
-            	   var res = jsonobject.body.split(":");
-            	   finalizar(res[1]);
-            	   //myApp.alert( jsonobject.body);
-            	}    	
-            	
-            });
         }
 //editar mensaje sms a enviar a contactos de emergencia
 function Edit_message(){
