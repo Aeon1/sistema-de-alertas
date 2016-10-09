@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.innovacion.alertas" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.innovacion.alertas" version="1.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
     <feature name="Camera">
         <param name="browser-package" value="Camera" />
     </feature>
@@ -7,7 +7,7 @@
         <param name="browser-package" value="Device" />
     </feature>
     <name>911 Alerta Movil</name>
-    <description>Hello World sample application that responds to the deviceready event.</description>
+    <description>El Gobierno del Estado de Sinaloa a trav�s de la Secretar�a de Innovaci�n Gubernamental y la  Secretar�a de Seguridad P�blica, pone a disposici�n de sus ciudadanos y visitantes la aplicaci�n denominada �911 Alerta Movil� que permite a los usuarios de tel�fonos m�viles realizar peticiones de atenci�n de emergencias a trav�s de la red de datos y l�nea telef�nica.</description>
     <author email="support@phonegap.com" href="http://phonegap.com">Innovacion Gubernamental</author>
     <content src="index.html" />
     <icon src="icon.png" />
@@ -22,4 +22,5 @@
     <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="14" />
     <preference name="orientation" value="portrait" />
+    <preference name="Fullscreen" value="false" />
 </widget>

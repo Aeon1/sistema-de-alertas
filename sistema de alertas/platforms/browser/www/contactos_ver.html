@@ -1,28 +1,24 @@
+
 <!-- We don't need full layout here, because this page will be parsed with Ajax-->
 <!-- Top Navbar-->
 <div class="navbar">
   <div class="navbar-inner">
+  <div class="left"><a href="iniciar.html" class="link"> <i class="icon icon-left-arrow-angle"></i></a></div>
     <div class="center sliding">Contactos de emergencia</div>    
   </div>
 </div>
 <div class="pages">
   <!-- Page, data-page contains page name-->
-  <div data-page="contactos" class="page">
+  <div data-page="viewcon" class="page">
   <!-- Search Bar -->
   <form data-search-list=".list-block-search" data-search-in=".item-title" class="searchbar searchbar-init">
     <div class="searchbar-input">
       <input type="search" placeholder="Buscar"><a href="#" class="searchbar-clear"></a>
     </div><a href="#" class="searchbar-cancel">Cancelar</a>
-  </form> 
+  </form>
+ 
   <!-- Search Bar overlay -->
-  <div class="searchbar-overlay"></div>  
-   <!-- Toolbar has additional "toolbar-bottom" class -->
-  <div class="toolbar toolbar-bottom" style="bottom: 20px; border-top:0px solid;background: transparent!important;">
-  <div class="list-block inset" style="margin-top: 0;">   
-      <a href="#" class="button button-big button-gold-c sombra" onclick="registrar()">Finalizar</a>
-      <br /> 
-      </div>  
-  </div>
+  <div class="searchbar-overlay"></div>
     <!-- Scrollable page content-->
     <div class="page-content hide-toolbar-on-scroll">
     <div class="content-block searchbar-not-found">
@@ -31,11 +27,20 @@
       <div class="content-block">
         <div class="content-block-inner">
             <div class="list-block list-block-search searchbar-found">
-              <ul id="contacts">
+            <div class="content-block-title">Contactos actuales</div>
+              <ul id="contacts_view">
               <li><p><span class="progressbar-infinite color-multi"></span></p></li>
               </ul>
             </div>
-        </div>
+        </div><br />
+        <div class="row">
+              <div class="col-50">
+                <a href="#" class="button button-big button-red sombra-roja" onclick="cancelar_reporte()">Cancelar</a>
+              </div>
+              <div class="col-50">
+                <a href="#" class="button button-big button-gold-c sombra" onclick="modificar_con()">Modificar</a>
+              </div>
+            </div>
       </div>
     </div>
   </div>

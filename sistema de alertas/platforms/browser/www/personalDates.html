@@ -1,0 +1,160 @@
+
+<!-- We don't need full layout here, because this page will be parsed with Ajax-->
+<!-- Top Navbar-->
+<div class="navbar">
+  <div class="navbar-inner">
+    <div class="center sliding">Registro</div>
+    <div class="right">
+      <!-- Right link contains only icon - additional "icon-only" class-->
+    </div>
+  </div>
+</div>
+<div class="pages">
+  <!-- Page, data-page contains page name-->
+  <div data-page="personalDates" class="page">
+    <!-- Scrollable page content-->
+    <!-- Toolbar has additional "toolbar-bottom" class -->
+
+    <div class="page-content">
+      <div class="content-block">
+            <div class="list-block inset">
+              <ul>
+                <li>
+                  <div class="item-content">
+                    <div class="item-inner">
+                    <div class="item-title label">Nombre*</div>
+                      <div class="item-input">
+                        <input type="text" placeholder="Nombre" name="name" value="">
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="item-content">
+                    <div class="item-inner">
+                    <div class="item-title label">Paterno*</div>
+                      <div class="item-input">
+                        <input type="text" placeholder="Apellido paterno" name="s_name" value="">
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="item-content">
+                    <div class="item-inner">
+                    <div class="item-title label">Materno</div>
+                      <div class="item-input">
+                        <input type="text" placeholder="apellido materno" name="t_name">
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="item-content">
+                    <div class="item-inner">
+                      <div class="item-title label">Sexo*</div>
+                      <div class="item-input">
+                        <select name="sex">
+                          <option>Hombre</option>
+                          <option>Mujer</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="item-content">
+                    <div class="item-inner">
+                    <div class="item-title label">Nacimiento*</div>
+                      <div class="item-input">
+                        <input type="date" placeholder="Fecha de nacimiento" value="" name="born">
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="item-content">
+                    <div class="item-inner">
+                    <div class="item-title label">Tel&eacute;fono</div>
+                      <div class="item-input">
+                        <input type="tel" placeholder="" name="tel" value="">
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="item-content">
+                    <div class="item-inner">
+                    <div class="item-title label">Celular*</div>
+                      <div class="item-input">
+                        <input type="tel" placeholder="" name="cel" value="">
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="item-content">
+                    <div class="item-inner">
+                    <div class="item-title label">E-mail*</div>
+                      <div class="item-input">
+                        <input type="email" placeholder="" name="mail" value="">
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+            <div class="item-content">
+              <div class="item-inner"> 
+              <div class="row">
+                <div class="col-80"><div class="label">Padece alguna enfermedad cr&oacute;nica</div></div>
+                <div class="col-20"><div class="item-input"><br />
+                  <label class="label-switch">
+                    <input type="checkbox" onchange="$$('#enfermedad').toggleClass('hide')" />
+                    <div class="checkbox"></div>
+                  </label>
+                </div></div>
+              </div>
+              </div>
+            </div>
+          </li>
+          <li class="hide" id="enfermedad">
+            <div class="item-content">
+                <div class="item-inner">
+                    <div class="item-title label">Enfermedad</div>
+                    <div class="item-input">
+                        <input type="text" placeholder="padecimiento" name="enfermedad">
+                    </div>
+                </div>
+            </div>
+          </li>
+          <li>
+          <div class="item-content">
+              <div class="item-inner"> 
+              <div class="row" style="width: 100%;">
+                <div class="col-60"><div class="label">Tipo de sangre</div></div>
+                <div class="col-40">
+                    <div class="item-input">
+                      <select name="blood">
+                        <option>No lo s&eacute;</option>
+                        <option>A+</option>
+                        <option>A-</option>
+                        <option>B+</option>
+                        <option>B-</option>
+                        <option>AB+</option>
+                        <option>AB-</option>
+                        <option>O+</option>
+                        <option>O-</option>
+                      </select>
+                    </div>
+                </div>
+              </div>
+              </div>
+            </div>
+          </li>    
+          </ul><br />
+  <a href="#" class="button button-big button-gold-c sombra" onclick="direction()">Continuar</a> 
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
