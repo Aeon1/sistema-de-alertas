@@ -59,7 +59,7 @@ myApp.onPageBeforeInit('reporte', function (page) {
 });
 //mostrar folio de reporte
 myApp.onPageBeforeInit('enviado', function (page) {
-    $$(page.navbarInnerContainer).find('#foliorep').html(page.query.folio);  
+    $$(page.navbarInnerContainer).find('#foliorep').html("Folio de reporte: "+ page.query.folio);  
 });
 function iniciar(){
      mainView.router.loadPage('iniciar.html');
