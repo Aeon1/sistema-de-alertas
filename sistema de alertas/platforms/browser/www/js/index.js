@@ -731,9 +731,9 @@ function sendserver(){
                             "<div class='progressbar color-orange pgrs3' data-progress='0'><span></span>");                            
                         }     
                         $$("#preload_reporte").html("<img src='img/boton palomita-17.png' style='width:42px; height:42px;'/>");                   
-                        if(totalx==0){
-                            $$("#foliorep").html("Folio de reporte: "+folio)
+                        if(totalx==0){                            
                             mainView.router.loadPage('final.html');
+                            $$("#foliorep").html("Folio de reporte: "+ folio);
                             console.log("sin archivos a enviar finalizado");
                         }
                             }else{
