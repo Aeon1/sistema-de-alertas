@@ -1,4 +1,4 @@
-<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.innovacion.alertas" version="1.0.1">
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.innovacion.alertas" version="1.0.1" encoding="iso-8859-1">
   <name>911 Alerta Movil</name>
   <description>El Gobierno del Estado de Sinaloa a través de la Secretaría de Innovación Gubernamental y la  Secretaría de Seguridad Pública, pone a disposición de sus ciudadanos y visitantes la aplicación denominada “911 Alerta Movil” que permite a los usuarios de teléfonos móviles realizar peticiones de atención de emergencias a través de la red de datos y línea telefónica.</description>
   <author href="http://phonegap.com" email="support@phonegap.com">Innovacion Gubernamental</author>
