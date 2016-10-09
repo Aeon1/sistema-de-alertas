@@ -7,7 +7,7 @@
         <param name="browser-package" value="Device" />
     </feature>
     <name>911 Alerta Movil</name>
-    <description>El Gobierno del Estado de Sinaloa a trav�s de la Secretar�a de Innovaci�n Gubernamental y la  Secretar�a de Seguridad P�blica, pone a disposici�n de sus ciudadanos y visitantes la aplicaci�n denominada �911 Alerta Movil� que permite a los usuarios de tel�fonos m�viles realizar peticiones de atenci�n de emergencias a trav�s de la red de datos y l�nea telef�nica.</description>
+    <description>El Gobierno del Estado de Sinaloa</description>
     <author email="support@phonegap.com" href="http://phonegap.com">Innovacion Gubernamental</author>
     <content src="index.html" />
     <icon src="icon.png" />
