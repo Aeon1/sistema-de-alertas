@@ -541,7 +541,7 @@ function robo() {
         {
             text: 'Robo habitaci&oacute;n',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Robo casa habitación&id=1');
+                mainView.router.loadPage('reporte.html?title=Robo casa habitaciu00f3n&id=1');
                 }
         },
         {
