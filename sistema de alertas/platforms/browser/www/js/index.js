@@ -470,8 +470,7 @@ function OnSuccess(data, status, xhr){
         tx.executeSql('INSERT INTO acceso(contacto,confirmacion) VALUES(?,?)',[id_contacto,codigo_confirmacion]);
     });
     enviocontactos(json.ContactoID,json.CodigoConfirmacion);
-    
-    }
+}
 //se envian los contactos al servidor
 function enviocontactos(id,verificacion){
     db.transaction(
@@ -500,7 +499,7 @@ function enviocontactos(id,verificacion){
 //finalizar el registro envio de codigo de confirmacion
 function finalizar(verify){    
     myApp.showPreloader('validando');    
-    var verificacion
+    var verificacion;
     console.log($$("#codigo_confirmaciona").val());
     if(verify=="" || verify=="undefined" || verify==null){
     if($$("#codigo_confirmaciona").val()!=""){
@@ -535,10 +534,7 @@ function finalizar(verify){
                             myApp.hidePreloader();
                         }
                         });
-//    });
-//});
 }
-
 //mensajes de funcion de botones
 function robo() {
     var buttons = [
@@ -552,8 +548,7 @@ function robo() {
             text: 'Robo a comercio',
             onClick: function () {
                 mainView.router.loadPage('reporte.html?title=Robo a comercio&id=2');
-                
-            }
+             }
         },
         {
             text: 'Robo de auto',
@@ -582,8 +577,7 @@ function violencia_mujeres(){
             text: 'Violencia Psicologica mujeres',
             onClick: function () {
                 mainView.router.loadPage('reporte.html?title=Violencia Psicologica mujeres&id=7');
-                
-            }
+             }
         },
     ];
     myApp.actions(buttons);
@@ -619,7 +613,7 @@ var captureSuccessaudio = function(mediaFiles) {
 // captura de audio con error
 var captureErroraudio = function(error) {
     console.log(error);
-    navigator.notification.alert('No se capturo nada', 'Captura');
+    navigator.notification.alert('No se grab&oacute; nada', 'Captura');
 };
 // captura de foto exitosa
 var captureSuccessfoto = function(mediaFiles) {
@@ -636,7 +630,7 @@ var captureSuccessfoto = function(mediaFiles) {
 // captura de foto con error
 var captureErrorfoto = function(error) {
     console.log(error);
-    navigator.notification.alert('No se capturo nada', 'Captura');
+    navigator.notification.alert('No se captur&oacute; nada', 'Captura');
 };
 // captura de video exitosa
 var captureSuccessvideo = function(mediaFiles) {
@@ -650,11 +644,10 @@ var captureSuccessvideo = function(mediaFiles) {
 path_video=path;
 $$(".video").removeClass('button-gold-c').addClass('active');;
 };
-
 // captura de video con error
 var captureErrorvideo = function(error) {
     console.log(error);
-    navigator.notification.alert('No se capturo nada', 'Captura');
+    navigator.notification.alert('No se captur&oacute; nada', 'Captura');
 };
 //obtencion de las coordenadas exitosa
 function onSuccessC(position) {
@@ -662,19 +655,7 @@ function onSuccessC(position) {
     longitude=position.coords.longitude;  
 }
 // obtencion de las coordenadas error
-function onErrorC(error) {
-   // myApp.alert('Asegurese que tiene habilitada la geolocalizacion', 'Ubicacion no encontrada', function () {
-//        if(typeof cordova.plugins.settings.openSetting != undefined){
-//            cordova.plugins.settings.open(function(){
-//                    console.log("opened settings")
-//                },
-//                function(){
-//                    console.log("failed to open settings")
-//                });
-//        }
-//    });
-//    mainView.router.loadPage('iniciar.html'); 
-}
+function onErrorC(error) {}
 //activar gps del celular
 function activar_gps(){
     if(typeof cordova.plugins.settings.openSetting != undefined){
@@ -697,7 +678,6 @@ function callNumber(number){
   console.log("Launching Calling Service for number "+number);
  window.PhoneCaller.call(number,onSuccesscall,onErrorcall);
 }
-
 //envio del reporte
 var totalx=0;
 function sendserver(){
@@ -767,8 +747,6 @@ function sendserver(){
 function cancelar_reporte(){
     mainView.router.loadPage('iniciar.html');
 }
-
-
 //envio de foto
 function win(r) {
     totalx=totalx-1;
@@ -853,8 +831,7 @@ var params = new Object();
     params.op = "sa" ;
 options.params = params;
 var headers={'headerParam':'headerValue'};
- 
-options.headers = headers;
+ options.headers = headers;
     var ft = new FileTransfer();
     ft.onprogress = function(progressEvent) {
         if (progressEvent.lengthComputable) {
@@ -903,7 +880,7 @@ function sendSMS() {
         });
     });
 
-        }
+}
 //editar mensaje sms a enviar a contactos de emergencia
 function Edit_message(){
     myApp.closePanel();
@@ -972,8 +949,7 @@ function modificar_con(){
                     );
 }
 //guardar los nuevos contactos
-function Save_new_con(){
-    
+function Save_new_con(){    
     var checkboxes = $$("#contacts_m input[type='checkbox']");
     var cont = 0;
     for (var x=0; x < checkboxes.length; x++) {
@@ -1014,7 +990,8 @@ function Save_new_con(){
     ]
   })
 }
-}//borrar y guardar nuevos contactos
+}
+//borrar y guardar nuevos contactos
 function boygunew(){           
     cont = 0; 
     var nombre="";var telefono="";
@@ -1050,12 +1027,8 @@ function boygunew(){
                             myApp.hidePreloader();
                         }
                         });
-                
             });
          });
-
-
-
 }
 //se envian los contactos al servidor
 function enviocontactos_new(){
