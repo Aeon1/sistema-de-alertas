@@ -539,9 +539,9 @@ function finalizar(verify){
 function robo() {
     var buttons = [
         {
-            text: 'Robo habitacion',
+            text: 'Robo habitaci&oacute;n',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Robo casa habitacion&id=1');
+                mainView.router.loadPage('reporte.html?title=Robo casa habitaci&oacute;n&id=1');
                 }
         },
         {
@@ -568,15 +568,15 @@ function incendio(){
 function violencia_mujeres(){
     var buttons = [
         {
-            text: 'Violencia fisica mujeres',
+            text: 'Violencia f&iacute;sica mujeres',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Violencia fisica mujeres&id=6');
+                mainView.router.loadPage('reporte.html?title=Violencia f&iacute;sica mujeres&id=6');
                 }
         },
         {
-            text: 'Violencia Psicologica mujeres',
+            text: 'Violencia psicol&oacute;gica mujeres',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Violencia Psicologica mujeres&id=7');
+                mainView.router.loadPage('reporte.html?title=Violencia psicol&oacute;gica mujeres&id=7');
              }
         },
     ];
