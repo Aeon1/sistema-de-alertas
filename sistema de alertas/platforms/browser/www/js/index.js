@@ -11,6 +11,7 @@ var path_video="";
 var mimeType_xa="";
 var mimeType_xf="";
 var mimeType_xv="";
+var promad="";
  var online=0;
 function onDeviceReady() {   
         db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
@@ -59,7 +60,7 @@ myApp.onPageBeforeInit('reporte', function (page) {
 });
 //mostrar folio de reporte
 myApp.onPageBeforeInit('enviado', function (page) {
-    $$(page.navbarInnerContainer).find('#foliorep').html("Folio de reporte: "+ page.query.folio);  
+    $$(page.container).find('#foliorep').html("Folio de reporte: "+ page.query.folio);  
 });
 function iniciar(){
      mainView.router.loadPage('iniciar.html');
@@ -712,6 +713,7 @@ function sendserver(){
                 var json = JSON.parse(result);
                 if(json.OcurrioError==0){
                         folio=json.FolioIncidente;
+                        promad=json.FolioPromad;
                         if(path_audio!=""){
                             totalx+=1;
                             sendfiles(path_audio,folio,mimeType_xa); 
@@ -732,7 +734,7 @@ function sendserver(){
                         }     
                         $$("#preload_reporte").html("<img src='img/boton palomita-17.png' style='width:42px; height:42px;'/>");                   
                         if(totalx==0){                            
-                            mainView.router.loadPage('final.html?folio='+folio);
+                            mainView.router.loadPage('final.html?folio='+promad);
                             console.log("sin archivos a enviar finalizado");
                         }
                             }else{
@@ -772,7 +774,7 @@ function win(r) {
     totalx=totalx-1;
     console.log("total "+totalx);
     if(totalx==0){
-         mainView.router.loadPage('final.html');
+         mainView.router.loadPage('final.html?folio='+promad);
         console.log("enviandos los archivos finalizado");
     }
     console.log("Code = " + r.responseCode);
@@ -783,7 +785,7 @@ function fail(error) {
     totalx=totalx-1;
     console.log("total "+totalx);
     if(totalx==0){
-        mainView.router.loadPage('final.html');
+        mainView.router.loadPage('final.html?folio='+promad);
         console.log("no se pudo enviar el archivo");
     }
     alert("An error has occurred: Code = " + error.code);
