@@ -1057,7 +1057,8 @@ function enviocontactos_new(){
     });
 }
 //mostrar pdf de terminos y condiciones
-cordova.plugins.fileOpener2.open(
+function pdf(){
+    cordova.plugins.fileOpener2.open(
     'img/terminos_y_condiciones.pdf', // You can also use a Cordova-style file uri: cdvfile://localhost/persistent/Download/starwars.pdf
     'application/pdf', 
     { 
@@ -1069,3 +1070,4 @@ cordova.plugins.fileOpener2.open(
         }
     }
 );
+}
