@@ -1,5 +1,5 @@
-<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.innovacion.alertas" version="1.0.2">
-  <name>911 Alerta Movil</name>
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.innovacion.alertas" version="1.0.3">
+  <name>SOS Sinaloa</name>
   <description>El Gobierno del Estado de Sinaloa</description>
   <author href="http://phonegap.com" email="support@phonegap.com">Innovacion Gubernamental</author>
   <content src="index.html"/>
