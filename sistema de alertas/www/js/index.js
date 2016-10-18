@@ -381,7 +381,7 @@ function registrar(){
  if(cont>=1){
  myApp.modal({
     title:  'Importante',
-    text: 'Favor de confirmar, una vez enviada la informaci&oacute;n el registro no podra ser cancelado. para confirmar el registro ingrese el c&oacute;digo de confirmaci&oacute;n que se enviar&aacute; al n&uacute;mero celular que registro.',
+    text: 'Favor de confirmar, una vez enviada la informaci&oacute;n el registro no podr&aacute; ser cancelado. Para confirmar el registro ingrese el c&oacute;digo de confirmaci&oacute;n que se enviar&aacute; al n&uacute;mero celular que registro.',
     buttons: [
       {
         text: 'Cancelar',
