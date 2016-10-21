@@ -37,16 +37,7 @@ var mainView = myApp.addView('.view-main', {
 //saber si el gps esta funcionando
 myApp.onPageInit('index', function (page) {
     var watchID = navigator.geolocation.watchPosition(onSuccessC, onErrorC, { timeout: 5000 });
-    var myApp = new Framework7({swipePanel:'left'});
-    plugin.google.maps.Map.isAvailable(function(isAvailable, message) {
-    if (isAvailable) {
-      var map = plugin.google.maps.Map.getMap();
-      map.addEventListener(plugin.google.maps.event.MAP_READY, onMapInit);
-    } else {
-      myApp.alert(message);
-    }
-  });
-    
+    var myApp = new Framework7({swipePanel:'left'});    
 });
 myApp.onPageInit('enviado', function (page) {
     path_audio="";
@@ -692,7 +683,7 @@ function callNumber(number){
 function verify_ubic(){
       var popupHTML = '<div class="popup">'+
                     '<div class="content-block" style="height:100%;width:100%;padding:0;margin-top:3%">'+
-                      '<div id="map"></div>'+
+                      '<div id="map_canvas"></div>'+
                       '<p style="position: relative;margin:10px 15px 10px 15px" id="coors">Lat: '+latitud+'<br /> Long:'+longitude+'</p>'+
                       '<div class="row" style="position: relative;margin:0 15px 0 15px">'+
                           '<div class="col-50">'+
@@ -705,13 +696,25 @@ function verify_ubic(){
                     '</div>'+
                   '</div>'
   myApp.popup(popupHTML);
-  var mapDiv = document.getElementById("map");
+ var mapDiv = document.getElementById("map_canvas");
 
-  // Initialize the map plugin
-  var map = plugin.google.maps.Map.getMap(mapDiv);
+  const GOOGLE = new plugin.google.maps.LatLng(24.798508,-107.408766);
+  var map = plugin.google.maps.Map.getMap(mapDiv, {
+    'camera': {
+      'latLng': GOOGLE,
+      'zoom': 17
+    }
+  });
+var myLatLng = new plugin.google.maps.LatLng( latitud, longitude ),
+  map.addEventListener(plugin.google.maps.event.MAP_READY, function() {
 
-  // You have to wait the MAP_READY event.
-  map.on(plugin.google.maps.event.MAP_READY, onMapInit);
+    map.addMarker({
+      'position': myLatLng,
+      'draggable':true
+    });
+
+  });
+
  // map = new GMaps({
 //        el: '#map',
 //        zoomControl: true,
@@ -735,8 +738,7 @@ function verify_ubic(){
 //      });
      
 }
-function onMapInit(map) {
-}
+
 //envio del reporte
 var totalx=0;
 function sendserver(){
