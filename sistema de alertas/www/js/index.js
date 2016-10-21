@@ -705,7 +705,7 @@ function verify_ubic(){
       'zoom': 17
     }
   });
-var myLatLng = new plugin.google.maps.LatLng( latitud, longitude ),
+var myLatLng = new plugin.google.maps.LatLng( latitud, longitude );
   map.addEventListener(plugin.google.maps.event.MAP_READY, function() {
 
     map.addMarker({
