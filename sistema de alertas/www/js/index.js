@@ -17,7 +17,8 @@ var map;
 function onDeviceReady() {   
         db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
         db.transaction(populateDB);
-        verificado();        
+        verificado(); 
+               
 }
 document.addEventListener("offline", checkConnection, false);
 document.addEventListener("online", checkConnection, false);
@@ -37,6 +38,14 @@ var mainView = myApp.addView('.view-main', {
 myApp.onPageInit('index', function (page) {
     var watchID = navigator.geolocation.watchPosition(onSuccessC, onErrorC, { timeout: 5000 });
     var myApp = new Framework7({swipePanel:'left'});
+    plugin.google.maps.Map.isAvailable(function(isAvailable, message) {
+    if (isAvailable) {
+      var map = plugin.google.maps.Map.getMap();
+      map.addEventListener(plugin.google.maps.event.MAP_READY, onMapInit);
+    } else {
+      myApp.alert(message);
+    }
+  });
     
 });
 myApp.onPageInit('enviado', function (page) {
