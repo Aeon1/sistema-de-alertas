@@ -642,6 +642,14 @@ module.exports = [
         "clobbers": [
             "window.sms"
         ]
+    },
+    {
+        "file": "plugins/cordova-sms-plugin/www/sms.js",
+        "id": "cordova-sms-plugin.Sms",
+        "pluginId": "cordova-sms-plugin",
+        "clobbers": [
+            "window.sms"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -671,7 +679,8 @@ module.exports.metadata =
     "cordova-plugin-phonecaller": "0.0.2",
     "com.phonegap.plugins.nativesettingsopener": "1.1.0",
     "cordova-plugin-sms-sender": "1.0.0",
-    "com.cordova.plugins.sms": "0.1.10"
+    "com.cordova.plugins.sms": "0.1.10",
+    "cordova-sms-plugin": "0.1.11"
 }
 // BOTTOM OF METADATA
 });

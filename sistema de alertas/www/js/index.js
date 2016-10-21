@@ -12,11 +12,12 @@ var mimeType_xa="";
 var mimeType_xf="";
 var mimeType_xv="";
 var promad="";
+var map;
  var online=0;
 function onDeviceReady() {   
         db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
         db.transaction(populateDB);
-        verificado();
+        verificado();        
 }
 document.addEventListener("offline", checkConnection, false);
 document.addEventListener("online", checkConnection, false);
@@ -681,12 +682,50 @@ function callNumber(number){
 //verificar ubicacion
 function verify_ubic(){
       var popupHTML = '<div class="popup">'+
-                    '<div class="content-block">'+
-                      '<p><a href="#" class="close-popup">Close me</a></p>'+
+                    '<div class="content-block" style="height:100%;width:100%;padding:0;margin-top:3%">'+
                       '<div id="map"></div>'+
+                      '<p style="position: relative;margin:10px 15px 10px 15px" id="coors">Lat: '+latitud+'<br /> Long:'+longitude+'</p>'+
+                      '<div class="row" style="position: relative;margin:0 15px 0 15px">'+
+                          '<div class="col-50">'+
+                            '<a href="#" class="button button-big button-red sombra-roja close-popup">Cancelar</a>'+
+                          '</div>'+
+                          '<div class="col-50">'+
+                            '<a href="#" class="button button-big button-gold-c sombra" onclick="sendserver()">Enviar</a>'+
+                          '</div>'+
+                        '</div>'+
                     '</div>'+
                   '</div>'
   myApp.popup(popupHTML);
+  map = new GMaps({
+        el: '#map',
+        zoomControl: true,
+          mapTypeControl: false,
+          scaleControl: true,
+          streetViewControl: false,
+          rotateControl: false,
+          lat: 24.798508,
+          lng: -107.408766
+      }); 
+
+
+//  map.addListener('center_changed', function() {
+//    // 3 seconds after the center of the map has changed, pan back to the
+//    // marker.
+//    window.setTimeout(function() {
+//      marker.panTo(map.setCenter());
+//    }, 100);
+//  });
+var myLatLng = new google.maps.LatLng( latitud, longitude ),
+      marker=map.addMarker({
+        position: myLatLng,
+        draggable: false
+      });
+      map.addListener('drag',function(event)
+      {
+        marker.setPosition(map.getCenter());
+        $$("#coors").html("Lat: "+map.getCenter().lat()+"<br /> Long: "+map.getCenter().lng()) ;
+      });
+     
 }
 
 //envio del reporte

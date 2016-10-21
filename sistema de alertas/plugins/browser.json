@@ -81,6 +81,9 @@
         },
         "com.cordova.plugins.sms": {
             "PACKAGE_NAME": "com.innovacion.alertas"
+        },
+        "cordova-sms-plugin": {
+            "PACKAGE_NAME": "com.innovacion.alertas"
         }
     },
     "dependent_plugins": {}
