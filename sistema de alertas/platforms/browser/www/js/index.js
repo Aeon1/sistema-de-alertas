@@ -699,21 +699,21 @@ function verify_ubic(){
  var mapDiv = document.getElementById("map_canvas");
 
   const GOOGLE = new plugin.google.maps.LatLng(24.798508,-107.408766);
-  var map = plugin.google.maps.Map.getMap(mapDiv, {
+  var map = plugin.google.maps.Map.getMap(mapDiv,{
     'camera': {
       'latLng': GOOGLE,
       'zoom': 17
     }
   });
-var myLatLng = new plugin.google.maps.LatLng( latitud, longitude );
-  map.addEventListener(plugin.google.maps.event.MAP_READY, function() {
-
-    map.addMarker({
-      'position': myLatLng,
-      'draggable':true
-    });
-
-  });
+//var myLatLng = new plugin.google.maps.LatLng( latitud, longitude );
+//  map.addEventListener(plugin.google.maps.event.MAP_READY, function() {
+//
+//    map.addMarker({
+//      'position': myLatLng,
+//      'draggable':true
+//    });
+//
+//  });
 
  // map = new GMaps({
 //        el: '#map',
