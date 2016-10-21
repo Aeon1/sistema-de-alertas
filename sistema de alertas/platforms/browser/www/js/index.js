@@ -19,15 +19,7 @@ function onDeviceReady() {
         db.transaction(populateDB);
         verificado(); 
         
-                var mapDiv = document.getElementById("map_canvas");
-
-  const GOOGLE = new plugin.google.maps.LatLng(24.798508,-107.408766);
-  var map = plugin.google.maps.Map.getMap(mapDiv,{
-    'camera': {
-      'latLng': GOOGLE,
-      'zoom': 17
-    }
-  });
+    
 }
 document.addEventListener("offline", checkConnection, false);
 document.addEventListener("online", checkConnection, false);
@@ -66,7 +58,16 @@ myApp.onPageBeforeInit('reporte', function (page) {
         mainView.router.loadPage('iniciar.html');
         myApp.alert("No puede enviar reportes internet","Internet no encontrado");
         
-    }  
+    } 
+               var mapDiv = document.getElementById("map_canvas");
+
+  const GOOGLE = new plugin.google.maps.LatLng(24.798508,-107.408766);
+  var map = plugin.google.maps.Map.getMap(mapDiv,{
+    'camera': {
+      'latLng': GOOGLE,
+      'zoom': 17
+    }
+  });  
 });
 //mostrar folio de reporte
 myApp.onPageBeforeInit('enviado', function (page) {
