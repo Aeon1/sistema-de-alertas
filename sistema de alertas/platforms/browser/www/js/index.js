@@ -696,6 +696,13 @@ function verify_ubic(){
                     '</div>'+
                   '</div>'
   myApp.popup(popupHTML);
+  var mapDiv = document.getElementById("map");
+
+  // Initialize the map plugin
+  var map = plugin.google.maps.Map.getMap(mapDiv);
+
+  // You have to wait the MAP_READY event.
+  map.on(plugin.google.maps.event.MAP_READY, onMapInit);
  // map = new GMaps({
 //        el: '#map',
 //        zoomControl: true,
@@ -707,27 +714,20 @@ function verify_ubic(){
 //          lng: -107.408766
 //      }); 
 
-
-//  map.addListener('center_changed', function() {
-//    // 3 seconds after the center of the map has changed, pan back to the
-//    // marker.
-//    window.setTimeout(function() {
-//      marker.panTo(map.setCenter());
-//    }, 100);
-//  });
-var myLatLng = new google.maps.LatLng( latitud, longitude ),
-      marker=map.addMarker({
-        position: myLatLng,
-        draggable: false
-      });
-      map.addListener('drag',function(event)
-      {
-        marker.setPosition(map.getCenter());
-        $$("#coors").html("Lat: "+map.getCenter().lat()+"<br /> Long: "+map.getCenter().lng()) ;
-      });
+//var myLatLng = new google.maps.LatLng( latitud, longitude ),
+//      marker=map.addMarker({
+//        position: myLatLng,
+//        draggable: false
+//      });
+//      map.addListener('drag',function(event)
+//      {
+//        marker.setPosition(map.getCenter());
+//        $$("#coors").html("Lat: "+map.getCenter().lat()+"<br /> Long: "+map.getCenter().lng()) ;
+//      });
      
 }
-
+function onMapInit(map) {
+}
 //envio del reporte
 var totalx=0;
 function sendserver(){
