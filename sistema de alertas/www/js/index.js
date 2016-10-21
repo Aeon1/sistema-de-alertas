@@ -678,6 +678,17 @@ function callNumber(number){
   console.log("Launching Calling Service for number "+number);
  window.PhoneCaller.call(number,onSuccesscall,onErrorcall);
 }
+//verificar ubicacion
+function verify_ubic(){
+      var popupHTML = '<div class="popup">'+
+                    '<div class="content-block">'+
+                      '<p><a href="#" class="close-popup">Close me</a></p>'+
+                      '<div id="map"></div>'+
+                    '</div>'+
+                  '</div>'
+  myApp.popup(popupHTML);
+}
+
 //envio del reporte
 var totalx=0;
 function sendserver(){
