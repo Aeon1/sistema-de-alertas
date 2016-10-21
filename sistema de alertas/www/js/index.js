@@ -18,7 +18,16 @@ function onDeviceReady() {
         db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
         db.transaction(populateDB);
         verificado(); 
-               
+        
+                var mapDiv = document.getElementById("map_canvas");
+
+  const GOOGLE = new plugin.google.maps.LatLng(24.798508,-107.408766);
+  var map = plugin.google.maps.Map.getMap(mapDiv,{
+    'camera': {
+      'latLng': GOOGLE,
+      'zoom': 17
+    }
+  });
 }
 document.addEventListener("offline", checkConnection, false);
 document.addEventListener("online", checkConnection, false);
