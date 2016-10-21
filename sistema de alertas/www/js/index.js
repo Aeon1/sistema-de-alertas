@@ -696,16 +696,16 @@ function verify_ubic(){
                     '</div>'+
                   '</div>'
   myApp.popup(popupHTML);
-  map = new GMaps({
-        el: '#map',
-        zoomControl: true,
-          mapTypeControl: false,
-          scaleControl: true,
-          streetViewControl: false,
-          rotateControl: false,
-          lat: 24.798508,
-          lng: -107.408766
-      }); 
+ // map = new GMaps({
+//        el: '#map',
+//        zoomControl: true,
+//          mapTypeControl: false,
+//          scaleControl: true,
+//          streetViewControl: false,
+//          rotateControl: false,
+//          lat: 24.798508,
+//          lng: -107.408766
+//      }); 
 
 
 //  map.addListener('center_changed', function() {

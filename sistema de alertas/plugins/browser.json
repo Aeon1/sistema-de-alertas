@@ -84,6 +84,9 @@
         },
         "cordova-sms-plugin": {
             "PACKAGE_NAME": "com.innovacion.alertas"
+        },
+        "plugin.google.maps": {
+            "PACKAGE_NAME": "com.innovacion.alertas"
         }
     },
     "dependent_plugins": {}
