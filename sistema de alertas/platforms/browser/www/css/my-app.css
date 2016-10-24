@@ -35,7 +35,7 @@ box-shadow:         0px 3px 1px -1px rgba(126, 32, 41, 1);
 }
 .toolbar:before{background: transparent!important;}
 
-#map_canvas{
+#map{
   display: block;
 position: relative;
 border-radius: 5px;

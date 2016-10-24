@@ -10,9 +10,6 @@
     <description>Gobierno del Estado de Sinaloa</description>
     <author email="joel.r@live.com.mx" href="http://innovaciongubernamental.gob.mx">Innovacion Gubernamental</author>
     <content src="index.html" />
-    <gap:plugin name="cordova-plugin-googlemaps" source="npm">
-        <param name="API_KEY_FOR_ANDROID" value="AIzaSyB4CCpKPseugP5BycmJoXAJ7QD4U3E5e_s" />
-    </gap:plugin>
     <icon src="icon.png" />
     <access origin="*" />
     <access origin="http://201.134.126.30/" />

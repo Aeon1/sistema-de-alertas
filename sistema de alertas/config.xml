@@ -26,9 +26,6 @@
   <plugin name="cordova-plugin-nativesettings" source="npm" spec="*"/>
   <plugin name="cordova-plugin-phonecaller" source="npm" spec="*"/>
   <plugin name="cordova-plugin-inappbrowser" source="npm" spec="~1.3.0"/>
-  <gap:plugin name="cordova-plugin-googlemaps" source="npm">
-    <param name="API_KEY_FOR_ANDROID" value="AIzaSyB4CCpKPseugP5BycmJoXAJ7QD4U3E5e_s" />
-    </gap:plugin>
   <icon src="icon.png"/>
   <platform name="android">
     <icon src="www/res/icon/android/drawable-ldpi-icon.png" density="ldpi"/>

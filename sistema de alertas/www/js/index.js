@@ -59,15 +59,6 @@ myApp.onPageBeforeInit('reporte', function (page) {
         myApp.alert("No puede enviar reportes internet","Internet no encontrado");
         
     } 
-               var mapDiv = document.getElementById("map_canvas");
-
-  const GOOGLE = new plugin.google.maps.LatLng(24.798508,-107.408766);
-  var map = plugin.google.maps.Map.getMap(mapDiv,{
-    'camera': {
-      'latLng': GOOGLE,
-      'zoom': 17
-    }
-  });  
 });
 //mostrar folio de reporte
 myApp.onPageBeforeInit('enviado', function (page) {
@@ -666,7 +657,9 @@ function onSuccessC(position) {
     longitude=position.coords.longitude;  
 }
 // obtencion de las coordenadas error
-function onErrorC(error) {}
+function onErrorC(error) {
+    myApp.alert("mal");
+}
 //activar gps del celular
 function activar_gps(){
     if(typeof cordova.plugins.settings.openSetting != undefined){
@@ -693,7 +686,7 @@ function callNumber(number){
 function verify_ubic(){
       var popupHTML = '<div class="popup">'+
                     '<div class="content-block" style="height:100%;width:100%;padding:0;margin-top:3%">'+
-                      '<div id="map_canvas"></div>'+
+                      '<div id="map"></div>'+
                       '<p style="position: relative;margin:10px 15px 10px 15px" id="coors">Lat: '+latitud+'<br /> Long:'+longitude+'</p>'+
                       '<div class="row" style="position: relative;margin:0 15px 0 15px">'+
                           '<div class="col-50">'+
@@ -706,46 +699,28 @@ function verify_ubic(){
                     '</div>'+
                   '</div>'
   myApp.popup(popupHTML);
- var mapDiv = document.getElementById("map_canvas");
+var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 24.798508, lng: -107.408766},
+          scrollwheel: false,
+          zoomControl: true,
+          mapTypeControl: false,
+          scaleControl: true,
+          streetViewControl: false,
+          rotateControl: false,
+          zoom: 8
+        });
 
-  const GOOGLE = new plugin.google.maps.LatLng(24.798508,-107.408766);
-  var map = plugin.google.maps.Map.getMap(mapDiv,{
-    'camera': {
-      'latLng': GOOGLE,
-      'zoom': 17
-    }
-  });
-//var myLatLng = new plugin.google.maps.LatLng( latitud, longitude );
-//  map.addEventListener(plugin.google.maps.event.MAP_READY, function() {
-//
-//    map.addMarker({
-//      'position': myLatLng,
-//      'draggable':true
-//    });
-//
-//  });
 
- // map = new GMaps({
-//        el: '#map',
-//        zoomControl: true,
-//          mapTypeControl: false,
-//          scaleControl: true,
-//          streetViewControl: false,
-//          rotateControl: false,
-//          lat: 24.798508,
-//          lng: -107.408766
-//      }); 
-
-//var myLatLng = new google.maps.LatLng( latitud, longitude ),
-//      marker=map.addMarker({
-//        position: myLatLng,
-//        draggable: false
-//      });
-//      map.addListener('drag',function(event)
-//      {
-//        marker.setPosition(map.getCenter());
-//        $$("#coors").html("Lat: "+map.getCenter().lat()+"<br /> Long: "+map.getCenter().lng()) ;
-//      });
+var myLatLng = new google.maps.LatLng( latitud, longitude );
+      marker=map.addMarker({
+        position: myLatLng,
+        draggable: true,
+        icon: 'img/marker.png'
+      });
+      marker.addListener('dragend',function(event)
+      {
+        $$("#coors").html("Lat: "+this.getPosition().lat()+"<br /> Long: "+this.getPosition().lng()) ;
+      });
      
 }
 
@@ -783,7 +758,7 @@ function sendserver(){
                              $$("#enviando_todo").append("<h2 class='text-center gold'>Enviando video</h2>"+
                             "<div class='progressbar color-orange pgrs3' data-progress='0'><span></span>");                            
                         }     
-                        $$("#preload_reporte").html("<img src='img/boton palomita-17.png' style='width:42px; height:42px;'/>");                   
+                        $$("#preload_reporte").html("<img src='img/palomita.png' style='width:42px; height:42px;'/>");                   
                         if(totalx==0){                            
                             mainView.router.loadPage('final.html?folio='+promad);
                             console.log("sin archivos a enviar finalizado");
