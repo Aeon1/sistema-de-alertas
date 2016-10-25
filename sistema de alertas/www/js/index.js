@@ -873,7 +873,7 @@ function sendserver(){
     $$.ajax({
         url:"http://201.134.126.30/BackEnd911WebService/Servicio.aspx",
         method: "POST",
-        data: {op:'ri',IdContacto:id_contacto,CodigoConfirmacion:codigo_confirmacion,IdIncidente:id_reporte,Latitud:latitud,Longitud:longitude},
+        data: {op:'ri',IdContacto:id_contacto,CodigoConfirmacion:codigo_confirmacion,IdIncidente:id_reporte,Latitud:latitud,Longitud:longitude,DatosAdicionales:descrip},
             success: function(result){
                 var json = JSON.parse(result);
                 if(json.OcurrioError==0){
