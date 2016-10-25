@@ -543,57 +543,57 @@ function robo() {
         {
             text: 'Robo a comercio',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Robo a comercio&id=8');
+                mainView.router.loadPage('reporte.html?title=Robo%20a%20comercio&id=8&instruc=Describa%20el%20incidente%20y/o%20descripci%C3%B3n%20de%20los%20responsables');
              }
         },
         {
             text: 'Robo a transporte p&uacute;blico',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Robo%20a%20transporte%20p%C3%BAblico&id=9');
+                mainView.router.loadPage('reporte.html?title=Robo%20a%20transporte%20p%C3%BAblico&id=9&instruc=Describa%20el%20incidente%20y/o%20descripci%C3%B3n%20de%20los%20responsables');
                 }
         },
         {
             text: 'Robo a persona',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Robo a persona&id=10');
+                mainView.router.loadPage('reporte.html?title=Robo%20a%20persona&id=10&instruc=Describa%20el%20incidente%20y/o%20descripci%C3%B3n%20de%20los%20responsables');
             }
         },
     ];
     myApp.actions(buttons);
 } 
 function abuso_autoridad(){
-    mainView.router.loadPage('reporte.html?title=Abuso de autoridad&id=24');
+    mainView.router.loadPage('reporte.html?title=Abuso%20de%20autoridad&id=24&instruc=Describa%20el%20incidente%20y%20descripci%C3%B3n%20de%20la%20autoridad%20responsable%20del%20abuso');
 }
 function incendio(){
     var buttons = [
         {
             text: 'Incendio de casa habitaci&oacute;n',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Incendio%20de%20casa%20habitaci%C3%B3n&id=11');
+                mainView.router.loadPage('reporte.html?title=Incendio%20de%20casa%20habitaci%C3%B3n&id=11&instruc=Describa%20el%20incidente%20y/o%20descripci%C3%B3n%20de%20los%20responsables');
                 }
         },
         {
             text: 'Incendio de veh&iacute;culo',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Incendio%20de%20veh%C3%ADculo&id=12');
+                mainView.router.loadPage('reporte.html?title=Incendio%20de%20veh%C3%ADculo&id=12&instruc=Describa%20el%20incidente%20y/o%20descripci%C3%B3n%20de%20los%20responsables');
              }
         },
         {
             text: 'Incendio de comercio/bodega',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Incendio de comercio/bodega&id=13');
+                mainView.router.loadPage('reporte.html?title=Incendio%20de%20comercio/bodega&id=13&instruc=Describa%20el%20incidente%20y/o%20descripci%C3%B3n%20de%20los%20responsables');
                 }
         },
         {
             text: 'Incendio de maleza/basura',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Incendio de maleza/basura&id=14');
+                mainView.router.loadPage('reporte.html?title=Incendio%20de%20maleza/basura&id=14&instruc=Describa%20el%20incidente%20y/o%20descripci%C3%B3n%20de%20los%20responsables');
             }
         },
         {
             text: 'Fuga de gas LP',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Fuga de gas LP&id=15');
+                mainView.router.loadPage('reporte.html?title=Fuga%20de%20gas%20LP&id=15&instruc=Describa%20el%20incidente%20y/o%20descripci%C3%B3n%20de%20los%20responsables');
             }
         },
     ];
@@ -604,31 +604,31 @@ function violencia_mujeres(){
         {
             text: 'Violencia contra la mujer',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Violencia contra la mujer&id=1');
+                mainView.router.loadPage('reporte.html?title=Violencia%20contra%20la%20mujer&id=1&instruc=Describa%20lo%20sucedido%20y%20descripci%C3%B3n%20de%20la%20afectada%20y/o%20responsable');
                 }
         },
         {
             text: 'Violencia familiar',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Violencia familiar&id=2');
+                mainView.router.loadPage('reporte.html?title=Violencia%20familiar&id=2&instruc=Describa%20lo%20sucedido%20y%20descripci%C3%B3n%20de%20los%20afectados%20y/o%20responsable');
              }
         },
         {
             text: 'Violencia f&iacute;sica (ri&ntilde;a)',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Violencia%20f%C3%ADsica%20(ri%C3%B1a)&id=3');
+                mainView.router.loadPage('reporte.html?title=Violencia%20f%C3%ADsica%20(ri%C3%B1a)&id=3&instruc=Describa%20lo%20sucedido%20y%20descripci%C3%B3n%20del%20afectado%20y/o%20responsable');
              }
         },
         {
             text: 'Violencia infantil',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Violencia infantil&id=4');
+                mainView.router.loadPage('reporte.html?title=Violencia%20infantil&id=4&instruc=Describa%20lo%20sucedido%20y%20descripci%C3%B3n%20del%20afectado%20y/o%20responsable');
              }
         },
         {
             text: 'Homicidio',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Homicidio&id=5');
+                mainView.router.loadPage('reporte.html?title=Homicidio&id=5&instruc=Describa%20lo%20sucedido%20y%20descripci%C3%B3n%20del%20afectado%20y/o%20responsable');
              }
         },
     ];
@@ -639,19 +639,19 @@ function accidente(){
         {
             text: 'Con lesionados',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Accidente con lesionados&id=16');
+                mainView.router.loadPage('reporte.html?title=Accidente%20con%20lesionados&id=16&instruc=Describa%20los%20hechos%20ocurridos%20en%20el%20incidente');
                 }
         },
         {
             text: 'Sin lesionados',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Accidente sin lesionados&id=17');
+                mainView.router.loadPage('reporte.html?title=Accidente%20sin%20lesionados&id=17&instruc=Describa%20los%20hechos%20ocurridos%20en%20el%20incidente');
              }
         },
         {
             text: 'Tipo volcadura',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Accidente tipo volcadura&id=18');
+                mainView.router.loadPage('reporte.html?title=Accidente%20tipo%20volcadura&id=18&instruc=Describa%20los%20hechos%20ocurridos%20en%20el%20incidente');
                 }
         },
     ];
@@ -662,38 +662,38 @@ function emergencia(){
         {
             text: 'Persona inconsiente',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Emergencia persona inconsiente&id=19');
+                mainView.router.loadPage('reporte.html?title=Emergencia%20persona%20inconsiente&id=19&instruc=Describa%20los%20hechos%20ocurridos%20en%20el%20incidente');
                 }
         },
         {
             text: 'Ataque por convulciones',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Emergencia ataque por convulciones&id=20');
+                mainView.router.loadPage('reporte.html?title=Emergencia%20ataque%20por%20convulciones&id=20&instruc=Describa%20los%20hechos%20ocurridos%20en%20el%20incidente');
              }
         },
         {
             text: 'Ataque cardiaco',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Emergencia ataque cardiaco&id=21');
+                mainView.router.loadPage('reporte.html?title=Emergencia%20ataque%20cardiaco&id=21&instruc=Describa%20los%20hechos%20ocurridos%20en%20el%20incidente');
              }
         },
         {
             text: 'Caida/fractura',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Emergencia caida/fractura&id=22');
+                mainView.router.loadPage('reporte.html?title=Emergencia%20caida/fractura&id=22&instruc=Describa%20los%20hechos%20ocurridos%20en%20el%20incidente');
              }
         },
         {
             text: 'Electrocutado',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Emergencia electrocutado&id=23');
+                mainView.router.loadPage('reporte.html?title=Emergencia%20electrocutado&id=23&instruc=Describa%20los%20hechos%20ocurridos%20en%20el%20incidente');
              }
         },
     ];
     myApp.actions(buttons);
 }
 function privacion(){
-    mainView.router.loadPage('reporte.html?title=Privaci%C3%B3n%20ilegal%20de%20la%20libertad&id=6');
+    mainView.router.loadPage('reporte.html?title=Privaci%C3%B3n%20ilegal%20de%20la%20libertad&id=6&instruc=Describa%20las%20caracteristicas%20del%20privado%20y/o%20de%20los%20responsables');
 }
 function extorsion(){
     mainView.router.loadPage('extorsion.html');
