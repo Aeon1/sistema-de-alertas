@@ -79,7 +79,6 @@ function iniciar(){
     states[Connection.CELL_4G]  = '1';
     states[Connection.NONE]     = '0';
     online=states[networkState];
-    myApp.alert(states[networkState]+"xxx");
     if (online=='0'){showAlert();}
     }
         
