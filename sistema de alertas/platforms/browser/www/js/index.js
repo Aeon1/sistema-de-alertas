@@ -13,6 +13,7 @@ var mimeType_xf="";
 var mimeType_xv="";
 var promad="";
 var instrucciones="";
+var watchId="";
 var map;
  var online=0;
 function onDeviceReady() {   
@@ -49,7 +50,7 @@ myApp.onPageInit('enviado', function (page) {
 //comprobar nuevamente que el gps este activo
 myApp.onPageBeforeInit('reporte', function (page) {
     if(online==1){
-    var watchId = navigator.geolocation.watchPosition(onSuccessC, onErrorC, {timeout: 5000});
+    watchId = navigator.geolocation.watchPosition(onSuccessC, onErrorC, {timeout: 5000});
     var path_audio="";
     var path_foto="";
     var path_video="";
