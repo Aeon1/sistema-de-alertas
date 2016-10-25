@@ -37,27 +37,26 @@ var mainView = myApp.addView('.view-main', {
 });
 //saber si el gps esta funcionando
 myApp.onPageInit('index', function (page) {
-    var watchID = navigator.geolocation.watchPosition(onSuccessC, onErrorC, { timeout: 5000 });
+    var watchId = navigator.geolocation.watchPosition(onSuccessC, onErrorC, {timeout: 5000});
     var myApp = new Framework7({swipePanel:'left'});    
 });
 myApp.onPageInit('enviado', function (page) {
     path_audio="";
     path_foto="";
-    path_video="";
-    
+    path_video="";    
 });
 //comprobar nuevamente que el gps este activo
 myApp.onPageBeforeInit('reporte', function (page) {
     if(online==1){
     var path_audio="";
     var path_foto="";
-    var path_video="";
-    $$(page.navbarInnerContainer).find('#title_reporte').html(page.query.title);
+    var path_video="";    
+    $$(page.navbarInnerContainer).find('#title_reporte').html(decodeURI(page.query.title));
+    console.log(page.query.title);
     id_reporte=page.query.id;
     }else{
         mainView.router.loadPage('iniciar.html');
-        myApp.alert("No puede enviar reportes internet","Internet no encontrado");
-        
+        myApp.alert("No puede enviar reportes internet","Internet no encontrado");        
     } 
 });
 //mostrar folio de reporte
@@ -532,7 +531,7 @@ function finalizar(verify){
                             console.log("respuesta confirmacion "+result);
                         }, 
                         error: function(result){ 
-                            myApp.alert('Ocurrio un error al intentar la verificacion', 'Error');
+                            myApp.alert('Ocurrio un error al intentar la verificaci&oacute;n', 'Error');
                             myApp.hidePreloader();
                         }
                         });
@@ -541,54 +540,162 @@ function finalizar(verify){
 function robo() {
     var buttons = [
         {
-            text: 'Robo habitaci&oacute;n',
+            text: 'Robo de veh&iacute;culo',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Robo casa habitacion&id=1');
+                mainView.router.loadPage('reporte.html?title=Robo%20de%20veh%C3%ADculo&id=7');
                 }
         },
         {
             text: 'Robo a comercio',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Robo a comercio&id=2');
+                mainView.router.loadPage('reporte.html?title=Robo a comercio&id=8');
              }
         },
         {
-            text: 'Robo de auto',
+            text: 'Robo a transporte p&uacute;blico',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Robo de auto&id=3');
+                mainView.router.loadPage('reporte.html?title=Robo%20a%20transporte%20p%C3%BAblico&id=9');
+                }
+        },
+        {
+            text: 'Robo a persona',
+            onClick: function () {
+                mainView.router.loadPage('reporte.html?title=Robo a persona&id=10');
             }
         },
     ];
     myApp.actions(buttons);
 } 
 function abuso_autoridad(){
-    mainView.router.loadPage('reporte.html?title=Abuso de autoridad&id=4');
+    mainView.router.loadPage('reporte.html?title=Abuso de autoridad&id=24');
 }
 function incendio(){
-    mainView.router.loadPage('reporte.html?title=Incendio&id=5');
+    var buttons = [
+        {
+            text: 'Incendio de casa habitaci&oacute;n',
+            onClick: function () {
+                mainView.router.loadPage('reporte.html?title=Incendio%20de%20casa%20habitaci%C3%B3n&id=11');
+                }
+        },
+        {
+            text: 'Incendio de veh&iacute;culo',
+            onClick: function () {
+                mainView.router.loadPage('reporte.html?title=Incendio%20de%20veh%C3%ADculo&id=12');
+             }
+        },
+        {
+            text: 'Incendio de comercio/bodega',
+            onClick: function () {
+                mainView.router.loadPage('reporte.html?title=Incendio de comercio/bodega&id=13');
+                }
+        },
+        {
+            text: 'Incendio de maleza/basura',
+            onClick: function () {
+                mainView.router.loadPage('reporte.html?title=Incendio de maleza/basura&id=14');
+            }
+        },
+        {
+            text: 'Fuga de gas LP',
+            onClick: function () {
+                mainView.router.loadPage('reporte.html?title=Fuga de gas LP&id=15');
+            }
+        },
+    ];
+    myApp.actions(buttons);
 }
 function violencia_mujeres(){
     var buttons = [
         {
-            text: 'Violencia f&iacute;sica mujeres',
+            text: 'Violencia contra la mujer',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Violencia fisica mujeres&id=6');
+                mainView.router.loadPage('reporte.html?title=Violencia contra la mujer&id=1');
                 }
         },
         {
-            text: 'Violencia psicol&oacute;gica mujeres',
+            text: 'Violencia familiar',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Violencia psicologica mujeres&id=7');
+                mainView.router.loadPage('reporte.html?title=Violencia familiar&id=2');
+             }
+        },
+        {
+            text: 'Violencia f&iacute;sica (ri&ntilde;a)',
+            onClick: function () {
+                mainView.router.loadPage('reporte.html?title=Violencia%20f%C3%ADsica%20(ri%C3%B1a)&id=3');
+             }
+        },
+        {
+            text: 'Violencia infantil',
+            onClick: function () {
+                mainView.router.loadPage('reporte.html?title=Violencia infantil&id=4');
+             }
+        },
+        {
+            text: 'Homicidio',
+            onClick: function () {
+                mainView.router.loadPage('reporte.html?title=Homicidio&id=5');
              }
         },
     ];
     myApp.actions(buttons);
 }
 function accidente(){
-    mainView.router.loadPage('reporte.html?title=Accidente veicular&id=8');
+    var buttons = [
+        {
+            text: 'Con lesionados',
+            onClick: function () {
+                mainView.router.loadPage('reporte.html?title=Accidente con lesionados&id=16');
+                }
+        },
+        {
+            text: 'Sin lesionados',
+            onClick: function () {
+                mainView.router.loadPage('reporte.html?title=Accidente sin lesionados&id=17');
+             }
+        },
+        {
+            text: 'Tipo volcadura',
+            onClick: function () {
+                mainView.router.loadPage('reporte.html?title=Accidente tipo volcadura&id=18');
+                }
+        },
+    ];
+    myApp.actions(buttons);
 }
 function emergencia(){
-    mainView.router.loadPage('reporte.html?title=Emergencia medica&id=9');
+    var buttons = [
+        {
+            text: 'Persona inconsiente',
+            onClick: function () {
+                mainView.router.loadPage('reporte.html?title=Emergencia persona inconsiente&id=19');
+                }
+        },
+        {
+            text: 'Ataque por convulciones',
+            onClick: function () {
+                mainView.router.loadPage('reporte.html?title=Emergencia ataque por convulciones&id=20');
+             }
+        },
+        {
+            text: 'Ataque cardiaco',
+            onClick: function () {
+                mainView.router.loadPage('reporte.html?title=Emergencia ataque cardiaco&id=21');
+             }
+        },
+        {
+            text: 'Caida/fractura',
+            onClick: function () {
+                mainView.router.loadPage('reporte.html?title=Emergencia caida/fractura&id=22');
+             }
+        },
+        {
+            text: 'Electrocutado',
+            onClick: function () {
+                mainView.router.loadPage('reporte.html?title=Emergencia electrocutado&id=23');
+             }
+        },
+    ];
+    myApp.actions(buttons);
 }
 //funciones de captura de archivos
 function audio(){
@@ -654,11 +761,12 @@ var captureErrorvideo = function(error) {
 //obtencion de las coordenadas exitosa
 function onSuccessC(position) {
     latitud=position.coords.latitude;
-    longitude=position.coords.longitude;  
+    longitude=position.coords.longitude;
+    console.log(latitud+","+longitude);  
 }
 // obtencion de las coordenadas error
 function onErrorC(error) {
-    myApp.alert("mal");
+    console.log("error de geolocalizacion "+error.message);  
 }
 //activar gps del celular
 function activar_gps(){
@@ -687,13 +795,13 @@ function verify_ubic(){
       var popupHTML = '<div class="popup">'+
                     '<div class="content-block" style="height:100%;width:100%;padding:0;margin-top:3%">'+
                       '<div id="map"></div>'+
-                      '<p style="position: relative;margin:10px 15px 10px 15px" id="coors">Lat: '+latitud+'<br /> Long:'+longitude+'</p>'+
+                      '<p style="position: relative;margin:10px 15px 10px 15px" id="coors">Verifique que el icono muestra el punto donde se encuentra actualmente, de lo contrario mueva el icono hasta colocarlo en su posici&oacute;n actual</p>'+
                       '<div class="row" style="position: relative;margin:0 15px 0 15px">'+
                           '<div class="col-50">'+
                             '<a href="#" class="button button-big button-red sombra-roja close-popup">Cancelar</a>'+
                           '</div>'+
                           '<div class="col-50">'+
-                            '<a href="#" class="button button-big button-gold-c sombra" onclick="sendserver()">Enviar</a>'+
+                            '<a href="#" class="button button-big button-gold-c sombra close-popup" onclick="sendserver()">Enviar</a>'+
                           '</div>'+
                         '</div>'+
                     '</div>'+
@@ -707,19 +815,22 @@ var map = new google.maps.Map(document.getElementById('map'), {
           scaleControl: true,
           streetViewControl: false,
           rotateControl: false,
-          zoom: 8
+          zoom: 14
         });
 
 
-var myLatLng = new google.maps.LatLng( latitud, longitude );
-      marker=map.addMarker({
+var myLatLng = new google.maps.LatLng(latitud,longitude);
+      var marker = new google.maps.Marker({
         position: myLatLng,
+        map: map,
         draggable: true,
-        icon: 'img/marker.png'
+        icon:'img/marker.png'
       });
-      marker.addListener('dragend',function(event)
-      {
-        $$("#coors").html("Lat: "+this.getPosition().lat()+"<br /> Long: "+this.getPosition().lng()) ;
+map.setCenter(myLatLng);
+marker.addListener( 'dragend', function (event){
+        //$$("#coors").html("Lat: "+this.getPosition().lat()+"<br />Lng: "+ this.getPosition().lng());
+        latitud=this.getPosition().lat();
+        longitude=this.getPosition().lng();
       });
      
 }
