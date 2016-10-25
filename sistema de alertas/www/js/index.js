@@ -50,7 +50,7 @@ myApp.onPageInit('enviado', function (page) {
 //comprobar nuevamente que el gps este activo
 myApp.onPageBeforeInit('reporte', function (page) {
     if(online==1){
-    watchId = navigator.geolocation.watchPosition(onSuccessC, onErrorC, {timeout: 5000});
+    navigator.geolocation.getCurrentPositio(onSuccessC, onErrorC, {timeout: 10000});
     var path_audio="";
     var path_foto="";
     var path_video="";
