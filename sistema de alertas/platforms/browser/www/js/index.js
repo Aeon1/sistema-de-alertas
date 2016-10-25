@@ -12,6 +12,7 @@ var mimeType_xa="";
 var mimeType_xf="";
 var mimeType_xv="";
 var promad="";
+var instrucciones="";
 var map;
  var online=0;
 function onDeviceReady() {   
@@ -50,8 +51,9 @@ myApp.onPageBeforeInit('reporte', function (page) {
     if(online==1){
     var path_audio="";
     var path_foto="";
-    var path_video="";    
+    var path_video="";
     $$(page.navbarInnerContainer).find('#title_reporte').html(decodeURI(page.query.title));
+    $$(page.container).find("#instrucciones").html(decodeURI(page.query.instruc));
     id_reporte=page.query.id;
     }else{
         mainView.router.loadPage('iniciar.html');
@@ -77,6 +79,7 @@ function iniciar(){
     states[Connection.CELL_4G]  = '1';
     states[Connection.NONE]     = '0';
     online=states[networkState];
+    myApp.alert(states[networkState]+"xxx");
     if (online=='0'){showAlert();}
     }
         
@@ -535,7 +538,7 @@ function robo() {
         {
             text: 'Robo de veh&iacute;culo',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Robo%20de%20veh%C3%ADculo&id=7');
+                mainView.router.loadPage('reporte.html?title=Robo%20de%20veh%C3%ADculo&id=7&instruc=Describa%20el%20modelo,%20placas,%20color,%20etc.%20acerca%20de%20su%20carro%20y%20la%20descripci%C3%B3n%20de%20los%20hechos%20o%20del%20asaltante%20en%20cuestion');
                 }
         },
         {
@@ -838,6 +841,7 @@ function sendserver(){
     $$("#aviso_importante").css('display', 'none');
     $$("#co_aviso").css('display', 'none');
     $$("#enviando_todo").css('display', 'block');
+    descrip=$$("#hechos").val();
     $$.ajax({
         url:"http://201.134.126.30/BackEnd911WebService/Servicio.aspx",
         method: "POST",
