@@ -803,7 +803,6 @@ function verify_ubic(){
                     '</div>'+
                   '</div>'
   myApp.popup(popupHTML);
- // navigator.geolocation.clearWatch(watchID);
 var map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 24.798508, lng: -107.408766},
           scrollwheel: false,
@@ -814,10 +813,7 @@ var map = new google.maps.Map(document.getElementById('map'), {
           rotateControl: false,
           zoom: 14
         });
-
-
-
-      var marker = new google.maps.Marker({});
+var marker = new google.maps.Marker({});
       if(latitud!="" && longitude!=""){
         var myLatLng = new google.maps.LatLng(latitud,longitude);
       }else{
@@ -829,8 +825,7 @@ map.addListener('dragstart', function (event){
    $$("#imgmapa").css('top','-36%');
       });
       
-      
-        map.addListener("dragend",function(event){
+map.addListener("dragend",function(event){
             $$("#imgmapa").css('top','-32.5%');
         latitud=this.getCenter().lat();
         longitude=this.getCenter().lng();
@@ -838,8 +833,7 @@ map.addListener('dragstart', function (event){
             position: this.getCenter(),
             map: map
           });
-        })
-     
+});     
 }
 //aviso antes de envio de reporte
 function beforereport(){
