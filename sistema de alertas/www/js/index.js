@@ -52,7 +52,6 @@ myApp.onPageBeforeInit('reporte', function (page) {
     var path_foto="";
     var path_video="";    
     $$(page.navbarInnerContainer).find('#title_reporte').html(decodeURI(page.query.title));
-    console.log(page.query.title);
     id_reporte=page.query.id;
     }else{
         mainView.router.loadPage('iniciar.html');
@@ -424,12 +423,10 @@ function sendDatesServer(){
     }
     var telefono="";
 function datosFin(tx, results){
-    console.log("iniciado correctamente");
     var len = results.rows.length;            
             telefono=results.rows.item(0).celular;
             var fecha=results.rows.item(0).nacimiento.split("-");
             var nacimiento=fecha[2]+"/"+fecha[1]+"/"+fecha[0];
-            console.log(telefono);
             $$.ajax({
                         url:"http://201.134.126.30/BackEnd911WebService/Servicio.aspx",
                         method: "POST", 
@@ -484,7 +481,6 @@ function enviocontactos(id,verificacion){
                         method: "POST", 
                         data: {op:'rce',IdContacto:id,CodigoConfirmacion:verificacion,Nombre:results.rows.item(i).nombre,PrimerApellido:'',SegundoApellido:'',TelefonoMovil:results.rows.item(i).telefono},
                         success: function(result){
-                            console.log("respuesta contactos: "+result);
                             myApp.hidePreloader();        
                             mainView.router.loadPage('registro.html');
                          }, 
@@ -501,7 +497,6 @@ function enviocontactos(id,verificacion){
 function finalizar(verify){    
     myApp.showPreloader('validando');    
     var verificacion;
-    console.log($$("#codigo_confirmaciona").val());
     if(verify=="" || verify=="undefined" || verify==null){
     if($$("#codigo_confirmaciona").val()!=""){
             verificacion=$$("#codigo_confirmaciona").val();
@@ -511,7 +506,6 @@ function finalizar(verify){
     }else{
         verificacion=verify;
     }
-        console.log(id_contacto+" "+verificacion);
             $$.ajax({
                         url:"http://201.134.126.30/BackEnd911WebService/Servicio.aspx",
                         method: "POST",
@@ -528,7 +522,6 @@ function finalizar(verify){
                             }else{
                                 myApp.alert(json.MensajeError, 'Error');
                             }
-                            console.log("respuesta confirmacion "+result);
                         }, 
                         error: function(result){ 
                             myApp.alert('Ocurrio un error al intentar la verificaci&oacute;n', 'Error');
@@ -697,6 +690,12 @@ function emergencia(){
     ];
     myApp.actions(buttons);
 }
+function privacion(){
+    mainView.router.loadPage('reporte.html?title=Privaci%C3%B3n%20ilegal%20de%20la%20libertad&id=6');
+}
+function extorsion(){
+    mainView.router.loadPage('extorsion.html');
+}
 //funciones de captura de archivos
 function audio(){
     navigator.device.capture.captureAudio(captureSuccessaudio, captureErroraudio, {limit:1});
@@ -712,7 +711,6 @@ var captureSuccessaudio = function(mediaFiles) {
     var i, path, len;
     for (i = 0, len = mediaFiles.length; i < len; i += 1) {
         path = mediaFiles[i].fullPath;
-        console.log(mediaFiles[i].size);
         mimeType=mediaFiles[i].type;
     }
     mimeType_xa=mimeType;
@@ -721,7 +719,6 @@ var captureSuccessaudio = function(mediaFiles) {
 };
 // captura de audio con error
 var captureErroraudio = function(error) {
-    console.log(error);
     navigator.notification.alert('No se grab&oacute; nada', 'Captura');
 };
 // captura de foto exitosa
@@ -729,7 +726,6 @@ var captureSuccessfoto = function(mediaFiles) {
     var i, path, len;
     for (i = 0, len = mediaFiles.length; i < len; i += 1) {
         path = mediaFiles[i].fullPath;
-        console.log(mediaFiles[i].size);
     mimeType=mediaFiles[i].type;
     }
     mimeType_xf=mimeType;
@@ -738,7 +734,6 @@ var captureSuccessfoto = function(mediaFiles) {
 };
 // captura de foto con error
 var captureErrorfoto = function(error) {
-    console.log(error);
     navigator.notification.alert('No se captur&oacute; nada', 'Captura');
 };
 // captura de video exitosa
@@ -746,7 +741,6 @@ var captureSuccessvideo = function(mediaFiles) {
     var i, path, len;
     for (i = 0, len = mediaFiles.length; i < len; i += 1) {
         path = mediaFiles[i].fullPath;
-        console.log(mediaFiles[i].size);
     mimeType=mediaFiles[i].type;
     }
     mimeType_xv=mimeType;
@@ -755,14 +749,12 @@ $$(".video").removeClass('button-gold-c').addClass('active');;
 };
 // captura de video con error
 var captureErrorvideo = function(error) {
-    console.log(error);
     navigator.notification.alert('No se captur&oacute; nada', 'Captura');
 };
 //obtencion de las coordenadas exitosa
 function onSuccessC(position) {
     latitud=position.coords.latitude;
-    longitude=position.coords.longitude;
-    console.log(latitud+","+longitude);  
+    longitude=position.coords.longitude; 
 }
 // obtencion de las coordenadas error
 function onErrorC(error) {
@@ -794,8 +786,8 @@ function callNumber(number){
 function verify_ubic(){
       var popupHTML = '<div class="popup">'+
                     '<div class="content-block" style="height:100%;width:100%;padding:0;margin-top:3%">'+
-                      '<div id="map"></div>'+
-                      '<p style="position: relative;margin:10px 15px 10px 15px" id="coors">Verifique que el icono muestra el punto donde se encuentra actualmente, de lo contrario mueva el icono hasta colocarlo en su posici&oacute;n actual</p>'+
+                      '<div id="map"></div><img id="imgmapa" src="img/marker.png" /><div id="transmap"></div>'+
+                      '<p style="position: relative;margin:10px 15px 10px 15px" id="coors">Verifique que el icono muestra el punto donde se encuentra actualmente, de lo contrario mueva el mapa hasta colocar el punto en su posici&oacute;n actual</p>'+
                       '<div class="row" style="position: relative;margin:0 15px 0 15px">'+
                           '<div class="col-50">'+
                             '<a href="#" class="button button-big button-red sombra-roja close-popup">Cancelar</a>'+
@@ -820,18 +812,22 @@ var map = new google.maps.Map(document.getElementById('map'), {
 
 
 var myLatLng = new google.maps.LatLng(latitud,longitude);
-      var marker = new google.maps.Marker({
-        position: myLatLng,
-        map: map,
-        draggable: true,
-        icon:'img/marker.png'
-      });
+      var marker = new google.maps.Marker({});
 map.setCenter(myLatLng);
-marker.addListener( 'dragend', function (event){
-        //$$("#coors").html("Lat: "+this.getPosition().lat()+"<br />Lng: "+ this.getPosition().lng());
-        latitud=this.getPosition().lat();
-        longitude=this.getPosition().lng();
+map.addListener('dragstart', function (event){
+   $$("#imgmapa").css('top','-36%');
       });
+      
+      
+        map.addListener("dragend",function(event){
+            $$("#imgmapa").css('top','-32.5%');
+        latitud=this.getCenter().lat();
+        longitude=this.getCenter().lng();
+            var marker = new google.maps.Marker({
+            position: this.getCenter(),
+            map: map
+          });
+        })
      
 }
 
