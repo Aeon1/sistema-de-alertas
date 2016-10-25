@@ -38,7 +38,7 @@ var mainView = myApp.addView('.view-main', {
 });
 //saber si el gps esta funcionando
 myApp.onPageInit('index', function (page) {
-    var watchId = navigator.geolocation.watchPosition(onSuccessC, onErrorC, {timeout: 5000});
+    //var watchId = navigator.geolocation.watchPosition(onSuccessC, onErrorC, {timeout: 5000});
     var myApp = new Framework7({swipePanel:'left'});    
 });
 myApp.onPageInit('enviado', function (page) {
@@ -49,6 +49,7 @@ myApp.onPageInit('enviado', function (page) {
 //comprobar nuevamente que el gps este activo
 myApp.onPageBeforeInit('reporte', function (page) {
     if(online==1){
+    var watchId = navigator.geolocation.watchPosition(onSuccessC, onErrorC, {timeout: 5000});
     var path_audio="";
     var path_foto="";
     var path_video="";
@@ -795,12 +796,13 @@ function verify_ubic(){
                             '<a href="#" class="button button-big button-red sombra-roja close-popup">Cancelar</a>'+
                           '</div>'+
                           '<div class="col-50">'+
-                            '<a href="#" class="button button-big button-gold-c sombra close-popup" onclick="sendserver()">Enviar</a>'+
+                            '<a href="#" class="button button-big button-gold-c sombra close-popup" onclick="beforereport()">Enviar</a>'+
                           '</div>'+
                         '</div>'+
                     '</div>'+
                   '</div>'
   myApp.popup(popupHTML);
+  navigator.geolocation.clearWatch(watchID);
 var map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 24.798508, lng: -107.408766},
           scrollwheel: false,
@@ -813,8 +815,14 @@ var map = new google.maps.Map(document.getElementById('map'), {
         });
 
 
-var myLatLng = new google.maps.LatLng(latitud,longitude);
+
       var marker = new google.maps.Marker({});
+      if(latitud!="" && longitude!=""){
+        var myLatLng = new google.maps.LatLng(latitud,longitude);
+      }else{
+        
+        var myLatLng = new google.maps.LatLng(24.798508,-107.408766);
+      }
 map.setCenter(myLatLng);
 map.addListener('dragstart', function (event){
    $$("#imgmapa").css('top','-36%');
@@ -832,7 +840,27 @@ map.addListener('dragstart', function (event){
         })
      
 }
-
+//aviso antes de envio de reporte
+function beforereport(){
+    myApp.modal({
+    title:  'Importante',
+    text: '<p>Est&aacute; por realizar el reporte de un "Incidente" una vez generado no podr&aacute; ser cancelado y se alertar&aacute; a las autoridades correspondientes para su atenci&oacute;n.</p><p>El uso indebido de esta aplicaci&oacute;n ser&aacute; sancionado</p><h3 class="gold text-center">&iquest;EST&Aacute; SEGURO DE CONTINUAR CON EL REPORTE?</h3> ',
+    buttons: [
+      {
+        text: 'Cancelar',
+        onClick: function() {
+          myApp.closeModal();
+        }
+      },
+      {
+        text: 'Aceptar',
+        onClick: function() {
+           sendserver();            
+        }
+      },
+    ]
+  })
+}
 //envio del reporte
 var totalx=0;
 function sendserver(){
@@ -886,16 +914,21 @@ function sendserver(){
                         }
     });
     }else{
-        myApp.alert('Asegurese que tiene habilitada la geolocalizacion', 'Ubicacion no encontrada', function (){
-        if(typeof cordova.plugins.settings.openSetting != undefined){
-            cordova.plugins.settings.open(function(){
-                    console.log("opened settings")
-                },
-                function(){
-                    console.log("failed to open settings")
-                });
-        }
+        myApp.alert('La ubicacion no fue encontrada, por favor verifiquelas', 'Ubicacion no encontrada', function () {
+        verify_ubic();
     });
+        
+        
+       // myApp.alert('Asegurese que tiene habilitada la geolocalizacion', 'Ubicacion no encontrada', function (){
+//        if(typeof cordova.plugins.settings.openSetting != undefined){
+//            cordova.plugins.settings.open(function(){
+//                    console.log("opened settings")
+//                },
+//                function(){
+//                    console.log("failed to open settings")
+//                });
+//        }
+//    });
     }
     
 }
