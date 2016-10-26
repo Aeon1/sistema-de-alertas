@@ -816,7 +816,9 @@ var map = new google.maps.Map(document.getElementById('map'), {
 var marker = new google.maps.Marker({});
       if(latitud!="" && longitude!=""){
         var myLatLng = new google.maps.LatLng(latitud,longitude);
-      }else{        
+      }else{   
+        latitud=24.798508;
+        longitude=-107.408766;
         var myLatLng = new google.maps.LatLng(24.798508,-107.408766);
       }
 map.setCenter(myLatLng);
