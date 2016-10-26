@@ -801,7 +801,7 @@ function verify_ubic(){
                           '</div>'+
                         '</div>'+
                     '</div>'+
-                  '</div>'
+                  '</div>';
   myApp.popup(popupHTML);
 var map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 24.798508, lng: -107.408766},
