@@ -13,7 +13,6 @@ var mimeType_xf="";
 var mimeType_xv="";
 var promad="";
 var instrucciones="";
-var watchId="";
 var map;
  var online=0;
 function onDeviceReady() {   
@@ -40,6 +39,7 @@ var mainView = myApp.addView('.view-main', {
 //saber si el gps esta funcionando
 myApp.onPageInit('index', function (page) {
     //var watchId = navigator.geolocation.watchPosition(onSuccessC, onErrorC, {timeout: 5000});
+    navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC, {timeout: 10000});
     var myApp = new Framework7({swipePanel:'left'});    
 });
 myApp.onPageInit('enviado', function (page) {
@@ -48,9 +48,9 @@ myApp.onPageInit('enviado', function (page) {
     path_video="";    
 });
 //comprobar nuevamente que el gps este activo
-myApp.onPageBeforeInit('reporte', function (page) {
-    if(online==1){
-    navigator.geolocation.getCurrentPositio(onSuccessC, onErrorC, {timeout: 10000});
+myApp.onPageBeforeInit('reporte', function (page) { 
+    console.log(online);
+    if(online==1){    
     var path_audio="";
     var path_foto="";
     var path_video="";
@@ -816,8 +816,7 @@ var map = new google.maps.Map(document.getElementById('map'), {
 var marker = new google.maps.Marker({});
       if(latitud!="" && longitude!=""){
         var myLatLng = new google.maps.LatLng(latitud,longitude);
-      }else{
-        
+      }else{        
         var myLatLng = new google.maps.LatLng(24.798508,-107.408766);
       }
 map.setCenter(myLatLng);
