@@ -80,8 +80,8 @@ myApp.onPageBeforeInit('reporte', function (page) {
     var path_foto="";
     var path_video="";
     id_reporte=page.query.id;
-    $$(page.navbarInnerContainer).find('#title_reporte').html(titulos[titulos]['titulo']));
-    $$(page.container).find("#instrucciones").html(titulos[titulos]['instrucciones']);
+    $$(page.navbarInnerContainer).find('#title_reporte').html(titulos[id_reporte]['titulo']));
+    $$(page.container).find("#instrucciones").html(titulos[id_reporte]['instrucciones']);
     
     }else{
         mainView.router.loadPage('iniciar.html');
