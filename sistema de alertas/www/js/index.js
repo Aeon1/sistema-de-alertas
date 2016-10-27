@@ -47,6 +47,31 @@ myApp.onPageInit('enviado', function (page) {
     path_foto="";
     path_video="";    
 });
+var titulos={'1':{'titulo':'Violencia contra la mujer','instrucciones':'Describa lo sucedido y descripción de la afectada y/o responsable'},
+                    '2':{'titulo':'Violencia familiar','instrucciones':'Describa lo sucedido y descripción de los afectados y/o responsable'},
+                    '3':{'titulo':'Violencia física (riña)','instrucciones':'Describa lo sucedido y descripción del afectado y/o responsable'},
+                    '4':{'titulo':'Violencia infantil','instrucciones':'Describa lo sucedido y descripción del afectado y/o responsable'},
+                    '5':{'titulo':'Homicidio','instrucciones':'Describa lo sucedido y descripción del afectado y/o responsable'},
+                    '6':{'titulo':'Privación ilegal de la libertad','instrucciones':'Describa las caracteristicas del privado y/o de los responsables'},
+                    '7':{'titulo':'Robo de vehículo','instrucciones':'Describa el modelo, placas, color, etc. acerca de su carro y la descripción de los hechos o del asaltante en cuestion'},
+                    '8':{'titulo':'Robo a comercio','instrucciones':'Describa el incidente y/o descripción de los responsables'},
+                    '9':{'titulo':'Robo a trasporte público','instrucciones':'Describa el incidente y/o descripción de los responsables'},
+                    '10':{'titulo':'Robo a persona','instrucciones':'Describa el incidente y/o descripción de los responsables'},
+                    '11':{'titulo':'Incendio de casa habitación','instrucciones':'Describa el incidente y/o descripción de los responsables'},
+                    '12':{'titulo':'Incendio de vehículo','instrucciones':'Describa el incidente y/o descripción de los responsables'},
+                    '13':{'titulo':'Incendio de comercio/bodega','instrucciones':'Describa el incidente y/o descripción de los responsables'},
+                    '14':{'titulo':'Incendio de maleza/basura','instrucciones':'Describa el incidente y/o descripción de los responsables'},
+                    '15':{'titulo':'Fuga de gas LP','instrucciones':'Describa el incidente y/o descripción de los responsables'},
+                    '16':{'titulo':'Accidente vehicular con lesionados','instrucciones':'Describa los hechos ocurridos en el incidente'},
+                    '17':{'titulo':'Accidente vehicular sin lesionados','instrucciones':'Describa los hechos ocurridos en el incidente'},
+                    '18':{'titulo':'Accidente vehicular tipo volcadura','instrucciones':'Describa los hechos ocurridos en el incidente'},
+                    '19':{'titulo':'Emergencia médica persona inconsciente','instrucciones':'Describa los hechos ocurridos en el incidente'},
+                    '20':{'titulo':'Emergencia médica ataque por convulciones','instrucciones':'Describa los hechos ocurridos en el incidente'},
+                    '21':{'titulo':'Emergencia médica ataque cardiaco','instrucciones':'Describa los hechos ocurridos en el incidente'},
+                    '22':{'titulo':'Emergencia médica caída/fractura','instrucciones':'Describa los hechos ocurridos en el incidente'},
+                    '23':{'titulo':'Emergencia médica electrocutado','instrucciones':'Describa los hechos ocurridos en el incidente'},
+                    '24':{'titulo':'Abuso de autoridad','instrucciones':'Describa el incidente y descripción de la autoridad responsable del abuso'}
+                    };
 //comprobar nuevamente que el gps este activo
 myApp.onPageBeforeInit('reporte', function (page) { 
     console.log(online);
@@ -54,9 +79,10 @@ myApp.onPageBeforeInit('reporte', function (page) {
     var path_audio="";
     var path_foto="";
     var path_video="";
-    $$(page.navbarInnerContainer).find('#title_reporte').html(decodeURI(page.query.title));
-    $$(page.container).find("#instrucciones").html(decodeURI(page.query.instruc));
     id_reporte=page.query.id;
+    $$(page.navbarInnerContainer).find('#title_reporte').html(titulos[titulos]['titulo']));
+    $$(page.container).find("#instrucciones").html(titulos[titulos]['instrucciones']);
+    
     }else{
         mainView.router.loadPage('iniciar.html');
         myApp.alert("No puede enviar reportes internet","Internet no encontrado");        
@@ -69,8 +95,7 @@ myApp.onPageBeforeInit('enviado', function (page) {
 function iniciar(){
      mainView.router.loadPage('iniciar.html');
 }
-
- function checkConnection() {
+function checkConnection() {
         var networkState = navigator.network.connection.type;
         var states = {};
     states[Connection.UNKNOWN]  = '1';
@@ -432,7 +457,7 @@ function datosFin(tx, results){
             var fecha=results.rows.item(0).nacimiento.split("-");
             var nacimiento=fecha[2]+"/"+fecha[1]+"/"+fecha[0];
             $$.ajax({
-                        url:"http://201.134.126.30/BackEnd911WebService/Servicio.aspx",
+                        url:"https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/SERVICIO.ASPX",
                         method: "POST", 
                         data: {
                             op:'rc',
@@ -481,7 +506,7 @@ function enviocontactos(id,verificacion){
             var len = results.rows.length;
             for (var i=0; i<len; i++){
                    $$.ajax({
-                        url:"http://201.134.126.30/BackEnd911WebService/Servicio.aspx",
+                        url:"https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/SERVICIO.ASPX",
                         method: "POST", 
                         data: {op:'rce',IdContacto:id,CodigoConfirmacion:verificacion,Nombre:results.rows.item(i).nombre,PrimerApellido:'',SegundoApellido:'',TelefonoMovil:results.rows.item(i).telefono},
                         success: function(result){
@@ -511,7 +536,7 @@ function finalizar(verify){
         verificacion=verify;
     }
             $$.ajax({
-                        url:"http://201.134.126.30/BackEnd911WebService/Servicio.aspx",
+                        url:"https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/SERVICIO.ASPX",
                         method: "POST",
                         data: {op:'cr',IdContacto:id_contacto,CodigoConfirmacion:verificacion},
                         success: function(result){
@@ -539,63 +564,63 @@ function robo() {
         {
             text: 'Robo de veh&iacute;culo',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Robo%20de%20veh%C3%ADculo&id=7&instruc=Describa%20el%20modelo,%20placas,%20color,%20etc.%20acerca%20de%20su%20carro%20y%20la%20descripci%C3%B3n%20de%20los%20hechos%20o%20del%20asaltante%20en%20cuestion');
+                mainView.router.loadPage('reporte.html?id=7');
                 }
         },
         {
             text: 'Robo a comercio',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Robo%20a%20comercio&id=8&instruc=Describa%20el%20incidente%20y/o%20descripci%C3%B3n%20de%20los%20responsables');
+                mainView.router.loadPage('reporte.html?id=8');
              }
         },
         {
             text: 'Robo a transporte p&uacute;blico',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Robo%20a%20transporte%20p%C3%BAblico&id=9&instruc=Describa%20el%20incidente%20y/o%20descripci%C3%B3n%20de%20los%20responsables');
+                mainView.router.loadPage('reporte.html?id=9');
                 }
         },
         {
             text: 'Robo a persona',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Robo%20a%20persona&id=10&instruc=Describa%20el%20incidente%20y/o%20descripci%C3%B3n%20de%20los%20responsables');
+                mainView.router.loadPage('reporte.html?id=10');
             }
         },
     ];
     myApp.actions(buttons);
 } 
 function abuso_autoridad(){
-    mainView.router.loadPage('reporte.html?title=Abuso%20de%20autoridad&id=24&instruc=Describa%20el%20incidente%20y%20descripci%C3%B3n%20de%20la%20autoridad%20responsable%20del%20abuso');
+    mainView.router.loadPage('reporte.html?id=24');
 }
 function incendio(){
     var buttons = [
         {
             text: 'Incendio de casa habitaci&oacute;n',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Incendio%20de%20casa%20habitaci%C3%B3n&id=11&instruc=Describa%20el%20incidente%20y/o%20descripci%C3%B3n%20de%20los%20responsables');
+                mainView.router.loadPage('reporte.html?id=11');
                 }
         },
         {
             text: 'Incendio de veh&iacute;culo',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Incendio%20de%20veh%C3%ADculo&id=12&instruc=Describa%20el%20incidente%20y/o%20descripci%C3%B3n%20de%20los%20responsables');
+                mainView.router.loadPage('reporte.html?id=12');
              }
         },
         {
             text: 'Incendio de comercio/bodega',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Incendio%20de%20comercio/bodega&id=13&instruc=Describa%20el%20incidente%20y/o%20descripci%C3%B3n%20de%20los%20responsables');
+                mainView.router.loadPage('reporte.html?id=13');
                 }
         },
         {
             text: 'Incendio de maleza/basura',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Incendio%20de%20maleza/basura&id=14&instruc=Describa%20el%20incidente%20y/o%20descripci%C3%B3n%20de%20los%20responsables');
+                mainView.router.loadPage('reporte.html?id=14');
             }
         },
         {
             text: 'Fuga de gas LP',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Fuga%20de%20gas%20LP&id=15&instruc=Describa%20el%20incidente%20y/o%20descripci%C3%B3n%20de%20los%20responsables');
+                mainView.router.loadPage('reporte.html?id=15');
             }
         },
     ];
@@ -606,31 +631,31 @@ function violencia_mujeres(){
         {
             text: 'Violencia contra la mujer',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Violencia%20contra%20la%20mujer&id=1&instruc=Describa%20lo%20sucedido%20y%20descripci%C3%B3n%20de%20la%20afectada%20y/o%20responsable');
+                mainView.router.loadPage('reporte.html?id=1');
                 }
         },
         {
             text: 'Violencia familiar',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Violencia%20familiar&id=2&instruc=Describa%20lo%20sucedido%20y%20descripci%C3%B3n%20de%20los%20afectados%20y/o%20responsable');
+                mainView.router.loadPage('reporte.html?id=2');
              }
         },
         {
             text: 'Violencia f&iacute;sica (ri&ntilde;a)',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Violencia%20f%C3%ADsica%20(ri%C3%B1a)&id=3&instruc=Describa%20lo%20sucedido%20y%20descripci%C3%B3n%20del%20afectado%20y/o%20responsable');
+                mainView.router.loadPage('reporte.html?id=3');
              }
         },
         {
             text: 'Violencia infantil',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Violencia%20infantil&id=4&instruc=Describa%20lo%20sucedido%20y%20descripci%C3%B3n%20del%20afectado%20y/o%20responsable');
+                mainView.router.loadPage('reporte.html?id=4');
              }
         },
         {
             text: 'Homicidio',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Homicidio&id=5&instruc=Describa%20lo%20sucedido%20y%20descripci%C3%B3n%20del%20afectado%20y/o%20responsable');
+                mainView.router.loadPage('reporte.html?id=5');
              }
         },
     ];
@@ -641,19 +666,19 @@ function accidente(){
         {
             text: 'Con lesionados',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Accidente%20con%20lesionados&id=16&instruc=Describa%20los%20hechos%20ocurridos%20en%20el%20incidente');
+                mainView.router.loadPage('reporte.html?id=16');
                 }
         },
         {
             text: 'Sin lesionados',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Accidente%20sin%20lesionados&id=17&instruc=Describa%20los%20hechos%20ocurridos%20en%20el%20incidente');
+                mainView.router.loadPage('reporte.html?id=17');
              }
         },
         {
             text: 'Tipo volcadura',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Accidente%20tipo%20volcadura&id=18&instruc=Describa%20los%20hechos%20ocurridos%20en%20el%20incidente');
+                mainView.router.loadPage('reporte.html?id=18');
                 }
         },
     ];
@@ -664,38 +689,38 @@ function emergencia(){
         {
             text: 'Persona inconsiente',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Emergencia%20persona%20inconsiente&id=19&instruc=Describa%20los%20hechos%20ocurridos%20en%20el%20incidente');
+                mainView.router.loadPage('reporte.html?id=19');
                 }
         },
         {
             text: 'Ataque por convulciones',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Emergencia%20ataque%20por%20convulciones&id=20&instruc=Describa%20los%20hechos%20ocurridos%20en%20el%20incidente');
+                mainView.router.loadPage('reporte.html?id=20');
              }
         },
         {
             text: 'Ataque cardiaco',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Emergencia%20ataque%20cardiaco&id=21&instruc=Describa%20los%20hechos%20ocurridos%20en%20el%20incidente');
+                mainView.router.loadPage('reporte.html?id=21');
              }
         },
         {
             text: 'Caida/fractura',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Emergencia%20caida/fractura&id=22&instruc=Describa%20los%20hechos%20ocurridos%20en%20el%20incidente');
+                mainView.router.loadPage('reporte.html?id=22');
              }
         },
         {
             text: 'Electrocutado',
             onClick: function () {
-                mainView.router.loadPage('reporte.html?title=Emergencia%20electrocutado&id=23&instruc=Describa%20los%20hechos%20ocurridos%20en%20el%20incidente');
+                mainView.router.loadPage('reporte.html?id=23');
              }
         },
     ];
     myApp.actions(buttons);
 }
 function privacion(){
-    mainView.router.loadPage('reporte.html?title=Privaci%C3%B3n%20ilegal%20de%20la%20libertad&id=6&instruc=Describa%20las%20caracteristicas%20del%20privado%20y/o%20de%20los%20responsables');
+    mainView.router.loadPage('reporte.html?id=6');
 }
 function extorsion(){
     mainView.router.loadPage('extorsion.html');
@@ -790,7 +815,7 @@ function callNumber(number){
 function verify_ubic(){
       var popupHTML = '<div class="popup">'+
                     '<div class="content-block" style="height:100%;width:100%;padding:0;margin-top:3%">'+
-                      '<div id="map"></div><img id="imgmapa" src="img/marker.png" /><div id="transmap"></div>'+
+                      '<div id="map"></div><img id="imgmapa" src="img/marker.png" /><div id="transmap"></div><p id="validacion"></p>'+
                       '<p style="position: relative;margin:10px 15px 10px 15px" id="coors">Verifique que el icono muestra el punto donde se encuentra actualmente, de lo contrario mueva el mapa hasta colocar el punto en su posici&oacute;n actual</p>'+
                       '<div class="row" style="position: relative;margin:0 15px 0 15px">'+
                           '<div class="col-50">'+
@@ -815,18 +840,22 @@ var map = new google.maps.Map(document.getElementById('map'), {
         });
 var marker = new google.maps.Marker({});
       if(latitud!="" && longitude!=""){
+        $$("#validacion").text("Obtenidas");
         var myLatLng = new google.maps.LatLng(latitud,longitude);
       }else{   
         latitud=24.798508;
         longitude=-107.408766;
         var myLatLng = new google.maps.LatLng(24.798508,-107.408766);
+        $$("#validacion").text("No encontrada ubicaci&oacute;n");
       }
 map.setCenter(myLatLng);
 map.addListener('dragstart', function (event){
+    $$("#validacion").text("Esperando ubicaci&oacute;n...");
    $$("#imgmapa").css('top','-36%');
       });
       
 map.addListener("dragend",function(event){
+        $$("#validacion").text("Obtenidas");
             $$("#imgmapa").css('top','-32.5%');
         latitud=this.getCenter().lat();
         longitude=this.getCenter().lng();
@@ -866,7 +895,7 @@ function sendserver(){
     $$("#enviando_todo").css('display', 'block');
     descrip=$$("#hechos").val();
     $$.ajax({
-        url:"http://201.134.126.30/BackEnd911WebService/Servicio.aspx",
+        url:"https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/SERVICIO.ASPX",
         method: "POST",
         data: {op:'ri',IdContacto:id_contacto,CodigoConfirmacion:codigo_confirmacion,IdIncidente:id_reporte,Latitud:latitud,Longitud:longitude,DatosAdicionales:descrip},
             success: function(result){
@@ -957,7 +986,7 @@ function fail(error) {
 }
 //enviar los archivos
 function sendfiles(fileURL,folio,mime){
-    var uri = encodeURI("http://201.134.126.30/BackEnd911WebService/Servicio.aspx");
+    var uri = encodeURI("https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/SERVICIO.ASPX");
  console.log(fileURL);
 var options = new FileUploadOptions();
 options.fileKey="archivos";
@@ -981,7 +1010,7 @@ options.headers = headers;
     ft.upload(fileURL, uri, win, fail, options);
 }
 function sendfiles2(fileURL,folio,mime){
-    var uri = encodeURI("http://201.134.126.30/BackEnd911WebService/Servicio.aspx");
+    var uri = encodeURI("https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/SERVICIO.ASPX");
  console.log(fileURL);
 var options = new FileUploadOptions();
 options.fileKey="archivos";
@@ -1005,7 +1034,7 @@ options.headers = headers;
     ft.upload(fileURL, uri, win, fail, options);
 }
 function sendfiles3(fileURL,folio,mime){
-    var uri = encodeURI("http://201.134.126.30/BackEnd911WebService/Servicio.aspx");
+    var uri = encodeURI("https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/SERVICIO.ASPX");
  console.log(fileURL);
 var options = new FileUploadOptions();
 options.fileKey="archivos";
@@ -1185,7 +1214,7 @@ function boygunew(){
             tx.executeSql('DELETE FROM contactos',[],function(tx,results){
                 myApp.showPreloader('Guardando contactos de emergencia');
                 $$.ajax({
-                        url:"http://201.134.126.30/BackEnd911WebService/Servicio.aspx",
+                        url:"https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/SERVICIO.ASPX",
                         method: "POST", 
                         data: {op:'ece',IDCONTACTO:id_contacto,CODIGOCONFIRMACION:codigo_confirmacion},
                         success: function(result){
@@ -1223,7 +1252,7 @@ function enviocontactos_new(){
             var len = results.rows.length;
             for (var i=0; i<len; i++){
                    $$.ajax({
-                        url:"http://201.134.126.30/BackEnd911WebService/Servicio.aspx",
+                        url:"https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/SERVICIO.ASPX",
                         method: "POST", 
                         data: {op:'rce',IdContacto:id_contacto,CodigoConfirmacion:codigo_confirmacion,Nombre:results.rows.item(i).nombre,PrimerApellido:'',SegundoApellido:'',TelefonoMovil:results.rows.item(i).telefono},
                         success: function(result){

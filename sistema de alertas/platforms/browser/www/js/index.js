@@ -69,8 +69,7 @@ myApp.onPageBeforeInit('enviado', function (page) {
 function iniciar(){
      mainView.router.loadPage('iniciar.html');
 }
-
- function checkConnection() {
+function checkConnection() {
         var networkState = navigator.network.connection.type;
         var states = {};
     states[Connection.UNKNOWN]  = '1';
