@@ -14,11 +14,13 @@ var mimeType_xv="";
 var promad="";
 var instrucciones="";
 var map;
- var online=0;
+var cityCircle;
+var online;
 function onDeviceReady() {   
         db = window.openDatabase("Database", "1.0", "datos de acceso", 1000000);        
         db.transaction(populateDB);
-        verificado(); 
+        verificado();
+        checkConnection(); 
         
     
 }
@@ -36,65 +38,6 @@ var mainView = myApp.addView('.view-main', {
     dynamicNavbar: true,
     swipeBackPage:false
 });
-//saber si el gps esta funcionando
-myApp.onPageInit('index', function (page) {
-    //var watchId = navigator.geolocation.watchPosition(onSuccessC, onErrorC, {timeout: 5000});
-    navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC, {timeout: 10000});
-    var myApp = new Framework7({swipePanel:'left'});    
-});
-myApp.onPageInit('enviado', function (page) {
-    path_audio="";
-    path_foto="";
-    path_video="";    
-});
-var titulos={'1':{'titulo':'Violencia contra la mujer','instrucciones':'Describa lo sucedido y descripci&oacute;n de la afectada y/o responsable'},
-                    '2':{'titulo':'Violencia familiar','instrucciones':'Describa lo sucedido y descripci&oacute;n de los afectados y/o responsable'},
-                    '3':{'titulo':'Violencia f&iacute;sica (ri&ntilde;a)','instrucciones':'Describa lo sucedido y descripción del afectado y/o responsable'},
-                    '4':{'titulo':'Violencia infantil','instrucciones':'Describa lo sucedido y descripción del afectado y/o responsable'},
-                    '5':{'titulo':'Homicidio','instrucciones':'Describa lo sucedido y descripci&oacute;n del afectado y/o responsable'},
-                    '6':{'titulo':'Privaci&oacute;n ilegal de la libertad','instrucciones':'Describa las caracteristicas del privado y/o de los responsables'},
-                    '7':{'titulo':'Robo de veh&iacute;culo','instrucciones':'Describa el modelo, placas, color, etc. acerca de su carro y la descripci&oacute;n de los hechos o del asaltante en cuestion'},
-                    '8':{'titulo':'Robo a comercio','instrucciones':'Describa el incidente y/o descripci&oacute;n de los responsables'},
-                    '9':{'titulo':'Robo a trasporte p&uacute;blico','instrucciones':'Describa el incidente y/o descripci&oacute;n de los responsables'},
-                    '10':{'titulo':'Robo a persona','instrucciones':'Describa el incidente y/o descripci&oacute;n de los responsables'},
-                    '11':{'titulo':'Incendio de casa habitaci&oacute;n','instrucciones':'Describa el incidente y/o descripción de los responsables'},
-                    '12':{'titulo':'Incendio de veh&iacute;culo','instrucciones':'Describa el incidente y/o descripción de los responsables'},
-                    '13':{'titulo':'Incendio de comercio/bodega','instrucciones':'Describa el incidente y/o descripción de los responsables'},
-                    '14':{'titulo':'Incendio de maleza/basura','instrucciones':'Describa el incidente y/o descripci&oacute;n de los responsables'},
-                    '15':{'titulo':'Fuga de gas LP','instrucciones':'Describa el incidente y/o descripci&oacute;n de los responsables'},
-                    '16':{'titulo':'Accidente vehicular con lesionados','instrucciones':'Describa los hechos ocurridos en el incidente'},
-                    '17':{'titulo':'Accidente vehicular sin lesionados','instrucciones':'Describa los hechos ocurridos en el incidente'},
-                    '18':{'titulo':'Accidente vehicular tipo volcadura','instrucciones':'Describa los hechos ocurridos en el incidente'},
-                    '19':{'titulo':'Emergencia m&eacute;dica persona inconsciente','instrucciones':'Describa los hechos ocurridos en el incidente'},
-                    '20':{'titulo':'Emergencia m&eacute;dica ataque por convulciones','instrucciones':'Describa los hechos ocurridos en el incidente'},
-                    '21':{'titulo':'Emergencia m&eacute;dica ataque cardiaco','instrucciones':'Describa los hechos ocurridos en el incidente'},
-                    '22':{'titulo':'Emergencia m&eacute;dica caída/fractura','instrucciones':'Describa los hechos ocurridos en el incidente'},
-                    '23':{'titulo':'Emergencia m&eacute;dica electrocutado','instrucciones':'Describa los hechos ocurridos en el incidente'},
-                    '24':{'titulo':'Abuso de autoridad','instrucciones':'Describa el incidente y descripción de la autoridad responsable del abuso'}
-                    };
-//comprobar nuevamente que el gps este activo
-myApp.onPageBeforeInit('reporte', function (page) { 
-    console.log(online);
-    if(online==1){    
-    var path_audio="";
-    var path_foto="";
-    var path_video="";
-    id_reporte=page.query.id;
-    $$(page.navbarInnerContainer).find('#title_reporte').html(titulos[id_reporte]['titulo']);
-    $$(page.container).find("#instrucciones").html(titulos[id_reporte]['instrucciones']);
-    
-    }else{
-        mainView.router.loadPage('iniciar.html');
-        myApp.alert("No puede enviar reportes internet","Internet no encontrado");        
-    } 
-});
-//mostrar folio de reporte
-myApp.onPageBeforeInit('enviado', function (page) {
-    $$(page.container).find('#foliorep').html("Folio de reporte: "+ page.query.folio);  
-});
-function iniciar(){
-     mainView.router.loadPage('iniciar.html');
-}
 function checkConnection() {
         var networkState = navigator.network.connection.type;
         var states = {};
@@ -108,7 +51,64 @@ function checkConnection() {
     online=states[networkState];
     if (online=='0'){showAlert();}
     }
-        
+//saber si el gps esta funcionando
+myApp.onPageInit('index', function (page) {
+    //var watchId = navigator.geolocation.watchPosition(onSuccessC, onErrorC, {timeout: 5000});
+    navigator.geolocation.getCurrentPosition(onSuccessC, onErrorC, {timeout: 10000});
+    var myApp = new Framework7({swipePanel:'left'});    
+});
+myApp.onPageInit('enviado', function (page) {
+    path_audio="";
+    path_foto="";
+    path_video="";    
+});
+var titulos={'1':{'titulo':'Violencia contra la mujer','instrucciones':'Describa lo sucedido y descripci&oacute;n de la afectada y/o responsable'},
+                    '2':{'titulo':'Violencia familiar','instrucciones':'Describa lo sucedido y descripci&oacute;n de los afectados y/o responsable'},
+                    '3':{'titulo':'Violencia f&iacute;sica (ri&ntilde;a)','instrucciones':'Describa lo sucedido y descripci&oacute;n del afectado y/o responsable'},
+                    '4':{'titulo':'Violencia infantil','instrucciones':'Describa lo sucedido y descripci&oacute;n del afectado y/o responsable'},
+                    '5':{'titulo':'Homicidio','instrucciones':'Describa lo sucedido y descripci&oacute;n del afectado y/o responsable'},
+                    '6':{'titulo':'Privaci&oacute;n ilegal de la libertad','instrucciones':'Describa las caracteristicas del privado y/o de los responsables'},
+                    '7':{'titulo':'Robo de veh&iacute;culo','instrucciones':'Describa el modelo, placas, color, etc. acerca de su carro y la descripci&oacute;n de los hechos o del asaltante en cuestion'},
+                    '8':{'titulo':'Robo a comercio','instrucciones':'Describa el incidente y/o descripci&oacute;n de los responsables'},
+                    '9':{'titulo':'Robo a trasporte p&uacute;blico','instrucciones':'Describa el incidente y/o descripci&oacute;n de los responsables'},
+                    '10':{'titulo':'Robo a persona','instrucciones':'Describa el incidente y/o descripci&oacute;n de los responsables'},
+                    '11':{'titulo':'Incendio de casa habitaci&oacute;n','instrucciones':'Describa el incidente y/o descripci&oacute;n de los responsables'},
+                    '12':{'titulo':'Incendio de veh&iacute;culo','instrucciones':'Describa el incidente y/o descripci&oacute;n de los responsables'},
+                    '13':{'titulo':'Incendio de comercio/bodega','instrucciones':'Describa el incidente y/o descripci&oacute;n de los responsables'},
+                    '14':{'titulo':'Incendio de maleza/basura','instrucciones':'Describa el incidente y/o descripci&oacute;n de los responsables'},
+                    '15':{'titulo':'Fuga de gas LP','instrucciones':'Describa el incidente y/o descripci&oacute;n de los responsables'},
+                    '16':{'titulo':'Accidente vehicular con lesionados','instrucciones':'Describa los hechos ocurridos en el incidente'},
+                    '17':{'titulo':'Accidente vehicular sin lesionados','instrucciones':'Describa los hechos ocurridos en el incidente'},
+                    '18':{'titulo':'Accidente vehicular tipo volcadura','instrucciones':'Describa los hechos ocurridos en el incidente'},
+                    '19':{'titulo':'Emergencia m&eacute;dica persona inconsciente','instrucciones':'Describa los hechos ocurridos en el incidente'},
+                    '20':{'titulo':'Emergencia m&eacute;dica ataque por convulciones','instrucciones':'Describa los hechos ocurridos en el incidente'},
+                    '21':{'titulo':'Emergencia m&eacute;dica ataque cardiaco','instrucciones':'Describa los hechos ocurridos en el incidente'},
+                    '22':{'titulo':'Emergencia m&eacute;dica ca&iacute;da/fractura','instrucciones':'Describa los hechos ocurridos en el incidente'},
+                    '23':{'titulo':'Emergencia m&eacute;dica electrocutado','instrucciones':'Describa los hechos ocurridos en el incidente'},
+                    '24':{'titulo':'Abuso de autoridad','instrucciones':'Describa el incidente y descripci&oacute;n de la autoridad responsable del abuso'}
+                    };
+//comprobar nuevamente que el gps este activo
+myApp.onPageBeforeInit('reporte', function(page){
+   id_reporte=page.query.id;
+    $$(page.navbarInnerContainer).find('#title_reporte').html(titulos[id_reporte]['titulo']);
+    $$(page.container).find("#instrucciones").html(titulos[id_reporte]['instrucciones']);
+    if(online==1){        
+    var path_audio="";
+    var path_foto="";
+    var path_video="";       
+    }else{
+        mainView.router.loadPage('iniciar.html');
+        myApp.alert("No puede enviar reportes internet","Internet no encontrado");        
+    } 
+});
+//mostrar folio de reporte
+myApp.onPageBeforeInit('enviado', function (page) {
+    $$(page.container).find('#foliorep').html("Folio de reporte: "+ page.query.folio);  
+});
+function iniciar(){
+     mainView.router.loadPage('iniciar.html');
+}
+       
 function showAlert() {
     mainView.router.loadPage('iniciar.html');
     myApp.alert("Algunas caracteristicas no estaran disponibles","Internet no detectado");
@@ -705,7 +705,7 @@ function emergencia(){
              }
         },
         {
-            text: 'Caida/fractura',
+            text: 'Ca&iacute;da/fractura',
             onClick: function () {
                 mainView.router.loadPage('reporte.html?id=22');
              }
@@ -815,8 +815,8 @@ function callNumber(number){
 function verify_ubic(){
       var popupHTML = '<div class="popup">'+
                     '<div class="content-block" style="height:100%;width:100%;padding:0;margin-top:3%">'+
-                      '<div id="map"></div><img id="imgmapa" src="img/marker.png" /><div id="transmap"></div><p id="validacion"></p>'+
-                      '<p style="position: relative;margin:10px 15px 10px 15px" id="coors">Verifique que el icono muestra el punto donde se encuentra actualmente, de lo contrario mueva el mapa hasta colocar el punto en su posici&oacute;n actual</p>'+
+                      '<div id="map"></div><img id="imgmapa" src="img/marker.png" /><div id="transmap"></div>'+
+                      '<p style="position: relative;margin:10px 15px 10px 15px;font-size:small" id="coors">Verifique que el icono muestra el punto donde se encuentra actualmente, de lo contrario mueva el mapa hasta colocar el punto en su posici&oacute;n actual, el circulo verde indica que se ha obtenido la ubicaci&oacute;n correctamente</p>'+
                       '<div class="row" style="position: relative;margin:0 15px 0 15px">'+
                           '<div class="col-50">'+
                             '<a href="#" class="button button-big button-red sombra-roja close-popup">Cancelar</a>'+
@@ -840,31 +840,50 @@ var map = new google.maps.Map(document.getElementById('map'), {
         });
 var marker = new google.maps.Marker({});
       if(latitud!="" && longitude!=""){
-        $$("#validacion").text("Obtenidas");
+        $$("#validacion").html("Obtenidas");
         var myLatLng = new google.maps.LatLng(latitud,longitude);
+        cityCircle = new google.maps.Circle({
+      strokeColor: '#00FF00',
+      strokeOpacity: 0.8,
+      strokeWeight: 0,
+      fillColor: '#00FF00',
+      fillOpacity: 0.35,
+      map: map,
+      center: myLatLng,
+      radius: 100
+    });
       }else{   
         latitud=24.798508;
         longitude=-107.408766;
         var myLatLng = new google.maps.LatLng(24.798508,-107.408766);
-        $$("#validacion").text("No encontrada ubicación");
       }
 map.setCenter(myLatLng);
 map.addListener('dragstart', function (event){
-    $$("#validacion").text("Esperando ubicación...");
-   $$("#imgmapa").css('top','-36%');
+   $$("#imgmapa").css({'top':'-36%'});
+   $$("#transmap").css("display","block");
+   latitud="";
+        longitude="";
       });
-      
 map.addListener("dragend",function(event){
-        $$("#validacion").text("Obtenidas:"+this.getCenter());
-            $$("#imgmapa").css('top','-32.5%');
-        latitud=this.getCenter().lat();
-        longitude=this.getCenter().lng();
-            var marker = new google.maps.Marker({
-            position: this.getCenter(),
-            map: map
-          });
+            latitud=this.getCenter().lat();
+            longitude=this.getCenter().lng();
+                cityCircle.setMap(null);
+                $$("#transmap").css("display","none");
+                $$("#imgmapa").css('top','-32.5%');
+    cityCircle = new google.maps.Circle({
+      strokeColor: '#00FF00',
+      strokeOpacity: 0.8,
+      strokeWeight: 0,
+      fillColor: '#00FF00',
+      fillOpacity: 0.35,
+      map: map,
+      center: new google.maps.LatLng(latitud,longitude),
+      radius: 100
+    });
+        
 });     
 }
+
 //aviso antes de envio de reporte
 function beforereport(){
     myApp.modal({

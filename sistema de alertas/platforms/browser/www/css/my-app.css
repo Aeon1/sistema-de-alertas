@@ -65,4 +65,5 @@ height: 70%;
             bottom: 0;
             margin: auto;
             z-index: 1000;
+            display: none;
 }
