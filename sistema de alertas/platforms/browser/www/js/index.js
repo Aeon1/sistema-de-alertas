@@ -138,7 +138,7 @@ function vaciar(){
 function populateDB(tx) {  
 //    tx.executeSql('DROP TABLE IF EXISTS datos');
 //    tx.executeSql('DROP TABLE IF EXISTS contactos');
-//    tx.executeSql('DROP TABLE IF EXISTS aviso'); 
+//    tx.executeSql('DROP TABLE IF EXISTS aviso');
 //    tx.executeSql('DROP TABLE IF EXISTS direccion'); 
 //    tx.executeSql('DROP TABLE IF EXISTS acceso'); 
     tx.executeSql('CREATE TABLE IF NOT EXISTS aviso(id INTEGER PRIMARY KEY AUTOINCREMENT,acepto)');
@@ -191,7 +191,6 @@ function aceptAviso(){
         tx.executeSql('INSERT INTO aviso(acepto) VALUES(?)',['si']);
     });        
         checkDatos();
-        //myApp.closeModal('.popup-aviso')
 }
 function checkDatos(){
         db.transaction(
@@ -228,26 +227,67 @@ function checkcontacts(){
         tx.executeSql('SELECT * FROM contactos',[],function(tx, results){
             var len = results.rows.length;
                 if(len==0){
-                    mainView.router.loadPage('contactos.html');
-                    navigator.contacts.find(
-                        ['displayName', 'name','phoneNumbers'],
-                        function(contacts){
-                            var contact_name;
-                            var contact_phone;                            
-                            for( i = 0; i < contacts.length; i++) {
-                                if(i==0){$$("#contacts").html("");}
-                                if(contacts[i].name.formatted != null && contacts[i].name.formatted != undefined ) {
-                                    contact_name = contacts[i].name.formatted;
-                                    contact_name = contact_name.replace(/'/g,"''");
-                                    if(contacts[i].phoneNumbers != null && contacts[i].phoneNumbers.length > 0 && contacts[i].phoneNumbers[0].value != null && contacts[i].phoneNumbers[0].value != undefined ) {
-                                        $$("#contacts").append("<li><label class='label-checkbox item-content'><input type='checkbox' name='my-checkbox-"+i+"' value='"+contacts[i].phoneNumbers[0].value+"' nombre='"+contact_name+"'><div class='item-media'><i class='icon icon-form-checkbox'></i></div><div class='item-inner'><div class='item-title'>"+contact_name+"</div></div></label></li>");
-                                    } else {contact_phone = "";}
-                                }
-                            }
-                        },function(error){
-                            alert(error);
-                        },{ filter:"", multiple:true }
-                    );           
+          myApp.closeNotification(".notifications"); 
+    myApp.modal({
+    title:  'Aviso',
+    text: '<p>Parece que no finalizaste tu registro...</p><p>A continuaci&oacute;n se le pedir&aacute; que defina contactos de emergencia, esto con la finalidad de que pueda avisar r&aacute;pidamente desde la aplicaci&oacute;n en caso que sufra alg&uacute;n incidente, estos pueden ser agregados o cambiados en cualquier momento.</p><span>Requiere que autorice el acceso a sus contactos</span>',
+    buttons: [
+      {
+        text: 'Saltar',
+        onClick: function() {
+          myApp.modal({
+    title:  'Importante',
+    text: 'Favor de confirmar, una vez enviada la informaci&oacute;n el registro no podr&aacute; ser cancelado. Para confirmar el registro ingrese el c&oacute;digo de confirmaci&oacute;n que se enviar&aacute; al n&uacute;mero celular que registro.',
+    buttons: [
+      {
+        text: 'Cancelar',
+        onClick: function() {
+          myApp.closeModal();
+        }
+      },
+      {
+        text: 'Aceptar',
+        onClick: function() {
+           myApp.showPreloader('Enviando registro');
+           sendDatesServer();            
+        }
+      },
+    ]
+  }) 
+        }
+      },
+      {
+        text: 'Aceptar',
+        onClick: function() {
+           mainView.router.loadPage('contactos.html');
+        navigator.contacts.find(
+        ['displayName', 'name','phoneNumbers'],
+        function(contacts){
+            var contact_name;
+            var contact_phone;
+            
+            for( i = 0; i < contacts.length; i++) {
+                if(i==0){
+                    $$("#contacts").html("");
+                }
+                if(contacts[i].name.formatted != null && contacts[i].name.formatted != undefined ) {
+                    contact_name = contacts[i].name.formatted;
+                    contact_name = contact_name.replace(/'/g,"''");
+                    if(contacts[i].phoneNumbers != null && contacts[i].phoneNumbers.length > 0 && contacts[i].phoneNumbers[0].value != null && contacts[i].phoneNumbers[0].value != undefined ) {
+                        $$("#contacts").append("<li><label class='label-checkbox item-content'><input type='checkbox' name='my-checkbox-"+i+"' value='"+contacts[i].phoneNumbers[0].value+"' nombre='"+contact_name+"'><div class='item-media'><i class='icon icon-form-checkbox'></i></div><div class='item-inner'><div class='item-title'>"+contact_name+"</div></div></label></li>");
+                    } else {
+                        contact_phone = "";
+                    }
+                }
+            }
+        },function(error){
+            alert(error);
+        },{ filter:"", multiple:true }
+    );           
+        }
+      },
+    ]
+  })           
                 }else{
                      myApp.modal({
                     title:  'Importante',
@@ -265,8 +305,7 @@ function checkcontacts(){
                         text: 'Aceptar',
                         onClick: function() {
                            myApp.showPreloader('Enviando registro');
-                           sendDatesServer();
-                            
+                           sendDatesServer();                            
                         }
                       },
                     ]
@@ -275,7 +314,6 @@ function checkcontacts(){
         });
     });
 }
-
 //lleva a pantalla de direccion
 function direction(){
     var nombre=$$("input[name='name']").val();
@@ -364,31 +402,67 @@ function contactos(){
         tx.executeSql('INSERT INTO direccion(calle,numero,colonia,municipio) VALUES(?,?,?,?)',[calle,numero,colonia,municipio]);
         });
     myApp.closeNotification(".notifications"); 
-    mainView.router.loadPage('contactos.html');
-    navigator.contacts.find(
-    ['displayName', 'name','phoneNumbers'],
-    function(contacts){
-        var contact_name;
-        var contact_phone;
-        
-        for( i = 0; i < contacts.length; i++) {
-            if(i==0){
-                $$("#contacts").html("");
-            }
-            if(contacts[i].name.formatted != null && contacts[i].name.formatted != undefined ) {
-                contact_name = contacts[i].name.formatted;
-                contact_name = contact_name.replace(/'/g,"''");
-                if(contacts[i].phoneNumbers != null && contacts[i].phoneNumbers.length > 0 && contacts[i].phoneNumbers[0].value != null && contacts[i].phoneNumbers[0].value != undefined ) {
-                    $$("#contacts").append("<li><label class='label-checkbox item-content'><input type='checkbox' name='my-checkbox-"+i+"' value='"+contacts[i].phoneNumbers[0].value+"' nombre='"+contact_name+"'><div class='item-media'><i class='icon icon-form-checkbox'></i></div><div class='item-inner'><div class='item-title'>"+contact_name+"</div></div></label></li>");
-                } else {
-                    contact_phone = "";
+    myApp.modal({
+    title:  'Aviso',
+    text: '<p>A continuaci&oacute;n se le pedir&aacute; que defina contactos de emergencia, esto con la finalidad de que pueda avisar r&aacute;pidamente desde la aplicaci&oacute;n en caso que sufra alg&uacute;n incidente, estos pueden ser agregados o cambiados en cualquier momento.</p><span>Requiere que autorice el acceso a sus contactos</span>',
+    buttons: [
+      {
+        text: 'Saltar',
+        onClick: function() {
+          myApp.modal({
+    title:  'Importante',
+    text: 'Favor de confirmar, una vez enviada la informaci&oacute;n el registro no podr&aacute; ser cancelado. Para confirmar el registro ingrese el c&oacute;digo de confirmaci&oacute;n que se enviar&aacute; al n&uacute;mero celular que registro.',
+    buttons: [
+      {
+        text: 'Cancelar',
+        onClick: function() {
+          myApp.closeModal();
+        }
+      },
+      {
+        text: 'Aceptar',
+        onClick: function() {
+           myApp.showPreloader('Enviando registro');
+           sendDatesServer();            
+        }
+      },
+    ]
+  }) 
+        }
+      },
+      {
+        text: 'Aceptar',
+        onClick: function() {
+           mainView.router.loadPage('contactos.html');
+        navigator.contacts.find(
+        ['displayName', 'name','phoneNumbers'],
+        function(contacts){
+            var contact_name;
+            var contact_phone;
+            
+            for( i = 0; i < contacts.length; i++) {
+                if(i==0){
+                    $$("#contacts").html("");
+                }
+                if(contacts[i].name.formatted != null && contacts[i].name.formatted != undefined ) {
+                    contact_name = contacts[i].name.formatted;
+                    contact_name = contact_name.replace(/'/g,"''");
+                    if(contacts[i].phoneNumbers != null && contacts[i].phoneNumbers.length > 0 && contacts[i].phoneNumbers[0].value != null && contacts[i].phoneNumbers[0].value != undefined ) {
+                        $$("#contacts").append("<li><label class='label-checkbox item-content'><input type='checkbox' name='my-checkbox-"+i+"' value='"+contacts[i].phoneNumbers[0].value+"' nombre='"+contact_name+"'><div class='item-media'><i class='icon icon-form-checkbox'></i></div><div class='item-inner'><div class='item-title'>"+contact_name+"</div></div></label></li>");
+                    } else {
+                        contact_phone = "";
+                    }
                 }
             }
+        },function(error){
+            alert(error);
+        },{ filter:"", multiple:true }
+    );           
         }
-    },function(error){
-        alert(error);
-    },{ filter:"", multiple:true }
-); 
+      },
+    ]
+  })
+     
 }
 }
 //guardar contactos y enviar datos al server
@@ -407,7 +481,7 @@ function registrar(){
         tx.executeSql('INSERT INTO contactos(nombre,telefono) VALUES(?,?)',[nombre,telefono]);
  } 
  }
- if(cont>=1){
+ if(cont>=0){
  myApp.modal({
     title:  'Importante',
     text: 'Favor de confirmar, una vez enviada la informaci&oacute;n el registro no podr&aacute; ser cancelado. Para confirmar el registro ingrese el c&oacute;digo de confirmaci&oacute;n que se enviar&aacute; al n&uacute;mero celular que registro.',
@@ -504,6 +578,10 @@ function enviocontactos(id,verificacion){
         function(tx) {              
         tx.executeSql('select * from contactos',[],function(tx, results){
             var len = results.rows.length;
+            if(len==0){
+                myApp.hidePreloader();        
+                mainView.router.loadPage('registro.html');
+            }else{
             for (var i=0; i<len; i++){
                    $$.ajax({
                         url:"https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/SERVICIO.ASPX",
@@ -518,6 +596,7 @@ function enviocontactos(id,verificacion){
                             myApp.hidePreloader();
                         }
                         });  
+            }
             }
         });
     });
@@ -1287,5 +1366,20 @@ function enviocontactos_new(){
                         });  
             }
         });
+    });
+}
+function resms(){
+    myApp.showPreloader('Reenviando c&oacute;digo de confirmaci&oacute;n');
+    $$.ajax({
+        url:"https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/SERVICIO.ASPX",
+        method: "POST", 
+        data: {op:'rsms',IdContacto:id_contacto,CodigoConfirmacion:codigo_confirmacion},
+        success: function(result){
+            myApp.hidePreloader();
+        }, 
+        error: function(result){ 
+            myApp.alert('Ocurrio un error al intentar reeenviar el c&oacute;digo de confirmaci&oacute;n', 'Error');
+            myApp.hidePreloader();
+        }
     });
 }
