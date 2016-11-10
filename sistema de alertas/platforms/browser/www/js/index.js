@@ -539,6 +539,7 @@ function datosFin(tx, results){
                             PrimerApellido:results.rows.item(0).apellido_p,
                             SegundoApellido:results.rows.item(0).apellido_m,
                             FechaNacimiento:nacimiento,
+                            Sexo:results.rows.item(0).sexo,
                             EnfermedadesCronicas:results.rows.item(0).enfermedad,
                             TipoSangre:results.rows.item(0).sangre,
                             Calle:results.rows.item(0).calle,
@@ -823,11 +824,13 @@ var captureSuccessaudio = function(mediaFiles) {
     }
     mimeType_xa=mimeType;
     path_audio=path;
-    $$(".audio").removeClass('button-gold-c').addClass('active');;
+    $$(".audio").removeClass('button-gold-c').addClass('active');
+    path_audio="";
 };
 // captura de audio con error
 var captureErroraudio = function(error) {
-    navigator.notification.alert('No se grab&oacute; nada', 'Captura');
+    myApp.alert('No se grab&oacute; nada', 'Captura');
+    $$(".audio").removeClass('active').addClass('button-gold-c');
 };
 // captura de foto exitosa
 var captureSuccessfoto = function(mediaFiles) {
@@ -842,7 +845,9 @@ var captureSuccessfoto = function(mediaFiles) {
 };
 // captura de foto con error
 var captureErrorfoto = function(error) {
-    navigator.notification.alert('No se captur&oacute; nada', 'Captura');
+    myApp.alert('No se captur&oacute; nada', 'Captura');
+    $$(".foto").removeClass('active').addClass('button-gold-c');
+    path_foto="";
 };
 // captura de video exitosa
 var captureSuccessvideo = function(mediaFiles) {
@@ -853,11 +858,13 @@ var captureSuccessvideo = function(mediaFiles) {
     }
     mimeType_xv=mimeType;
 path_video=path;
-$$(".video").removeClass('button-gold-c').addClass('active');;
+$$(".video").removeClass('button-gold-c').addClass('active');
 };
 // captura de video con error
 var captureErrorvideo = function(error) {
-    navigator.notification.alert('No se captur&oacute; nada', 'Captura');
+    myApp.alert('No se captur&oacute; nada', 'Captura');
+    $$(".video").removeClass('active').addClass('button-gold-c');
+    path_video="";
 };
 //obtencion de las coordenadas exitosa
 function onSuccessC(position) {
@@ -875,7 +882,7 @@ function activar_gps(){
                     console.log("opened settings")
                 },
                 function(){
-                    console.log("failed to open settings")
+                    console.log("failed to open settings");
                 });
         }
 }

@@ -539,6 +539,7 @@ function datosFin(tx, results){
                             PrimerApellido:results.rows.item(0).apellido_p,
                             SegundoApellido:results.rows.item(0).apellido_m,
                             FechaNacimiento:nacimiento,
+                            Sexo:results.rows.item(0).sexo,
                             EnfermedadesCronicas:results.rows.item(0).enfermedad,
                             TipoSangre:results.rows.item(0).sangre,
                             Calle:results.rows.item(0).calle,
@@ -563,14 +564,20 @@ function Onbefore(xhr){
 }
 function OnSuccess(data, status, xhr){
     var json = JSON.parse(data);
-    id_contacto=json.ContactoID;
-    codigo_confirmacion=json.CodigoConfirmacion;
-    db.transaction(
-        function(tx) {
-        tx.executeSql('DELETE FROM acceso',[]);
-        tx.executeSql('INSERT INTO acceso(contacto,confirmacion) VALUES(?,?)',[id_contacto,codigo_confirmacion]);
+    if(json.OcurrioError==0){   
+        id_contacto=json.ContactoID;
+        codigo_confirmacion=json.CodigoConfirmacion;
+        db.transaction(
+            function(tx) {
+            tx.executeSql('DELETE FROM acceso',[]);
+            tx.executeSql('INSERT INTO acceso(contacto,confirmacion) VALUES(?,?)',[id_contacto,codigo_confirmacion]);
+        });
+        enviocontactos(json.ContactoID,json.CodigoConfirmacion);
+    }else{
+    myApp.alert(json.MensajeError, 'Error', function () {
+       mainView.router.loadPage('index.html');
     });
-    enviocontactos(json.ContactoID,json.CodigoConfirmacion);
+    }
 }
 //se envian los contactos al servidor
 function enviocontactos(id,verificacion){
@@ -823,11 +830,13 @@ var captureSuccessaudio = function(mediaFiles) {
     }
     mimeType_xa=mimeType;
     path_audio=path;
-    $$(".audio").removeClass('button-gold-c').addClass('active');;
+    $$(".audio").removeClass('button-gold-c').addClass('active');
+    path_audio="";
 };
 // captura de audio con error
 var captureErroraudio = function(error) {
-    navigator.notification.alert('No se grab&oacute; nada', 'Captura');
+    myApp.alert('No se grab&oacute; nada', 'Captura');
+    $$(".audio").removeClass('active').addClass('button-gold-c');
 };
 // captura de foto exitosa
 var captureSuccessfoto = function(mediaFiles) {
@@ -842,7 +851,9 @@ var captureSuccessfoto = function(mediaFiles) {
 };
 // captura de foto con error
 var captureErrorfoto = function(error) {
-    navigator.notification.alert('No se captur&oacute; nada', 'Captura');
+    myApp.alert('No se captur&oacute; nada', 'Captura');
+    $$(".foto").removeClass('active').addClass('button-gold-c');
+    path_foto="";
 };
 // captura de video exitosa
 var captureSuccessvideo = function(mediaFiles) {
@@ -853,11 +864,13 @@ var captureSuccessvideo = function(mediaFiles) {
     }
     mimeType_xv=mimeType;
 path_video=path;
-$$(".video").removeClass('button-gold-c').addClass('active');;
+$$(".video").removeClass('button-gold-c').addClass('active');
 };
 // captura de video con error
 var captureErrorvideo = function(error) {
-    navigator.notification.alert('No se captur&oacute; nada', 'Captura');
+    myApp.alert('No se captur&oacute; nada', 'Captura');
+    $$(".video").removeClass('active').addClass('button-gold-c');
+    path_video="";
 };
 //obtencion de las coordenadas exitosa
 function onSuccessC(position) {
@@ -875,7 +888,7 @@ function activar_gps(){
                     console.log("opened settings")
                 },
                 function(){
-                    console.log("failed to open settings")
+                    console.log("failed to open settings");
                 });
         }
 }
@@ -1369,6 +1382,8 @@ function enviocontactos_new(){
     });
 }
 function resms(){
+    if(id_contacto!="" && codigo_confirmacion!=""){
+      startWatch();
     myApp.showPreloader('Reenviando c&oacute;digo de confirmaci&oacute;n');
     $$.ajax({
         url:"https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/SERVICIO.ASPX",
@@ -1381,5 +1396,8 @@ function resms(){
             myApp.alert('Ocurrio un error al intentar reeenviar el c&oacute;digo de confirmaci&oacute;n', 'Error');
             myApp.hidePreloader();
         }
-    });
+    });  
+    }else{
+        myApp.alert('Debe completar el registro para poder utilizar esta funci&oacute;n', 'Error');
+    }    
 }
