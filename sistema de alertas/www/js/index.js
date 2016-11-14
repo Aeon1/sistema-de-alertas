@@ -1006,10 +1006,12 @@ function sendserver(){
     $$("#co_aviso").css('display', 'none');
     $$("#enviando_todo").css('display', 'block');
     descrip=$$("#hechos").val();
+	var archivo=0;
+    if(totalx==0){archivo=0;}else{archivo=1;}
     $$.ajax({
         url:"https://uniformesyutilesescolares.sinaloa.gob.mx/BackEnd911WebService/SERVICIO.ASPX",
         method: "POST",
-        data: {op:'ri',IdContacto:id_contacto,CodigoConfirmacion:codigo_confirmacion,IdIncidente:id_reporte,Latitud:latitud,Longitud:longitude,DatosAdicionales:descrip},
+        data: {op:'ri',IdContacto:id_contacto,CodigoConfirmacion:codigo_confirmacion,IdIncidente:id_reporte,Latitud:latitud,Longitud:longitude,DatosAdicionales:descrip,EstatusArchivoPendiente:archivo},
             success: function(result){
                 var json = JSON.parse(result);
                 if(json.OcurrioError==0){
