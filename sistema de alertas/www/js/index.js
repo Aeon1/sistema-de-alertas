@@ -67,7 +67,7 @@ var titulos={'1':{'titulo':'Violencia contra la mujer','instrucciones':'Describa
                     '3':{'titulo':'Violencia f&iacute;sica (ri&ntilde;a)','instrucciones':'Describa lo sucedido y descripci&oacute;n del afectado y/o responsable'},
                     '4':{'titulo':'Violencia infantil','instrucciones':'Describa lo sucedido y descripci&oacute;n del afectado y/o responsable'},
                     '5':{'titulo':'Homicidio','instrucciones':'Describa lo sucedido y descripci&oacute;n del afectado y/o responsable'},
-                    '6':{'titulo':'Privaci&oacute;n ilegal de la libertad','instrucciones':'Describa las caracteristicas del privado y/o de los responsables'},
+                    '6':{'titulo':'Privaci&oacute;n ilegal de la libertad','instrucciones':'Describa las caracter&iacute;sticas del privado y/o de los responsables'},
                     '7':{'titulo':'Robo de veh&iacute;culo','instrucciones':'Describa el modelo, placas, color, etc. acerca de su carro y la descripci&oacute;n de los hechos o del asaltante en cuestion'},
                     '8':{'titulo':'Robo a comercio','instrucciones':'Describa el incidente y/o descripci&oacute;n de los responsables'},
                     '9':{'titulo':'Robo a trasporte p&uacute;blico','instrucciones':'Describa el incidente y/o descripci&oacute;n de los responsables'},
@@ -111,7 +111,7 @@ function iniciar(){
        
 function showAlert() {
     mainView.router.loadPage('iniciar.html');
-    myApp.alert("Algunas caracteristicas no estaran disponibles","Internet no detectado");
+    myApp.alert("Algunas caracter&iacute;sticas no estaran disponibles","Internet no detectado");
     
     }
 
@@ -557,7 +557,7 @@ function datosFin(tx, results){
 }
 function OnError(xhr, status){
     myApp.hidePreloader();
-        myApp.alert("ocurrio un error, intente de nuevo","Error");
+        myApp.alert("ocurri&oacute; un error, intente de nuevo","Error");
 }
 function Onbefore(xhr){
     console.log("enviando mensaje");
@@ -599,7 +599,7 @@ function enviocontactos(id,verificacion){
                             mainView.router.loadPage('registro.html');
                          }, 
                         error: function(result){ 
-                            myApp.alert('Ocurrio un error al registrar el contacto de emergencia '+results.rows.item(i).nombre, 'Error');
+                            myApp.alert('Ocurri&oacute; un error al registrar el contacto de emergencia '+results.rows.item(i).nombre, 'Error');
                             myApp.hidePreloader();
                         }
                         });  
@@ -639,7 +639,7 @@ function finalizar(verify){
                             }
                         }, 
                         error: function(result){ 
-                            myApp.alert('Ocurrio un error al intentar la verificaci&oacute;n', 'Error');
+                            myApp.alert('Ocurri&oacute; un error al intentar la verificaci&oacute;n', 'Error');
                             myApp.hidePreloader();
                         }
                         });
@@ -909,7 +909,7 @@ function verify_ubic(){
       var popupHTML = '<div class="popup">'+
                     '<div class="content-block" style="height:100%;width:100%;padding:0;margin-top:3%">'+
                       '<div id="map"></div><img id="imgmapa" src="img/marker.png" /><div id="transmap"></div>'+
-                      '<p style="position: relative;margin:10px 15px 10px 15px;font-size:small" id="coors">Verifique que el icono muestra el punto donde se encuentra actualmente, de lo contrario mueva el mapa hasta colocar el punto en su posici&oacute;n actual, el circulo verde indica que se ha obtenido la ubicaci&oacute;n correctamente</p>'+
+                      '<p style="position: relative;margin:10px 15px 10px 15px;font-size:small" id="coors">Verifique que el &iacute;cono muestra el punto donde se encuentra actualmente, de lo contrario mueva el mapa hasta colocar el punto en su posici&oacute;n actual, el c&iacute;rculo verde indica que se ha obtenido la ubicaci&oacute;n correctamente</p>'+
                       '<div class="row" style="position: relative;margin:0 15px 0 15px">'+
                           '<div class="col-50">'+
                             '<a href="#" class="button button-big button-red sombra-roja close-popup">Cancelar</a>'+
@@ -1045,13 +1045,13 @@ function sendserver(){
                             }
                         }, 
                         error: function(result){ 
-                            myApp.alert('Ocurrio un error al intentar la verificacion', 'Error');
+                            myApp.alert('Ocurri&oacute; un error al intentar la verificaci&oacute;n', 'Error');
                             $$("#aviso_importante").css('display', 'block');
                             $$("#enviando_todo").css('display', 'none');
                         }
     });
     }else{
-        myApp.alert('La ubicacion no fue encontrada, por favor verifiquelas', 'Ubicacion no encontrada', function () {
+        myApp.alert('La ubicaci&oacute;n no fue encontrada, por favor verifiquelas', 'Ubicaci&oacute;n no encontrada', function () {
         verify_ubic();
     });
         
@@ -1092,7 +1092,7 @@ function fail(error) {
         mainView.router.loadPage('final.html?folio='+promad);
         console.log("no se pudo enviar el archivo");
     }
-    alert("An error has occurred: Code = " + error.code);
+    myApp.alert("&oacute;currio un error: Codigo = " + error.code);
     console.log("upload error source " + error.source);
     console.log("upload error target " + error.target);
 }
@@ -1198,7 +1198,7 @@ function sendSMS() {
                     	sms.send(sendto, textmsg,options, function(e){
                             myApp.alert("El mensaje a sido enviado",'SMS exitoso');
                         }, function(e){
-                            myApp.alert('error: '+e, "SMS error");
+                            myApp.alert('Error: '+e, "SMS error");
                         });
                 });
             });
@@ -1226,7 +1226,7 @@ function save_mensaje(){
         tx.executeSql('UPDATE mensaje SET mensaje=? where id=?',[sms_mens,1],function(tx,results){
             myApp.alert("Mensaje guardado correctamente","Guardado");
         }, function (error) {
-        myApp.alert("Ocurrrio un error al intentar guardar los cambios","Error");
+        myApp.alert("Ocurrri&oacute; un error al intentar guardar los cambios","Error");
     });
     });
 }
@@ -1349,7 +1349,7 @@ function boygunew(){
                              });                             
                          }, 
                         error: function(result){ 
-                            myApp.alert('Ocurrio un error al registrar el contacto de emergencia ', 'Error');
+                            myApp.alert('Ocurri&oacute; un error al registrar el contacto de emergencia ', 'Error');
                             myApp.hidePreloader();
                         }
                         });
@@ -1374,7 +1374,7 @@ function enviocontactos_new(){
                             view_contacts();
                          }, 
                         error: function(result){ 
-                            myApp.alert('Ocurrio un error al registrar el contacto de emergencia '+results.rows.item(i).nombre, 'Error');
+                            myApp.alert('Ocurri&oacute; un error al registrar el contacto de emergencia '+results.rows.item(i).nombre, 'Error');
                             myApp.hidePreloader();
                         }
                         });  
@@ -1394,7 +1394,7 @@ function resms(){
             myApp.hidePreloader();
         }, 
         error: function(result){ 
-            myApp.alert('Ocurrio un error al intentar reeenviar el c&oacute;digo de confirmaci&oacute;n', 'Error');
+            myApp.alert('Ocurri&oacute; un error al intentar reeenviar el c&oacute;digo de confirmaci&oacute;n', 'Error');
             myApp.hidePreloader();
         }
     });  
