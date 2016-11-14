@@ -831,12 +831,13 @@ var captureSuccessaudio = function(mediaFiles) {
     mimeType_xa=mimeType;
     path_audio=path;
     $$(".audio").removeClass('button-gold-c').addClass('active');
-    path_audio="";
+    
 };
 // captura de audio con error
 var captureErroraudio = function(error) {
     myApp.alert('No se grab&oacute; nada', 'Captura');
     $$(".audio").removeClass('active').addClass('button-gold-c');
+    path_audio="";
 };
 // captura de foto exitosa
 var captureSuccessfoto = function(mediaFiles) {
