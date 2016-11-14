@@ -82,7 +82,7 @@ var titulos={'1':{'titulo':'Violencia contra la mujer','instrucciones':'Describa
                     '18':{'titulo':'Accidente vehicular tipo volcadura','instrucciones':'Describa los hechos ocurridos en el incidente'},
                     '19':{'titulo':'Emergencia m&eacute;dica persona inconsciente','instrucciones':'Describa los hechos ocurridos en el incidente'},
                     '20':{'titulo':'Emergencia m&eacute;dica ataque por convulciones','instrucciones':'Describa los hechos ocurridos en el incidente'},
-                    '21':{'titulo':'Emergencia m&eacute;dica ataque cardiaco','instrucciones':'Describa los hechos ocurridos en el incidente'},
+                    '21':{'titulo':'Emergencia m&eacute;dica ataque card&iacute;aco','instrucciones':'Describa los hechos ocurridos en el incidente'},
                     '22':{'titulo':'Emergencia m&eacute;dica ca&iacute;da/fractura','instrucciones':'Describa los hechos ocurridos en el incidente'},
                     '23':{'titulo':'Emergencia m&eacute;dica electrocutado','instrucciones':'Describa los hechos ocurridos en el incidente'},
                     '24':{'titulo':'Abuso de autoridad','instrucciones':'Describa el incidente y descripci&oacute;n de la autoridad responsable del abuso'}
@@ -773,7 +773,7 @@ function accidente(){
 function emergencia(){
     var buttons = [
         {
-            text: 'Persona inconsiente',
+            text: 'Persona inconsciente',
             onClick: function () {
                 mainView.router.loadPage('reporte.html?id=19');
                 }
@@ -785,7 +785,7 @@ function emergencia(){
              }
         },
         {
-            text: 'Ataque cardiaco',
+            text: 'Ataque card&iacute;aco',
             onClick: function () {
                 mainView.router.loadPage('reporte.html?id=21');
              }
