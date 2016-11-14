@@ -1,4 +1,4 @@
-<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.innovacion.alertas" version="1.0.5.1">
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.innovacion.alertas" version="1.0.6">
   <name>SOS Sinaloa</name>
   <description>Gobierno del Estado de Sinaloa</description>
   <author href="http://innovaciongubernamental.gob.mx" email="joel.r@live.com.mx">Innovacion Gubernamental</author>
